@@ -31,7 +31,7 @@ export interface IGlobalState {
   chartColors: Record<string, string>;
 }
 
-const defaultTheme = ETheme.light;
+const defaultTheme = ETheme.dark;
 
 const initialState: IGlobalState = {
   loading: true,

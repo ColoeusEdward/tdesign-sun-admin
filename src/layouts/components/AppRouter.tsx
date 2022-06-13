@@ -8,6 +8,13 @@ import Style from './AppRouter.module.less';
 
 const { Content } = Layout;
 
+
+// 封装一层 专门负责显示页面标题
+const DomTitle = ({ route, children }: { route: IRouter, children: any }) => {
+  route.meta?.title && (document.title = route.meta!.title);
+  return children
+}
+
 type TRenderRoutes = (routes: IRouter[], parentPath?: string, breadcrumbs?: string[]) => React.ReactNode[];
 /**
  * 渲染应用路由
@@ -15,8 +22,8 @@ type TRenderRoutes = (routes: IRouter[], parentPath?: string, breadcrumbs?: stri
  * @param parentPath
  * @param breadcrumb
  */
-const renderRoutes: TRenderRoutes = (routes, parentPath = '', breadcrumb = []) =>
-  routes.map((route, index: number) => {
+const renderRoutes: TRenderRoutes = (routes, parentPath = '', breadcrumb = []) => {
+  return routes.map((route, index: number) => {
     const { Component, children, redirect, meta } = route;
     const currentPath = resolve(parentPath, route.path);
     let currentBreadcrumb = breadcrumb;
@@ -37,9 +44,11 @@ const renderRoutes: TRenderRoutes = (routes, parentPath = '', breadcrumb = []) =
           key={index}
           path={currentPath}
           element={
-            <Page isFullPage={route.isFullPage} breadcrumbs={currentBreadcrumb}>
-              <Component />
-            </Page>
+            <DomTitle route={route}>
+              <Page isFullPage={route.isFullPage} breadcrumbs={currentBreadcrumb}>
+                <Component />
+              </Page>
+            </DomTitle>
           }
         />
       );
@@ -47,7 +56,7 @@ const renderRoutes: TRenderRoutes = (routes, parentPath = '', breadcrumb = []) =
     // 无路由菜单
     return children ? renderRoutes(children, currentPath, currentBreadcrumb) : null;
   });
-
+}
 const AppRouter = () => (
   <Content className={Style.panel}>
     <Suspense

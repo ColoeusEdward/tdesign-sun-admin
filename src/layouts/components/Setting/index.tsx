@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Row, Col, Switch } from 'tdesign-react';
 import { useAppDispatch, useAppSelector } from 'modules/store';
 import {
@@ -54,6 +54,11 @@ const layoutList = [
 export default memo(() => {
   const dispatch = useAppDispatch();
   const globalState = useAppSelector(selectGlobal);
+
+  useEffect(() => {
+    console.log(`layouteff`,);
+    dispatch(switchTheme())
+  }, [])
 
   return (
     <div>

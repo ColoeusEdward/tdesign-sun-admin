@@ -2,9 +2,17 @@ import path from 'path';
 import { viteMockServe } from 'vite-plugin-mock';
 import react from '@vitejs/plugin-react';
 import svgr from '@honkhonk/vite-plugin-svgr';
-
+import host from './src/configs/host'
+import define from './src/configs/define'
+function getBase(params) {
+  // console.log("🚀 ~ file: vite.config.js ~ line 8 ~ getBase ~ params", params)
+  // console.log(`host`,host[params.mode]);
+  var env = params.mode || 'development';
+  var root = env === 'development' ? '/' : define.root
+  return root
+}
 export default (params) => ({
-  base: './',
+  base: getBase(params),
   resolve: {
     alias: {
       assets: path.resolve(__dirname, './src/assets'),
@@ -36,10 +44,10 @@ export default (params) => ({
     svgr(),
     react(),
     params.mode === 'mock' &&
-      viteMockServe({
-        mockPath: './mock',
-        localEnabled: true,
-      }),
+    viteMockServe({
+      mockPath: './mock',
+      localEnabled: true,
+    }),
   ],
 
   build: {
@@ -50,12 +58,14 @@ export default (params) => ({
     host: '0.0.0.0',
     port: 3003,
     proxy: {
-      '/api': {
+      '/dev': {
         // 用于开发环境下的转发请求
         // 更多请参考：https://vitejs.dev/config/#server-proxy
-        target: 'https://service-exndqyuk-1257786608.gz.apigw.tencentcs.com',
+        target: host[params.mode].target,
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/dev/, '')
       },
     },
   },
 });
+

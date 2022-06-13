@@ -2,7 +2,7 @@ import React, { memo, useEffect } from 'react';
 import { Drawer, Layout } from 'tdesign-react';
 import throttle from 'lodash/throttle';
 import { useAppSelector, useAppDispatch } from 'modules/store';
-import { selectGlobal, toggleSetting, toggleMenu, ELayout } from 'modules/global';
+import { selectGlobal, toggleSetting, toggleMenu, ELayout, switchTheme } from 'modules/global';
 import Setting from './components/Setting';
 import AppLayout from './components/AppLayout';
 import Style from './index.module.less';
@@ -31,7 +31,7 @@ export default memo(() => {
     <Layout className={Style.panel}>
       <AppContainer />
       <Drawer
-        destroyOnClose
+        // destroyOnClose
         visible={globalState.setting}
         size='458px'
         footer={false}
