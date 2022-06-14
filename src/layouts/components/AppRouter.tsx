@@ -45,7 +45,7 @@ const renderRoutes: TRenderRoutes = (routes, parentPath = '', breadcrumb = []) =
           path={currentPath}
           element={
             <DomTitle route={route}>
-              <Page isFullPage={route.isFullPage} breadcrumbs={currentBreadcrumb}>
+              <Page isFullPage={route.isFullPage} route={route} breadcrumbs={currentBreadcrumb}>
                 <Component />
               </Page>
             </DomTitle>

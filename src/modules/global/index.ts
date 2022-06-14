@@ -32,10 +32,11 @@ export interface IGlobalState {
 }
 
 const defaultTheme = ETheme.dark;
+let localCollapsed = localStorage.getItem('menuCollapsed') && JSON.parse(localStorage.getItem('menuCollapsed')!)
 
 const initialState: IGlobalState = {
   loading: true,
-  collapsed: window.innerWidth < 1000, // 宽度小于1000 菜单闭合
+  collapsed: localCollapsed || window.innerWidth < 1000, // 宽度小于1000 菜单闭合
   setting: false,
   version,
   theme: defaultTheme,
@@ -44,7 +45,7 @@ const initialState: IGlobalState = {
   color: defaultColor?.[0],
   showHeader: true,
   showBreadcrumbs: true,
-  showFooter: true,
+  showFooter: false,
   chartColors: CHART_COLORS[defaultTheme],
 };
 
@@ -59,6 +60,7 @@ const globalSlice = createSlice({
       } else {
         state.collapsed = !!action.payload;
       }
+      localStorage.setItem('menuCollapsed', JSON.stringify(state.collapsed))
     },
     toggleSetting: (state) => {
       state.setting = !state.setting;
@@ -102,7 +104,7 @@ const globalSlice = createSlice({
       state.isFullPage = !!action?.payload;
     },
   },
-  extraReducers: () => {},
+  extraReducers: () => { },
 });
 
 export const selectGlobal = (state: RootState) => state.global;

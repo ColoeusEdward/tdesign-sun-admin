@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../modules/store';
 import { selectGlobal, switchFullPage } from '../../modules/global';
 import { Layout, Breadcrumb } from 'tdesign-react';
 import Style from './Page.module.less';
+import { IRouter } from 'router';
 
 const { Content } = Layout;
 const { BreadcrumbItem } = Breadcrumb;
@@ -11,7 +12,8 @@ const Page = ({
   children,
   isFullPage,
   breadcrumbs,
-}: React.PropsWithChildren<{ isFullPage?: boolean; breadcrumbs?: string[] }>) => {
+  route
+}: React.PropsWithChildren<{ isFullPage?: boolean; breadcrumbs?: string[]; route?: IRouter }>) => {
   const globalState = useAppSelector(selectGlobal);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -23,8 +25,8 @@ const Page = ({
   }
 
   return (
-    <Content className={Style.panel}>
-      {globalState.showBreadcrumbs && (
+    <Content className={Style.panel} style={route?.noMargin ? { margin: '0' } : {}}>
+      {globalState.showBreadcrumbs && !route?.noMargin && (
         <Breadcrumb className={Style.breadcrumb}>
           {breadcrumbs?.map((item, index) => (
             <BreadcrumbItem key={index}>{item}</BreadcrumbItem>

@@ -1,19 +1,12 @@
 import React, { lazy } from 'react';
 import { BrowserRouterProps } from 'react-router-dom';
-import dashboard from './modules/dashboard';
-import list from './modules/list';
-import form from './modules/form';
-import detail from './modules/detail';
-import result from './modules/result';
-import user from './modules/user';
-import login from './modules/login';
 
 // 把modules文件夹下的所有ts文件自动生成映射关系
-const modules = import.meta.globEager('./modules/**.ts')
+const modules = import.meta.globEager('./modules/**.{ts,tsx}')
 const moduleRouterList: IRouter[] = []
 
 Object.keys(modules).forEach((key: string) => {
-  const nameMatch: string[] | null = key.match(/^\.\/modules\/(.+)\.(ts)/)
+  const nameMatch: string[] | null = key.match(/^\.\/modules\/(.+)\.(ts|tsx)/)
 
   if (!nameMatch) {
     return
@@ -25,14 +18,13 @@ Object.keys(modules).forEach((key: string) => {
 
     ;[name] = name.split('/').splice(-1)
   moduleRouterList.push(...modules[key].default)
-  
-  // components[name] = 
 })
 
 export interface IRouter {
   path: string;
   redirect?: string;
   Component?: React.FC<BrowserRouterProps> | (() => any);
+  noMargin?: boolean;      //是否没有margin和面包条
   /**
    * 当前路由是否全屏显示
    */
@@ -55,7 +47,7 @@ const routes: IRouter[] = [
   },
   {
     path: '/',
-    redirect: '/dashboard/base',
+    redirect: '/home',
   },
 ];
 
