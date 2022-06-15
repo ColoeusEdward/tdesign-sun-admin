@@ -33,7 +33,7 @@ export interface IGlobalState {
 
 const defaultTheme = ETheme.dark;
 let localCollapsed = localStorage.getItem('menuCollapsed') && JSON.parse(localStorage.getItem('menuCollapsed')!)
-
+let localMainColor = localStorage.getItem('mainColor') && JSON.parse(localStorage.getItem('mainColor')!)
 const initialState: IGlobalState = {
   loading: true,
   collapsed: localCollapsed || window.innerWidth < 1000, // 宽度小于1000 菜单闭合
@@ -42,12 +42,13 @@ const initialState: IGlobalState = {
   theme: defaultTheme,
   layout: ELayout.side,
   isFullPage: false,
-  color: defaultColor?.[0],
+  color: localMainColor || defaultColor?.[0],
   showHeader: true,
   showBreadcrumbs: true,
   showFooter: false,
   chartColors: CHART_COLORS[defaultTheme],
 };
+document.documentElement.style.setProperty(`--td-brand-color-8`, initialState.color);
 
 // 创建带有命名空间的reducer
 const globalSlice = createSlice({
@@ -93,6 +94,7 @@ const globalSlice = createSlice({
       if (action?.payload) {
         state.color = action?.payload;
         document.documentElement.style.setProperty(`--td-brand-color-8`, action?.payload);
+        localStorage.setItem('mainColor', JSON.stringify(state.color))
       }
     },
     switchLayout: (state, action) => {

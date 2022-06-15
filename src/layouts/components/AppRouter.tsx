@@ -1,10 +1,11 @@
-import React, { Suspense, memo } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { Layout, Loading } from 'tdesign-react';
+import React, { Suspense, memo, useEffect } from 'react';
+import { Routes, Route, Navigate, useNavigate, NavigateFunction } from 'react-router-dom';
+import { Button, Layout, Loading } from 'tdesign-react';
 import routers, { IRouter } from 'router';
 import { resolve } from 'utils/path';
 import Page from './Page';
 import Style from './AppRouter.module.less';
+import KeepAlive, { useAliveController } from 'react-activation';
 
 const { Content } = Layout;
 
@@ -46,6 +47,7 @@ const renderRoutes: TRenderRoutes = (routes, parentPath = '', breadcrumb = []) =
           element={
             <DomTitle route={route}>
               <Page isFullPage={route.isFullPage} route={route} breadcrumbs={currentBreadcrumb}>
+                {/* <KeepAlive key={currentPath}></KeepAlive> */}
                 <Component />
               </Page>
             </DomTitle>
@@ -57,18 +59,20 @@ const renderRoutes: TRenderRoutes = (routes, parentPath = '', breadcrumb = []) =
     return children ? renderRoutes(children, currentPath, currentBreadcrumb) : null;
   });
 }
-const AppRouter = () => (
-  <Content className={Style.panel}>
-    <Suspense
-      fallback={
-        <div className={Style.loading}>
-          <Loading />
-        </div>
-      }
-    >
-      <Routes>{renderRoutes(routers)}</Routes>
-    </Suspense>
-  </Content>
-);
+const AppRouter = () => {
+  return (
+    <Content className={Style.panel}>
+      <Suspense
+        fallback={
+          <div className={Style.loading}>
+            <Loading />
+          </div>
+        }
+      >
+        <Routes>{renderRoutes(routers)}</Routes>
+      </Suspense>
+    </Content>
+  );
+}
 
 export default memo(AppRouter);
