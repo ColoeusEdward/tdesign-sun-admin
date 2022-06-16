@@ -1,37 +1,8 @@
 import request from 'utils/request';
 import { sendRequestG } from 'utils/util';
 
-export interface IContract {
-  adminName: string;
-  amount: string;
-  contractType: number;
-  index: number;
-  name: string;
-  no: string;
-  paymentType: 1 | 2;
-  status: number;
-  updateTime: string;
-}
 
-interface IResult {
-  list: IContract[];
-}
-
-interface IParams {
-  pageSize: number;
-  current: number;
-}
-
-
-export const getddd = async (params: IParams) => {
-  const result = await request.get<IResult>('/api/get-list');
-
-  // 模拟接口分页
-  let list = result?.data?.list || [];
-  const total = list.length;
-  list = list.splice(params.pageSize * (params.current - 1), params.pageSize);
-  return {
-    list,
-    total,
-  };
+export const RecordRelease = async (data?: any) => {
+  const result = await request.get<any>('/koa/mv_upload/record_release', { data: data });
+  return result
 };

@@ -36,6 +36,7 @@ export default memo(() => {
         size='458px'
         footer={false}
         header='页面配置'
+        destroyOnClose
         onClose={() => dispatch(toggleSetting())}
       >
         <Setting />
