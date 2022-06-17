@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { loginApi } from 'services/nt';
 import { RootState } from '../store';
 
 const namespace = 'user';
@@ -14,7 +15,8 @@ export const login = createAsyncThunk(`${namespace}/login`, async (userInfo: Rec
   const mockLogin = async (userInfo: Record<string, unknown>) => {
     // 登录请求流程
     console.log(userInfo);
-    // const { account, password } = userInfo;
+    const { account: name, password: psw } = userInfo;
+
     // if (account !== 'td') {
     //   return {
     //     code: 401,

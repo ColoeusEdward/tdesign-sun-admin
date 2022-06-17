@@ -1,18 +1,28 @@
 import React, { Suspense, memo, useEffect } from 'react';
-import { Routes, Route, Navigate, useNavigate, NavigateFunction } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, NavigateFunction, useLocation } from 'react-router-dom';
 import { Button, Layout, Loading } from 'tdesign-react';
 import routers, { IRouter } from 'router';
 import { resolve } from 'utils/path';
 import Page from './Page';
 import Style from './AppRouter.module.less';
 import KeepAlive, { useAliveController } from 'react-activation';
+import { useAtom } from 'jotai';
+import { tokenAtom } from 'jtStore/home';
 
 const { Content } = Layout;
 
 
-// 封装一层 专门负责显示页面标题
+// 封装一层 专门负责显示页面标题, 以及路由守卫
 const DomTitle = ({ route, children }: { route: IRouter, children: any }) => {
   route.meta?.title && (document.title = route.meta!.title);
+  const [token] = useAtom(tokenAtom)
+  const navigate = useNavigate();
+  const location = useLocation()
+  useEffect(() => {
+    if (!token && location.pathname.search('login') == -1) {
+      navigate('/login/index')
+    }
+  }, [token])
   return children
 }
 

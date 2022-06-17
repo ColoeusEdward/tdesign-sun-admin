@@ -28,6 +28,7 @@ export default (params) => ({
       router: path.resolve(__dirname, './src/router'),
       hooks: path.resolve(__dirname, './src/hooks'),
       types: path.resolve(__dirname, './src/types'),
+      jtStore: path.resolve(__dirname, './src/jtStore'),
     },
   },
 

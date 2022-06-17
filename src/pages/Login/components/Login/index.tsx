@@ -9,6 +9,9 @@ import { login } from 'modules/user';
 import useCountdown from '../../hooks/useCountDown';
 
 import Style from './index.module.less';
+import { useAtom } from 'jotai';
+import { tokenAtom } from 'jtStore/home';
+import { loginApi } from 'services/nt';
 
 const { FormItem } = Form;
 
@@ -21,19 +24,27 @@ export default function Login() {
   const formRef = useRef<FormInstanceFunctions>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [token, setToken] = useAtom(tokenAtom)
+  const [loading,setLoading] = useState(false)
 
   const onSubmit = async (e: SubmitContext) => {
     if (e.validateResult === true) {
       try {
         const formValue = formRef.current?.getFieldsValue?.(true) || {};
-        await dispatch(login(formValue));
+        // await dispatch(login(formValue));
+        let { account:name, password:psw } = formValue
+        setLoading(true)
+        let res = await loginApi({ name, psw })
+        setToken(res.token)
+        
+        setLoading(false)
+        // MessagePlugin.success('登录成功');
 
-        MessagePlugin.success('登录成功');
-
-        navigate('/dashboard/base');
+        navigate('/home');
       } catch (e) {
         console.log(e);
-        MessagePlugin.error('登录失败');
+        setLoading(false)
+        // MessagePlugin.error('登录失败');
       }
     }
   };
@@ -112,7 +123,7 @@ export default function Login() {
         )}
         {loginType !== 'qrcode' && (
           <FormItem className={Style.btnContainer}>
-            <Button block size='large' type='submit'>
+            <Button block size='large' type='submit' loading={loading}>
               登录
             </Button>
           </FormItem>

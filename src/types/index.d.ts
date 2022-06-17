@@ -18,3 +18,9 @@ interface baseGridItem {
 }
 
 export type gridItem = baseGridItem & Record<string, any>
+
+export interface baseRes<T> {
+  code:number
+  msg:string
+  data:T
+}
