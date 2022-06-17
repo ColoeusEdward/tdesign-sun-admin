@@ -14,17 +14,17 @@ export default memo(() => {
   const AppContainer = AppLayout[globalState.isFullPage ? ELayout.fullPage : globalState.layout];
 
   useEffect(() => {
-    const handleResize = throttle(() => {
-      if (window.innerWidth < 900) {
-        dispatch(toggleMenu(true));
-      } else if (window.innerWidth > 1000) {
-        dispatch(toggleMenu(false));
-      }
-    }, 100);
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    // const handleResize = throttle(() => {
+    //   if (window.innerWidth < 900) {
+    //     dispatch(toggleMenu(true));
+    //   } else if (window.innerWidth > 1000) {
+    //     dispatch(toggleMenu(false));
+    //   }
+    // }, 100);
+    // window.addEventListener('resize', handleResize);
+    // return () => {
+    //   window.removeEventListener('resize', handleResize);
+    // };
   }, []);
 
   return (

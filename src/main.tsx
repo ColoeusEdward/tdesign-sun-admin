@@ -9,12 +9,15 @@ import 'tdesign-react/es/style/index.css';
 import './styles/index.less';
 import '/node_modules/react-grid-layout/css/styles.css'
 import '/node_modules/react-resizable/css/styles.css'
+import './theme.css'
 import './index.css'
 import { getBaseName } from 'utils/util';
 import { AliveScope } from 'react-activation';
+import { setRootByHost } from 'configs/define';
 const baseName = getBaseName()
 
 const renderApp = () => {
+  setRootByHost()
   const container = document.getElementById('app');
   const root = createRoot(container!);
   root.render(

@@ -3,12 +3,13 @@ import { viteMockServe } from 'vite-plugin-mock';
 import react from '@vitejs/plugin-react';
 import svgr from '@honkhonk/vite-plugin-svgr';
 import host from './src/configs/host'
-import define from './src/configs/define'
+import define, { setRoot } from './src/configs/define'
 function getBase(params) {
+  setRoot(params.mode)
   // console.log("🚀 ~ file: vite.config.js ~ line 8 ~ getBase ~ params", params)
   // console.log(`host`,host[params.mode]);
-  var env = params.mode || 'development';
-  var root = env === 'development' ? '/' : define.root
+  // var env = params.mode || 'development';
+  var root = define.root
   return root
 }
 export default (params) => ({
