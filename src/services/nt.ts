@@ -11,6 +11,10 @@ export const RecordRelease = async (data?: any) => {
   return result
 };
 
+export const recordFree = async (data?: any) => {
+  const result = await request.get<any>('/koa/mv_upload/record_free', data);
+  return result
+};
 // export const ShowRecord = async (data?: any) => {
 //   const result = await request.get<string>('/koa/mv_upload/show_record', data);
 //   return result
@@ -18,7 +22,10 @@ export const RecordRelease = async (data?: any) => {
 
 export const ShowRecordSizeList = async (data?: any) => {
   const result = await request.get<string>('/koa/mv_upload/record_size_list', data);
-  return result
+  let list = result.data.split('\n').slice(0, -1).map(e=>{
+    return e.split('\t')
+  })
+  return list
 };
 
 export const LeftStorage = async (data?: any) => {
@@ -33,6 +40,5 @@ export const RmFile = async (data?: any) => {
 
 export const loginApi = async (data?: any) => {
   const result = await request.post<loginRes>('/koa/mv_upload/login', data);
-  console.log("🚀 ~ file: nt.ts ~ line 36 ~ loginApi ~ result", result)
   return result.data
 };

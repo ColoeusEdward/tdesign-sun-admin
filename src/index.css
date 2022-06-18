@@ -2,6 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-.react-grid-item.react-grid-placeholder{
-  background-color: transparent;
+.react-grid-item.react-grid-placeholder {
+  /* background-color: transparent; */
+  z-index: -10;
+}
+
+.msg-animation-active {
+  animation-name: enter;
+  /* animation: enter 1; */
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  /* transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); */
+}
+@keyframes enter {
+  0% {
+    /* transform: translate(0, 50px); */
+    transform: scale(0) translate(0, 50px);
+    opacity: 0;
+  }
+  10% {
+    transform: scale(1) translate(0, 0px);
+    opacity: 1;
+  }
+  90% {
+    transform: scale(1) translate(0, 0px);
+    opacity: 1;
+  }
+  100%{
+    transform: scale(0) translate(0, -50px);
+    opacity: 0;
+  }
 }

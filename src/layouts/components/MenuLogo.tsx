@@ -3,6 +3,7 @@ import Style from './Menu.module.less';
 import FullLogo from 'assets/svg/assets-logo-full.svg?component';
 import MiniLogo from 'assets/svg/assets-t-logo.svg?component';
 import { useNavigate } from 'react-router-dom';
+import logoW from 'assets/image/logo.webp'
 
 interface IProps {
   collapsed?: boolean;
@@ -17,7 +18,8 @@ export default memo((props: IProps) => {
 
   return (
     <div className={Style.menuLogo} onClick={handleClick}>
-      {props.collapsed ? <MiniLogo /> : <FullLogo />}
+      {/* {props.collapsed ? <MiniLogo /> : <FullLogo />} */}
+      <img src={logoW} className={'w-full h-full'}></img>
     </div>
   );
 });

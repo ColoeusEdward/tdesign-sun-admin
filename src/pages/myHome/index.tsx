@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Button } from 'tdesign-react';
+import { Button, MessagePlugin } from 'tdesign-react';
 import { CheckCircleIcon } from 'tdesign-icons-react';
 import { useParams } from 'react-router-dom';
 import withKeepAlive from 'hooks/withKeepAlive';
@@ -16,16 +16,25 @@ import GridIcon from './comp/GridIcon';
 import classNames from 'classnames';
 import Style from './index.module.less'
 import DeleteFile from './comp/DeleteFile';
+import FreeCloudUpload from './comp/FreeCloudUpload';
+import { getMsgOpt } from 'configs/cfg';
+import MySkeleton from 'components/MySkeleton';
+import InfoList from './comp/InfoList';
 
 const originLayout = [
   { type: 'btn', Comp: LinkBtn, ref: null, clickFn: 'recoverLayout', name: '复原', x: 11, y: 0, iconSrc: 'https://img.icons8.com/office/96/undefined/synchronize.png' },
   { type: 'btn', Comp: LinkBtn, name: '释放式上传', x: 0, y: 0, iconSrc: 'https://img.icons8.com/dusk/100/000000/upgrade.png' },
   { type: 'btn', Comp: LinkBtn, name: '释放MP4', x: 1, y: 0, iconSrc: 'https://img.icons8.com/color/100/000000/video.png' },
   { type: 'btn', Comp: LinkBtn, name: '命令行', x: 4, y: 0, iconSrc: 'https://img.icons8.com/dusk/100/000000/command-line.png' },
-  { type: 'btn', Comp: LinkBtn, name: 'aria2', x: 5, y: 0, iconSrc: 'https://raw.githubusercontent.com/mayswind/AriaNg-Native/master/assets/AriaNg.ico' },
+  { type: 'btn', Comp: LinkBtn, name: 'aria2', x: 5, y: 0, iconSrc: 'https://img.icons8.com/color/96/undefined/launched-rocket--v1.png' },
   { type: 'btn', Comp: LinkBtn, name: '部署', x: 10, y: 0, iconSrc: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/deployment-2369058-1978336.png' },
   { type: '2x3', Comp: DeleteFile, name: '删除文件', x: 2, y: 0, iconSrc: 'https://img.icons8.com/bubbles/100/000000/delete-sign.png' },
-  { type: '2x3', Comp: '', name: '上传视频至youtube', x: 6, y: 0, iconSrc: '' },
+  { type: '2x3', Comp: FreeCloudUpload, name: '自由上传文件', x: 7, y: 6, iconSrc: 'https://img.icons8.com/bubbles/100/000000/upload.png' },
+  { type: '2x3', Comp: MySkeleton, name: '上传视频至youtube', x: 6, y: 0, iconSrc: '' },
+  { type: '2x4', Comp: InfoList, name: '查看文件大小', x: 4, y: 3, iconSrc: 'https://icons-for-free.com/iconfiles/png/512/file+format+mp4+paper+icon-1320167130956649663.png' },
+  // { type: '2x3', Comp: '', name: '上传视频至youtube', x: 6, y: 0, iconSrc: '' },
+  // { type: '2x3', Comp: '', name: '上传视频至youtube', x: 6, y: 0, iconSrc: '' },
+  // { type: '2x3', Comp: '', name: '上传视频至youtube', x: 6, y: 0, iconSrc: '' },
 ]
 
 const buildLayout = (oriLay: any[]) => {
@@ -33,10 +42,14 @@ const buildLayout = (oriLay: any[]) => {
     btn: (e: gridItem) => {
       Object.assign(e, { w: 1, h: 3 })
     },
-    '2x3': (e: gridItem) => { Object.assign(e, { w: 2, h: 3 }) }
+    other: (e: gridItem) => {
+      let list = e.type.split('x')
+      Object.assign(e, { w: list[0]*1, h: list[1]*1 })
+    }
   }
   return oriLay.map((e: gridItem, i) => {
     obj[e.type] && obj[e.type](e)
+    !obj[e.type] && obj.other(e)
     e.i = String(i)
     e.Comp
     e.bg = randomStickerColor()
@@ -64,34 +77,40 @@ const MyHome: FC = () => {
   const expendSize = (item: gridItem) => {
     let nsize = getNewSize(item)
     let { h, w } = item
+    // console.log("🚀 ~ file: index.tsx ~ line 73 ~ expendSize ~ nsize", item, { h, w }, nsize, isEqual(nsize, { h, w }))
+    if (item.expend) return
     nsize && !isEqual(nsize, { h, w }) && setLayout((preLay) => {
       let list = preLay.map(e => ({ ...e }))
       let it = list.find(e => e.i == item.i)
       it && Object.assign(it, nsize, { expend: true })
+      // console.log("🚀 ~ file: index.tsx ~ line 79 ~ nsize&&!isEqual ~ it", it)
       return list
     })
+
   }
 
-  const recordMouseTime = () => {
+  const recordMouseTime = useCallback(() => {
     let time = new Date().getTime()
     timeRef.current = time
-  }
+  }, [])
 
   const isLongClick = () => {
     return new Date().getTime() - timeRef.current > 200
   }
 
   const itemClick = (item: gridItem) => {
+    // console.log(`itemClick`,);
     if (isLongClick()) return
     // console.log("🚀 ~ file: index.tsx ~ line 34 ~ itemClick ~ item", item)
+    // setCurI(item.i)
     setCurI('')
-    sleep(16).then(() => { setCurI(item.i) })
-    item.ref && item.ref.compClick && item.ref.compClick()
-    expendSize(item)
+    sleep(16).then(() => {
+      setCurI(item.i)
+      item.ref && item.ref.compClick && item.ref.compClick()
+      expendSize(item)
+    })
   }
-
   const updateLayout = useCallback((layout: any, oldItem: any, newItem: any) => {
-    // console.log("🚀 ~ file: index.tsx ~ line 43 ~ testLayoutChange ~ layout", layout)
     sonLayoutRef.current = layout
     setLayout((preLayout) => {
       let { x, y } = newItem
@@ -110,8 +129,9 @@ const MyHome: FC = () => {
       let pr: any = { name: e.name }
       e.clickFn && (pr.clickFn = fnObj[e.clickFn])
       return (
-        <div key={e.i} className={' bg-neutral-800 rounded-md'} style={{ transitionProperty: 'width, height,transform', background: e.bg }}  >
-          <div className={classNames('w-full h-full rounded-md overflow-hidden', { [Style.conActive]: curI == e.i })} onMouseDown={recordMouseTime} onMouseUp={() => { itemClick(e) }}>
+        <div key={e.i} className={classNames(' bg-neutral-800 rounded-md ', Style.cardItem)} style={{ transitionProperty: 'width, height,transform' }}  >
+          <div className={classNames('w-full h-full rounded-md overflow-hidden',
+            { [Style.conActive]: curI == e.i })} onMouseUp={() => { itemClick(e) }} >
             {!e.Comp || e.Comp == '' ? e.name :
               <e.Comp ref={(r: any) => { e.ref = r }} {...pr} >
                 {/* {!e.expend && <GridIcon name={e.name} iconSrc={e.iconSrc || ''} />} */}
@@ -125,15 +145,18 @@ const MyHome: FC = () => {
   }, [curI]);
 
   useEffect(() => {
+
   }, [layout])
 
   return (
-    <div className={'w-full text-cyan-100 text-base border-b border-solid border-cyan-200 border-t-0 border-x-0 pl-12'}
-      style={{ minHeight: '520px', maxHeight: 'calc(100vh - 64px)' }} >
-      <GridLayout ref={gridRef} className="layout" layout={layout} cols={12} rowHeight={30} width={1700} isResizable={false} onDragStop={updateLayout} allowOverlap={false} >
-        {children}
-      </GridLayout>
-    </div>
+    <>
+      <div className={classNames('w-full bg-transparent text-cyan-100 text-base  pl-12 overflow-auto select-none', Style.homeBg)}
+        style={{ minHeight: '520px', height: 'calc(100vh - 64px)' }} >
+        <GridLayout ref={gridRef} className="layout" layout={layout} cols={12} rowHeight={30} width={1700} isResizable={false} onDragStop={updateLayout} onDragStart={recordMouseTime} allowOverlap={false} >
+          {children}
+        </GridLayout>
+      </div>
+    </>
   );
 }
 

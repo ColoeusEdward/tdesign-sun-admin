@@ -1976,7 +1976,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.12":
+"@types/react@npm:*":
   version: 18.0.12
   resolution: "@types/react@npm:18.0.12"
   dependencies:
@@ -1984,6 +1984,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 526ea13b3adf7fe4b475e55b7426510a7861ef2910664a9014ef42cba0c699d5167dc378eb161e2ec26c07a3b6fde9b6bdcbbb6f4b5580612246bc289395ef03
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.0.14":
+  version: 18.0.14
+  resolution: "@types/react@npm:18.0.14"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 608eb57a383eedc54c79949673e5e8314f6b0c61542bff58721c8c47a18c23e2832e77c656050c2c2c004b62cf25582136c7c56fe1b6263a285c065fae31dbcf
   languageName: node
   linkType: hard
 
@@ -2257,9 +2268,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ahooks@npm:^3.4.1":
-  version: 3.4.1
-  resolution: "ahooks@npm:3.4.1"
+"ahooks@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "ahooks@npm:3.5.0"
   dependencies:
     "@types/js-cookie": ^2.x.x
     ahooks-v3-count: ^1.0.0
@@ -2271,7 +2282,7 @@ __metadata:
     screenfull: ^5.0.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: bbc41172536df594377263c2e3afc901f6713e49978be51b32b616fcba1d7f6a36392068e0be1bb545271cc4e7abf55a0e3c30efc20f483185ab584f91ab1bf9
+  checksum: c8a2f059da098bc2f6916ea325b09effd1619b5251fc1cec22d09c935ea6ef1afb7349587b09d6e9653139aae77c8ec6b8e73e7a638f9e27e0c16b6104ea02f2
   languageName: node
   linkType: hard
 
@@ -2339,7 +2350,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arg@npm:^5.0.1":
+"arg@npm:^5.0.2":
   version: 5.0.2
   resolution: "arg@npm:5.0.2"
   checksum: 6c69ada1a9943d332d9e5382393e897c500908d91d5cb735a01120d5f71daf1b339b7b8980cbeaba8fd1afc68e658a739746179e4315a26e8a28951ff9930078
@@ -4971,6 +4982,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mac-scrollbar@npm:^0.10.1":
+  version: 0.10.1
+  resolution: "mac-scrollbar@npm:0.10.1"
+  checksum: 542e9898bd5c1ebe4123c81c45016d64c20de0ef34a454124b8a93bea1a424cbd9d280008db59d9a27d433d561be1f966b2b8f33880834be4e01b2988e240f42
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^2.1.0":
   version: 2.1.0
   resolution: "make-dir@npm:2.1.0"
@@ -5743,15 +5761,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.1.0":
-  version: 18.1.0
-  resolution: "react-dom@npm:18.1.0"
+"react-dom@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "react-dom@npm:18.2.0"
   dependencies:
     loose-envify: ^1.1.0
-    scheduler: ^0.22.0
+    scheduler: ^0.23.0
   peerDependencies:
-    react: ^18.1.0
-  checksum: bb0d48eeb0b297c79c2a03978baa29f5b3ff7ba3d070b21e34c9af1a6e7fdf0ca8b8d73e41f9214d91ad40eeb6d1f3559f884cbbc338713374a51320637c23df
+    react: ^18.2.0
+  checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
   languageName: node
   linkType: hard
 
@@ -5928,12 +5946,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.1.0":
-  version: 18.1.0
-  resolution: "react@npm:18.1.0"
+"react@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "react@npm:18.2.0"
   dependencies:
     loose-envify: ^1.1.0
-  checksum: 5bb296b561b43ef2220395da4faac86c14a087c8c80e1a7598a5740f01ee605c11eaf249985c1e2000971c4cd32ccb46d40f00479bbd9fb6b1c7cf857393b7d4
+  checksum: 88e38092da8839b830cda6feef2e8505dec8ace60579e46aa5490fc3dc9bba0bd50336507dc166f43e3afc1c42939c09fe33b25fae889d6f402721dcd78fca1b
   languageName: node
   linkType: hard
 
@@ -6209,12 +6227,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.22.0":
-  version: 0.22.0
-  resolution: "scheduler@npm:0.22.0"
+"scheduler@npm:^0.23.0":
+  version: 0.23.0
+  resolution: "scheduler@npm:0.23.0"
   dependencies:
     loose-envify: ^1.1.0
-  checksum: a8ef5cab769c020cd6382ad9ecc3f72dbde56a50a36639b3a42ad9c11f7724f03700bcad373044059b8067d4a6365154dc7c0ca8027ef20ff4900cf58a0fc2c5
+  checksum: d79192eeaa12abef860c195ea45d37cbf2bbf5f66e3c4dcd16f54a7da53b17788a70d109ee3d3dde1a0fd50e6a8fc171f4300356c5aee4fc0171de526bf35f8a
   languageName: node
   linkType: hard
 
@@ -6545,11 +6563,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "tailwindcss@npm:3.1.2"
+"tailwindcss@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "tailwindcss@npm:3.1.3"
   dependencies:
-    arg: ^5.0.1
+    arg: ^5.0.2
     chokidar: ^3.5.3
     color-name: ^1.1.4
     detective: ^5.2.1
@@ -6576,7 +6594,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 0c097830374640de83ff4bbed06a891eb74f40cdafdcbfaf69faf65219a6e1b0fadd0cac1da8c70c9633742938e0818c2ba551f9ce47b8051c4e11adebdac8c6
+  checksum: ff7e159301ad1e55db95e9251c27c7d0f2274ac149874201d4ebcca8db2f1d3aba6f1e22ada88499961936d21ec74a82a6aa461064e1a3d0668017e2b0d3658d
   languageName: node
   linkType: hard
 
@@ -6618,12 +6636,12 @@ __metadata:
     "@types/mockjs": ^1.0.6
     "@types/node": ^17.0.31
     "@types/qrcode.react": ^1.0.2
-    "@types/react": ^18.0.12
+    "@types/react": ^18.0.14
     "@types/react-dom": ^18.0.5
     "@types/react-grid-layout": ^1.3.2
     "@types/react-router-dom": ^5.3.3
     "@vitejs/plugin-react": ^1.3.2
-    ahooks: ^3.4.1
+    ahooks: ^3.5.0
     autoprefixer: ^10.4.7
     axios: ^0.26.1
     axios-jsonp: ^1.0.4
@@ -6642,25 +6660,26 @@ __metadata:
     jotai: ^1.7.2
     less: ^4.1.2
     lodash: ^4.17.21
+    mac-scrollbar: ^0.10.1
     mockjs: ^1.1.0
     nano-memoize: ^1.3.0
     postcss: ^8.4.14
     prettier: ^2.5.1
     qrcode.react: ^3.0.2
-    react: ^18.1.0
+    react: ^18.2.0
     react-activation: ^0.11.2
-    react-dom: ^18.1.0
+    react-dom: ^18.2.0
     react-grid-layout: ^1.3.4
     react-icons: ^4.4.0
     react-photo-view: ^1.2.0
     react-redux: ^7.2.4
     react-router-dom: ^6.3.0
     socket.io-client: 4.2.0
-    tailwindcss: ^3.1.2
+    tailwindcss: ^3.1.3
     tdesign-icons-react: ^0.1.0
     tdesign-react: ^0.35.0
     tvision-color: ^1.4.0
-    typescript: ^4.7.3
+    typescript: ^4.7.4
     uuid: ^8.3.2
     vite: ^2.9.12
     vite-plugin-mock: ^2.9.6
@@ -6810,23 +6829,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.7.3":
-  version: 4.7.3
-  resolution: "typescript@npm:4.7.3"
+"typescript@npm:^4.7.4":
+  version: 4.7.4
+  resolution: "typescript@npm:4.7.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: fd13a1ce53790a36bb8350e1f5e5e384b5f6cb9b0635114a6d01d49cb99916abdcfbc13c7521cdae2f2d3f6d8bc4a8ae7625edf645a04ee940588cd5e7597b2f
+  checksum: 5750181b1cd7e6482c4195825547e70f944114fb47e58e4aa7553e62f11b3f3173766aef9c281783edfd881f7b8299cf35e3ca8caebe73d8464528c907a164df
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.7.3#~builtin<compat/typescript>":
-  version: 4.7.3
-  resolution: "typescript@patch:typescript@npm%3A4.7.3#~builtin<compat/typescript>::version=4.7.3&hash=7ad353"
+"typescript@patch:typescript@^4.7.4#~builtin<compat/typescript>":
+  version: 4.7.4
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 137d18a77f52254a284960b16ab53d0619f57b69b5d585804b8413f798a1175ce3e774fb95e6a101868577aafe357d8fcfc9171f0dc9fc0c210e9ae59d107cc0
+  checksum: 9096d8f6c16cb80ef3bf96fcbbd055bf1c4a43bd14f3b7be45a9fbe7ada46ec977f604d5feed3263b4f2aa7d4c7477ce5f9cd87de0d6feedec69a983f3a4f93e
   languageName: node
   linkType: hard
 

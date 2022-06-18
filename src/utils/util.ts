@@ -1,4 +1,6 @@
+import { getMsgOpt } from 'configs/cfg';
 import define from 'configs/define';
+import { MessagePlugin } from 'tdesign-react';
 import request from 'utils/request';
 
 export async function sendRequestG<T, R>(url: string, params?: R) {
@@ -36,7 +38,7 @@ export const ajaxPromiseAll = (list:any[]) => {
 export const copyToPaste = async (text:string) => {
   const clipboardObj = navigator.clipboard
   await clipboardObj.writeText(text)
-  window.$msg!.success('复制成功')
+  MessagePlugin.success({content:'复制成功',...getMsgOpt()})
 }
 
 export const numToChinese = (num:number) => {

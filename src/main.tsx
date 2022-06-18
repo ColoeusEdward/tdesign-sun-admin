@@ -10,6 +10,7 @@ import './styles/index.less';
 import '/node_modules/react-grid-layout/css/styles.css'
 import '/node_modules/react-resizable/css/styles.css'
 import './theme.css'
+import 'mac-scrollbar/dist/mac-scrollbar.css';
 import './index.css'
 import { getBaseName } from 'utils/util';
 import { AliveScope } from 'react-activation';

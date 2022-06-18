@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getMsgOpt } from 'configs/cfg';
 import { MessagePlugin } from 'tdesign-react';
 import proxy from '../configs/host';
 
@@ -36,18 +37,18 @@ instance.interceptors.response.use(
     if (response.status === 200) {
       const { data } = response;
       if (data.code === SUCCESS_CODE) {
-        MessagePlugin.success(data.msg, 2000)
+        MessagePlugin.success({ content: data.msg, ...getMsgOpt() })
         return data;
       }
-      MessagePlugin.error(data.msg, 2000)
+      MessagePlugin.error({ content: data.msg, ...getMsgOpt() })
       return Promise.reject(data);
     }
-    MessagePlugin.error(response?.data.msg, 2000)
+    MessagePlugin.error({ content: response?.data.msg, ...getMsgOpt() })
     return Promise.reject(response?.data);
   },
   (e) => {
     if (e.message.search('401') > -1) {
-      MessagePlugin.error('token过期, 请重新登录')
+      MessagePlugin.error({ content: 'token过期, 请重新登录', ...getMsgOpt() })
       localStorage.setItem('meaToken', '')
       location.reload()
     }
