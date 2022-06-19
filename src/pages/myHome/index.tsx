@@ -161,3 +161,4 @@ const MyHome: FC = () => {
 }
 
 export default withKeepAlive(memo(MyHome));
+//  withKeepAlive();

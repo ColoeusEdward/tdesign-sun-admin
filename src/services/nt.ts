@@ -1,3 +1,4 @@
+import { InputValue } from 'tdesign-react';
 import { baseRes } from 'types';
 import request from 'utils/request';
 import { sendRequestG } from 'utils/util';
@@ -6,13 +7,18 @@ type loginRes = {
   , token: string
 }
 
+interface recordData {
+  name_list:string[]
+  target?:InputValue
+}
+
 export const RecordRelease = async (data?: any) => {
   const result = await request.get<any>('/koa/mv_upload/record_release', data);
   return result
 };
 
-export const recordFree = async (data?: any) => {
-  const result = await request.get<any>('/koa/mv_upload/record_free', data);
+export const recordFree = async (data?: recordData) => {
+  const result = await request.post<any>('/koa/mv_upload/record_free', data);
   return result
 };
 // export const ShowRecord = async (data?: any) => {
@@ -41,4 +47,9 @@ export const RmFile = async (data?: any) => {
 export const loginApi = async (data?: any) => {
   const result = await request.post<loginRes>('/koa/mv_upload/login', data);
   return result.data
+};
+
+export const to_mp4 = async (data?: recordData) => {
+  const result = await request.post<any>('/koa/mv_upload/to_mp4', data);
+  return result
 };
