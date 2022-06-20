@@ -21,6 +21,7 @@ import { getMsgOpt } from 'configs/cfg';
 import MySkeleton from 'components/MySkeleton';
 import RecordList from './comp/RecordList';
 import LeftStorageList from './comp/LeftStorageList';
+import FlvToMp4 from './comp/FlvToMp4';
 
 
 const originLayout = [
@@ -29,14 +30,22 @@ const originLayout = [
   { type: 'btn', Comp: LinkBtn, name: '释放MP4', x: 1, y: 0, iconSrc: 'https://img.icons8.com/color/100/000000/video.png' },
   { type: 'btn', Comp: LinkBtn, name: '命令行', x: 4, y: 0, iconSrc: 'https://img.icons8.com/dusk/100/000000/command-line.png' },
   { type: 'btn', Comp: LinkBtn, name: 'aria2', x: 5, y: 0, iconSrc: 'https://img.icons8.com/color/96/undefined/launched-rocket--v1.png' },
-  { type: 'btn', Comp: LinkBtn, name: '部署', x: 10, y: 0, iconSrc: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/deployment-2369058-1978336.png' },
+  { type: 'uploadBtn', Comp: LinkBtn, name: '部署', x: 10, y: 0, iconSrc: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/deployment-2369058-1978336.png' },
   { type: '2x3', Comp: DeleteFile, name: '删除文件', x: 2, y: 0, iconSrc: 'https://img.icons8.com/bubbles/100/000000/delete-sign.png' },
   { type: '2x3', Comp: FreeCloudUpload, name: '自由上传文件', x: 7, y: 6, iconSrc: 'https://img.icons8.com/bubbles/100/000000/upload.png' },
-  { type: '2x3', Comp: MySkeleton, name: '上传视频至youtube', x: 6, y: 0, iconSrc: '' },
+  { type: '2x3', Comp: MySkeleton, name: '上传视频至youtube', x: 6, y: 0, iconSrc: 'https://img.icons8.com/fluency/96/000000/youtube-play.png' },
   { type: '2x4', Comp: RecordList, name: '查看文件大小', x: 4, y: 3, iconSrc: 'https://icons-for-free.com/iconfiles/png/512/file+format+mp4+paper+icon-1320167130956649663.png' },
   { type: '2x4', Comp: LeftStorageList, name: '剩余空间', x: 0, y: 3, iconSrc: 'https://icons-for-free.com/iconfiles/png/512/storage+dropbox+dropbox+logo+file+storage+file+transfer+upload-1320196083387888656.png' },
-  // { type: '2x3', Comp: '', name: '上传视频至youtube', x: 6, y: 0, iconSrc: '' },
-  // { type: '2x3', Comp: '', name: '上传视频至youtube', x: 6, y: 0, iconSrc: '' },
+  { type: '2x3', Comp: FlvToMp4, name: 'flv转mp4', x: 0, y: 7, iconSrc: 'https://img.icons8.com/color/96/undefined/not-sending-video-frames.png' },
+  { type: 'btn', Comp: LinkBtn, name: 'onedrive网盘', x: 7, y: 3, iconSrc: 'https://img.icons8.com/clouds/150/000000/skydrive.png' },
+  { type: 'btn', Comp: LinkBtn, name: '老upup', x: 11, y: 3, iconSrc: 'https://img.icons8.com/dusk/128/000000/home.png' },
+  { type: 'btn', Comp: LinkBtn, name: '下载文件夹', x: 10, y: 3, iconSrc: 'https://img.icons8.com/dusk/100/000000/download.png' },
+  { type: 'uploadBtn', Comp: LinkBtn, name: '上传至temp', x: 2, y: 3, iconSrc: 'https://img.icons8.com/plasticine/200/000000/add-folder.png' },
+  { type: 'uploadBtn', Comp: LinkBtn, name: '上传book', x: 6, y: 7, iconSrc: 'https://img.icons8.com/color/96/000000/book-reading.png' },
+  { type: 'btn', Comp: LinkBtn, name: '重启后端', x: 6, y: 7, iconSrc: 'https://img.icons8.com/bubbles/100/000000/restart.png' },
+  { type: 'btn', Comp: LinkBtn, name: 'vscode', x: 6, y: 3, iconSrc: 'https://img.icons8.com/color/96/undefined/visual-studio-code-2019.png' },
+  { type: 'btn', Comp: LinkBtn, name: 'book', x: 1, y: 7, iconSrc: 'https://img.icons8.com/dusk/64/000000/literature.png' },
+  { type: 'btn', Comp: LinkBtn, name: '更新onedrive Index代码', x: 3, y: 3, iconSrc: 'https://img.icons8.com/color/144/000000/git.png' },
 ]
 
 const buildLayout = (oriLay: any[]) => {
@@ -46,15 +55,16 @@ const buildLayout = (oriLay: any[]) => {
     },
     other: (e: gridItem) => {
       let list = e.type.split('x')
-      Object.assign(e, { w: list[0]*1, h: list[1]*1 })
+      Object.assign(e, { w: list[0] * 1, h: list[1] * 1 })
     }
   }
+  obj.uploadBtn = obj.btn
   return oriLay.map((e: gridItem, i) => {
     obj[e.type] && obj[e.type](e)
     !obj[e.type] && obj.other(e)
     e.i = String(i)
     e.Comp
-    e.bg = randomStickerColor()
+    // e.bg = randomStickerColor()
     return e
   })
 }
@@ -128,7 +138,7 @@ const MyHome: FC = () => {
 
   const children = useMemo(() => {
     return layout.map(e => {
-      let pr: any = { name: e.name }
+      let pr: any = { name: e.name, type: e.type }
       e.clickFn && (pr.clickFn = fnObj[e.clickFn])
       return (
         <div key={e.i} className={classNames(' bg-neutral-800 rounded-md ', Style.cardItem)} style={{ transitionProperty: 'width, height,transform' }}  >

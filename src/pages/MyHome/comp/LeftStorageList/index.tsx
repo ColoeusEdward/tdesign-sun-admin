@@ -19,7 +19,7 @@ const RecordList: React.FC<IRecordListProp> = forwardRef(({ clickFn, children, n
   const getList = () => {
     setLoading(true)
     LeftStorage().then((res) => {
-      console.log("🚀 ~ file: index.tsx ~ line 22 ~ LeftStorage ~ res", res)
+      // console.log("🚀 ~ file: index.tsx ~ line 22 ~ LeftStorage ~ res", res)
       setList(res)
     }).finally(() => {
       setLoading(false)

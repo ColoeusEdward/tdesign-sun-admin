@@ -29,8 +29,18 @@
     transform: scale(1) translate(0, 0px);
     opacity: 1;
   }
-  100%{
+  100% {
     transform: scale(0) translate(0, -50px);
     opacity: 0;
   }
+}
+
+.t-dialog--default {
+  padding: 16px 28px 20px 28px;
+}
+.t-dialog__ctx .t-dialog__position.t-dialog--top {
+  padding: 48px 0;
+}
+.t-dialog__ctx .t-dialog {
+  margin:auto;
 }

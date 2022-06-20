@@ -17,7 +17,7 @@ const MySkeleton: FC<IMySkeletonProp & RefAttributes<unknown>> = forwardRef(({ c
   }))
   const renderSks = () => {
     return new Array(lineCount).fill((
-      <Skeleton className={'mb-2'} theme='paragraph' animation="gradient" ></Skeleton>
+      <Skeleton className={'mb-2'} theme='paragraph' animation="gradient" >{'.'}</Skeleton>
     ))
   }
   useEffect(() => {
