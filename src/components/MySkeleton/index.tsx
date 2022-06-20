@@ -1,4 +1,5 @@
 import { useSize } from "ahooks";
+import classNames from "classnames";
 import { FC, ForwardedRef, forwardRef, ForwardRefExoticComponent, memo, ReactNode, RefAttributes, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { Skeleton, Textarea, TextareaValue } from "tdesign-react";
 
@@ -27,9 +28,10 @@ const MySkeleton: FC<IMySkeletonProp & RefAttributes<unknown>> = forwardRef(({ c
   }, [size])
   return (
     <div className={'h-full w-full'} ref={conRef} >
-      <div className={'absolute w-full h-full top-0 left-0 p-3'}>
-        {loading && renderSks()}
-      </div>
+      {loading &&
+        <div className={'absolute w-full h-full top-0 left-0 p-3'}>
+          {renderSks()}
+        </div>}
       {!loading && children}
     </div>
   )

@@ -33,7 +33,7 @@ const LinkBtn: React.FC<ILinkBtnProp> = forwardRef(({ clickFn, children, name, t
     compClick
   }))
   return (
-    <div className={'w-full h-full overflow-hidden'}  >
+    <div className={'w-full h-full overflow-hidden relative'}  >
       {(type == 'btn' || !type) && children}
       {type == 'uploadBtn' && <MyUploader ref={uploaderRef} uploadFn={submit} >{children}</MyUploader>}
     </div>

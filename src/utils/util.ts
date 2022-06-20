@@ -105,6 +105,7 @@ export const attempt2 = (fn: (...args: any[]) => any, ...args: any[]) => {
   }
 };
 
+
 // export const deepSearch = (obj:object, predicate) => {
 //   let result: Object[] = [];
 //   for (let p in obj) { // iterate on every property

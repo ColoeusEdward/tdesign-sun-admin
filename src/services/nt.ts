@@ -2,10 +2,13 @@ import { InputValue } from 'tdesign-react';
 import { baseRes } from 'types';
 import request from 'utils/request';
 import { sendRequestG } from 'utils/util';
+import jsonpAdapter from 'axios-jsonp'
+
 type loginRes = {
   Bearer: string
   , token: string
 }
+
 
 interface recordData {
   name_list: string[]
@@ -85,7 +88,16 @@ export const roll_back_sun = async (data?: any) => {
   return result
 };
 
-export const backup_img = async (data?: {imgurl:string}) => {
+export const backup_img = async (data?: { imgurl: string }) => {
   const result = await request.post<any>('/koa/newCen/free/backupImg', data);
   return result
 };
+
+export const get_weather = async () => {
+  const result = await request({
+    url: 'https://tianqi.2345.com/api/getWeatherInfo.php'
+    , adapter: jsonpAdapter
+  })
+  console.log("🚀 ~ file: nt.ts ~ line 101 ~ getWeather ~ result", result)
+  return result
+}

@@ -26,11 +26,11 @@ const MyUploader: FC<IMyUploaderProp & RefAttributes<{ trigger: Function }>> = f
     })
   }
   const handleProgressEvent = (progressEvent: any) => {
-    console.log("🚀 ~ file: MyUploader.tsx ~ line 29 ~ handleProgressEvent ~ progressEvent", progressEvent)
+    // console.log("🚀 ~ file: MyUploader.tsx ~ line 29 ~ handleProgressEvent ~ progressEvent", progressEvent)
     const percentCompleted = Math.round(
       (progressEvent.loaded * 100) / progressEvent.total
     );
-    console.log("🚀 ~ file: MyUploader.tsx ~ line 32 ~ handleProgressEvent ~ percentCompleted", percentCompleted)
+    // console.log("🚀 ~ file: MyUploader.tsx ~ line 32 ~ handleProgressEvent ~ percentCompleted", percentCompleted)
     setProg(percentCompleted)
     if (percentCompleted == 100) {
       resetProg()
@@ -41,10 +41,10 @@ const MyUploader: FC<IMyUploaderProp & RefAttributes<{ trigger: Function }>> = f
     (file: UploadFile): boolean | Promise<boolean> =>
       new Promise((resolve, reject) => {
         // setName('name2');
-        console.log("🚀 ~ file: MyUploader.tsx ~ line 19 ~ constMyUploader:FC<IMyUploaderProp&RefAttributes<unknown>>=forwardRef ~ file", file)
+        // console.log("🚀 ~ file: MyUploader.tsx ~ line 19 ~ constMyUploader:FC<IMyUploaderProp&RefAttributes<unknown>>=forwardRef ~ file", file)
         setUploading(true)
         uploadFn && uploadFn(file.raw, handleProgressEvent)
-          .then(() => sleep(1000))
+          .then(() => sleep(3000))
           .then(() => {
             setUploading(false)
           }).finally(() => {

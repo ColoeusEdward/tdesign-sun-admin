@@ -24,6 +24,7 @@ import LeftStorageList from './comp/LeftStorageList';
 import FlvToMp4 from './comp/FlvToMp4';
 import BackupImg from './comp/BackupImg';
 import MemChart from './comp/MemChart';
+import Weather from './comp/Weather';
 
 
 const originLayout = [
@@ -51,6 +52,7 @@ const originLayout = [
   { type: 'btn', Comp: LinkBtn, name: '回退', x: 11, y: 6, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
   { type: '4x1.5', Comp: BackupImg, name: '保存涩图', x: 7, y: 8.5, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
   { type: '2x6', Comp: MemChart, name: 'memPercent', x: 8, y: 0, },
+  { type: '2x3', Comp: Weather, name: '天气', x: 9, y: 6, noExpend: true },
 ]
 
 const buildLayout = (oriLay: any[]) => {
@@ -96,7 +98,7 @@ const MyHome: FC = () => {
     let { h, w } = item
     // console.log("🚀 ~ file: index.tsx ~ line 73 ~ expendSize ~ nsize", item, { h, w }, nsize, isEqual(nsize, { h, w }))
     if (item.expend) return
-    nsize && !isEqual(nsize, { h, w }) && setLayout((preLay) => {
+    !item.noExpend && nsize && !isEqual(nsize, { h, w }) && setLayout((preLay) => {
       let list = preLay.map(e => ({ ...e }))
       let it = list.find(e => e.i == item.i)
       it && Object.assign(it, nsize, { expend: true })

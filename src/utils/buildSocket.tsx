@@ -19,7 +19,7 @@ const JtComp = () => {
   useEffect(() => {
     console.log(`jtc`,);
     setMem = setMemory
-  })
+  }, [])
   return (<div></div>)
 }
 

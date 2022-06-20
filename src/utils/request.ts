@@ -36,6 +36,9 @@ instance.interceptors.response.use(
   (response) => {
     if (response.status === 200) {
       const { data } = response;
+      if(!data.code){  //jsonp 数据处理
+        return data
+      }
       if (data.code === SUCCESS_CODE) {
         MessagePlugin.success({ content: data.msg, ...getMsgOpt() })
         return data;
