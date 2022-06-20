@@ -1,4 +1,4 @@
-import { deploy, git_pull_onedrive_index, reboot_lexue, RecordRelease, ShowRecordSizeList, upload_book, upload_temp } from "services/nt"
+import { deploy, git_pull_onedrive_index, reboot_lexue, RecordRelease, roll_back_sun, ShowRecordSizeList, upload_book, upload_temp } from "services/nt"
 import { DialogPlugin } from "tdesign-react"
 
 const buildDialog = (confirmFn: () => {}) => {
@@ -51,6 +51,9 @@ export default function useLinkBtnLogic() {
     },
     '更新onedrive Index代码': () => {
       buildDialog(git_pull_onedrive_index)
+    },
+    '回退':() => {
+      buildDialog(roll_back_sun)
     }
   }
   const uploadObj: Record<string, Function> = {

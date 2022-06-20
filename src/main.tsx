@@ -14,8 +14,18 @@ import 'mac-scrollbar/dist/mac-scrollbar.css';
 import './index.css'
 import { getBaseName } from 'utils/util';
 import { AliveScope } from 'react-activation';
-import { setRootByHost } from 'configs/define';
+import define, { setRootByHost } from 'configs/define';
+import { buildSocket } from 'utils/buildSocket';
+import { io, Socket } from 'socket.io-client';
 const baseName = getBaseName()
+
+const socket: Socket = io(define.wsUrl, {
+  transports: ["websocket"]
+  , reconnectionDelayMax: 10000
+  , reconnectionDelay: 5000
+})
+
+
 
 const renderApp = () => {
   setRootByHost()
@@ -23,6 +33,7 @@ const renderApp = () => {
   const root = createRoot(container!);
   root.render(
     <Provider store={store}>
+      {buildSocket(socket)}
       <BrowserRouter basename={baseName} >
         <AliveScope>
           <App />

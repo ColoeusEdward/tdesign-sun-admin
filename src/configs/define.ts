@@ -1,7 +1,8 @@
 
 const define = {
-  root: '/site/sun/'
+  root: '/site/sun/',
   // root:'/'
+  wsUrl: 'wss://meamoe.ml'
 }
 export const setRoot = (mode: string) => {
   define.root = mode == 'development' ? '/' : '/site/sun/'

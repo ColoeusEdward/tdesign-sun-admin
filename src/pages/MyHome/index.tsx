@@ -22,6 +22,8 @@ import MySkeleton from 'components/MySkeleton';
 import RecordList from './comp/RecordList';
 import LeftStorageList from './comp/LeftStorageList';
 import FlvToMp4 from './comp/FlvToMp4';
+import BackupImg from './comp/BackupImg';
+import MemChart from './comp/MemChart';
 
 
 const originLayout = [
@@ -46,6 +48,9 @@ const originLayout = [
   { type: 'btn', Comp: LinkBtn, name: 'vscode', x: 6, y: 3, iconSrc: 'https://img.icons8.com/color/96/undefined/visual-studio-code-2019.png' },
   { type: 'btn', Comp: LinkBtn, name: 'book', x: 1, y: 7, iconSrc: 'https://img.icons8.com/dusk/64/000000/literature.png' },
   { type: 'btn', Comp: LinkBtn, name: '更新onedrive Index代码', x: 3, y: 3, iconSrc: 'https://img.icons8.com/color/144/000000/git.png' },
+  { type: 'btn', Comp: LinkBtn, name: '回退', x: 11, y: 6, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
+  { type: '4x1.5', Comp: BackupImg, name: '保存涩图', x: 7, y: 8.5, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
+  { type: '2x6', Comp: MemChart, name: 'memPercent', x: 8, y: 0, },
 ]
 
 const buildLayout = (oriLay: any[]) => {

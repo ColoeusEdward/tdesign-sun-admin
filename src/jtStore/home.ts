@@ -3,3 +3,4 @@ import { atomWithStorage } from 'jotai/utils'
 
 export const clickTimeAtom = atom(0);
 export const tokenAtom = atomWithStorage('meaToken', '')
+export const memoryAtom = atom([1, 1])

@@ -79,3 +79,13 @@ export const git_pull_onedrive_index = async (data?: any) => {
   const result = await request.get<string>('/koa/newCen/gitPullOnedriveInedx', { data });
   return result
 };
+
+export const roll_back_sun = async (data?: any) => {
+  const result = await request.get<string>('/koa/mv_upload/rollBackSun', { data });
+  return result
+};
+
+export const backup_img = async (data?: {imgurl:string}) => {
+  const result = await request.post<any>('/koa/newCen/free/backupImg', data);
+  return result
+};
