@@ -3594,7 +3594,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.4.0":
+"eslint-config-prettier@npm:^8.5.0":
   version: 8.5.0
   resolution: "eslint-config-prettier@npm:8.5.0"
   peerDependencies:
@@ -3605,7 +3605,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-react-app@npm:^7.0.0":
+"eslint-config-react-app@npm:^7.0.1":
   version: 7.0.1
   resolution: "eslint-config-react-app@npm:7.0.1"
   dependencies:
@@ -3663,7 +3663,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.25.3, eslint-plugin-import@npm:^2.25.4":
+"eslint-plugin-import@npm:^2.25.3, eslint-plugin-import@npm:^2.26.0":
   version: 2.26.0
   resolution: "eslint-plugin-import@npm:2.26.0"
   dependencies:
@@ -3749,7 +3749,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.27.1, eslint-plugin-react@npm:^7.28.0":
+"eslint-plugin-react@npm:^7.27.1, eslint-plugin-react@npm:^7.30.0":
   version: 7.30.0
   resolution: "eslint-plugin-react@npm:7.30.0"
   dependencies:
@@ -6651,11 +6651,11 @@ __metadata:
     echarts-for-react: ^3.0.2
     eslint: ^8.3.0
     eslint-config-airbnb-base: ^15.0.0
-    eslint-config-prettier: ^8.4.0
-    eslint-config-react-app: ^7.0.0
-    eslint-plugin-import: ^2.25.4
+    eslint-config-prettier: ^8.5.0
+    eslint-config-react-app: ^7.0.1
+    eslint-plugin-import: ^2.26.0
     eslint-plugin-prettier: ^4.0.0
-    eslint-plugin-react: ^7.28.0
+    eslint-plugin-react: ^7.30.0
     husky: ^7.0.4
     jotai: ^1.7.2
     less: ^4.1.2
