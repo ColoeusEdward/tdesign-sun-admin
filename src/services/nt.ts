@@ -36,7 +36,8 @@ export const ShowRecordSizeList = async (data?: any) => {
 
 export const LeftStorage = async (data?: any) => {
   const result = await request.get<string>('/koa/mv_upload/left_storage', data);
-  return result
+  let list = result.data.split('\n').slice(0, -1)
+  return list
 };
 
 export const RmFile = async (data?: any) => {
