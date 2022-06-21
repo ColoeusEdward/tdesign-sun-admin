@@ -1,4 +1,4 @@
-import { deploy, git_pull_onedrive_index, reboot_lexue, RecordRelease, roll_back_sun, ShowRecordSizeList, upload_book, upload_temp } from "services/nt"
+import { deploy, git_pull_onedrive_index, mp4_release, reboot_lexue, RecordRelease, roll_back_sun, ShowRecordSizeList, update_ecc, upload_book, upload_temp } from "services/nt"
 import { DialogPlugin } from "tdesign-react"
 
 const buildDialog = (confirmFn: () => {}) => {
@@ -24,6 +24,9 @@ export default function useLinkBtnLogic() {
   const obj: Record<string, Function> = {
     '释放式上传': () => {
       RecordRelease().then(() => { })
+    },
+    '释放MP4':() => {
+      buildDialog(mp4_release)
     },
     'aria2': () => {
       window.open('https://meamoe.ml/aria2/home/')
@@ -54,6 +57,9 @@ export default function useLinkBtnLogic() {
     },
     '回退':() => {
       buildDialog(roll_back_sun)
+    },
+    '更新证书':() => {
+      buildDialog(update_ecc)
     }
   }
   const uploadObj: Record<string, Function> = {

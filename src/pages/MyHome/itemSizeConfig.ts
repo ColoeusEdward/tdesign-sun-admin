@@ -17,7 +17,7 @@ export const randomStickerColor = () => {
 
 export const config: Record<string, { h: number, w: number }> = {  //展开后的size
   '2x3': { h: 6, w: 4 },
-  '2x4': { h: 18, w: 4 },
+  '2x4': { h: 12, w: 4 },
 }
 
 export const getNewSize = (item: gridItem) => {

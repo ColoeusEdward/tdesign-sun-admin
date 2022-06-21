@@ -16,7 +16,12 @@ interface recordData {
 }
 
 export const RecordRelease = async (data?: any) => {
-  const result = await request.get<any>('/koa/mv_upload/record_release', data);
+  const result = await request.get<any>('/koa/mv_upload/record_release', { data });
+  return result
+};
+
+export const mp4_release = async (data?: any) => {
+  const result = await request.get<any>('/koa/mv_upload/record_release_mp4', { data });
   return result
 };
 
@@ -88,6 +93,11 @@ export const roll_back_sun = async (data?: any) => {
   return result
 };
 
+export const update_ecc = async (data?: any) => {
+  const result = await request.get<string>('/koa/newCen/updateEcc', { data });
+  return result
+};
+
 export const backup_img = async (data?: { imgurl: string }) => {
   const result = await request.post<any>('/koa/newCen/free/backupImg', data);
   return result
@@ -98,6 +108,5 @@ export const get_weather = async () => {
     url: 'https://tianqi.2345.com/api/getWeatherInfo.php'
     , adapter: jsonpAdapter
   })
-  console.log("🚀 ~ file: nt.ts ~ line 101 ~ getWeather ~ result", result)
   return result
 }

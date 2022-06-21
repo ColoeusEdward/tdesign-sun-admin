@@ -1,7 +1,7 @@
 import { lazy, memo } from 'react';
 import { UserCircleIcon } from 'tdesign-icons-react';
 import { IRouter } from '../index';
-import { TbWindmill } from 'react-icons/tb';
+import { TbWindmill, TbBrandDiscord } from 'react-icons/tb';
 const Comp = lazy(() => import('pages/MyHome'))
 
 const result: IRouter[] = [
@@ -24,6 +24,15 @@ const result: IRouter[] = [
     //   },
     // ],
   },
+  {
+    path: '/v8',
+    Component: lazy(() => import('pages/V8')),
+    noMargin: true,
+    meta: {
+      title: 'V8',
+      Icon: () => <TbBrandDiscord style={{ fontSize: '20px' }} />,
+    },
+  }
 ];
 
 export default result;

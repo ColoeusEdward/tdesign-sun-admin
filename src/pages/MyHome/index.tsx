@@ -3,7 +3,7 @@ import { Button, MessagePlugin } from 'tdesign-react';
 import { CheckCircleIcon } from 'tdesign-icons-react';
 import { useParams } from 'react-router-dom';
 import withKeepAlive from 'hooks/withKeepAlive';
-import GridLayout from "react-grid-layout";
+import GridLayout, { WidthProvider } from "react-grid-layout";
 import { useAtom } from 'jotai';
 import { clickTimeAtom } from 'jtStore/home';
 import { gridItem } from 'types';
@@ -25,7 +25,7 @@ import FlvToMp4 from './comp/FlvToMp4';
 import BackupImg from './comp/BackupImg';
 import MemChart from './comp/MemChart';
 import Weather from './comp/Weather';
-
+import { useSize } from 'ahooks';
 
 const originLayout = [
   { type: 'btn', Comp: LinkBtn, ref: null, clickFn: 'recoverLayout', name: '复原', x: 11, y: 0, iconSrc: 'https://img.icons8.com/office/96/undefined/synchronize.png' },
@@ -53,6 +53,7 @@ const originLayout = [
   { type: '4x1.5', Comp: BackupImg, name: '保存涩图', x: 7, y: 8.5, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
   { type: '2x6', Comp: MemChart, name: 'memPercent', x: 8, y: 0, },
   { type: '2x3', Comp: Weather, name: '天气', x: 9, y: 6, noExpend: true },
+  { type: 'btn', Comp: LinkBtn, name: '更新证书', x: 0, y: 7, iconSrc: 'https://img.icons8.com/external-vitaliy-gorbachev-lineal-color-vitaly-gorbachev/100/000000/external-certificate-award-vitaliy-gorbachev-lineal-color-vitaly-gorbachev.png' },
 ]
 
 const buildLayout = (oriLay: any[]) => {
@@ -81,6 +82,8 @@ const MyHome: FC = () => {
   const timeRef = useRef(0)
   let { id } = useParams()
   const gridRef = useRef<any>()
+  const conRef = useRef(null)
+  const size = useSize(conRef)
   const [layout, setLayout] = useState(iniLayout.map(e => Object.assign({}, e)))
   const sonLayoutRef = useRef<gridItem[]>()
   const [curI, setCurI] = useState<string>('')
@@ -94,15 +97,16 @@ const MyHome: FC = () => {
   }
 
   const expendSize = (item: gridItem) => {
+    // console.log("🚀 ~ file: index.tsx ~ line 97 ~ expendSize ~ item", item)
     let nsize = getNewSize(item)
     let { h, w } = item
     // console.log("🚀 ~ file: index.tsx ~ line 73 ~ expendSize ~ nsize", item, { h, w }, nsize, isEqual(nsize, { h, w }))
+    // let fuck = { i: 'fuck', w: 1, h: 1, x: 12, y: 12 }
     if (item.expend) return
-    !item.noExpend && nsize && !isEqual(nsize, { h, w }) && setLayout((preLay) => {
+    !item.noExpend && nsize && setLayout((preLay) => {
       let list = preLay.map(e => ({ ...e }))
       let it = list.find(e => e.i == item.i)
       it && Object.assign(it, nsize, { expend: true })
-      // console.log("🚀 ~ file: index.tsx ~ line 79 ~ nsize&&!isEqual ~ it", it)
       return list
     })
 
@@ -110,6 +114,7 @@ const MyHome: FC = () => {
 
   const recordMouseTime = useCallback(() => {
     let time = new Date().getTime()
+    // console.log("🚀 ~ file: index.tsx ~ line 113 ~ recordMouseTime ~ time", time)
     timeRef.current = time
   }, [])
 
@@ -119,20 +124,25 @@ const MyHome: FC = () => {
 
   const itemClick = (item: gridItem) => {
     // console.log(`itemClick`,);
+
     if (isLongClick()) return
     // console.log("🚀 ~ file: index.tsx ~ line 34 ~ itemClick ~ item", item)
     // setCurI(item.i)
+    gridRef.current.removeDroppingPlaceholder()
+    item.ref && item.ref.compClick && item.ref.compClick()
+    expendSize(item)
     setCurI('')
     sleep(16).then(() => {
       setCurI(item.i)
-      item.ref && item.ref.compClick && item.ref.compClick()
-      expendSize(item)
+      // forceUpdate() 
     })
   }
-  const updateLayout = useCallback((layout: any, oldItem: any, newItem: any) => {
+  const updateLayout = useCallback((layout: any, oldItem: any, newItem: any,) => {
+    // console.log(`drstop`,);
     sonLayoutRef.current = layout
     setLayout((preLayout) => {
       let { x, y } = newItem
+      // console.log("🚀 ~ file: index.tsx ~ line 146 ~ setLayout ~ newItem", newItem)
       let ite = preLayout.find(e => e.i == newItem.i)
       ite && Object.assign(ite, { x, y })
       return preLayout
@@ -148,9 +158,9 @@ const MyHome: FC = () => {
       let pr: any = { name: e.name, type: e.type }
       e.clickFn && (pr.clickFn = fnObj[e.clickFn])
       return (
-        <div key={e.i} className={classNames(' bg-neutral-800 rounded-md ', Style.cardItem)} style={{ transitionProperty: 'width, height,transform' }}  >
-          <div className={classNames('w-full h-full rounded-md overflow-hidden',
-            { [Style.conActive]: curI == e.i })} onMouseUp={() => { itemClick(e) }} >
+        <div key={e.i} className={classNames(' bg-neutral-800 rounded-md ', Style.cardItem, { 'hidden': e.i == 'fuck' })} style={{ transitionProperty: 'width, height,transform' }}  >
+          <div className={classNames('w-full h-full rounded-md overflow-hidden cursor-pointer',
+            { [Style.conActive]: curI == e.i })} onTouchStart={recordMouseTime} onMouseUp={() => { itemClick(e) }} onMouseDown={recordMouseTime} onTouchEnd={() => { itemClick(e) }} >
             {!e.Comp || e.Comp == '' ? e.name :
               <e.Comp ref={(r: any) => { e.ref = r }} {...pr} >
                 {/* {!e.expend && <GridIcon name={e.name} iconSrc={e.iconSrc || ''} />} */}
@@ -164,14 +174,13 @@ const MyHome: FC = () => {
   }, [curI]);
 
   useEffect(() => {
-
   }, [layout])
 
   return (
     <>
-      <div className={classNames('w-full bg-transparent text-cyan-100 text-base  pl-12 overflow-auto select-none', Style.homeBg)}
-        style={{ minHeight: '520px', height: 'calc(100vh - 64px)' }} >
-        <GridLayout ref={gridRef} className="layout" layout={layout} cols={12} rowHeight={30} width={1700} isResizable={false} onDragStop={updateLayout} onDragStart={recordMouseTime} allowOverlap={false} >
+      <div className={classNames('w-full bg-transparent text-cyan-100 text-base overflow-y-auto overflow-x-hidden select-none', Style.homeBg)}
+        style={{ minHeight: '520px', height: 'calc(100vh - 64px)' }} ref={conRef} >
+        <GridLayout ref={gridRef} className="layout" layout={layout} cols={12} rowHeight={30} width={size?.width || 1700} isResizable={false} onDragStop={updateLayout}  >
           {children}
         </GridLayout>
       </div>
