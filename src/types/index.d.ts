@@ -24,3 +24,13 @@ export interface baseRes<T> {
   msg:string
   data:T
 }
+
+export type postData = {
+  title: string
+  , info: string
+  , replyNum: number
+  , url: string
+  , author: string
+  , lastTime: string
+  , imgList?: string[]
+}

@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.0",
+    "@szhsin/react-menu": "^3.1.0",
     "ahooks": "^3.5.0",
     "axios": "^0.27.2",
     "axios-jsonp": "^1.0.4",
@@ -56,6 +57,7 @@
     "dayjs": "^1.10.7",
     "echarts": "^5.3.0",
     "echarts-for-react": "^3.0.2",
+    "htmlparser2": "^8.0.1",
     "jotai": "^1.7.2",
     "jsonp": "^0.2.1",
     "lodash": "^4.17.21",

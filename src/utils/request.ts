@@ -21,6 +21,7 @@ export const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
+  if (!token) token = localStorage.getItem('meaToken') && JSON.parse(localStorage.getItem('meaToken')!)
   config.headers = {
     Authorization: `Bearer ${token}`
   }
@@ -36,7 +37,7 @@ instance.interceptors.response.use(
   (response) => {
     if (response.status === 200) {
       const { data } = response;
-      if(!data.code){  //jsonp 数据处理
+      if (!data.code) {  //jsonp 数据处理
         return data
       }
       if (data.code === SUCCESS_CODE) {

@@ -11,6 +11,9 @@ import '/node_modules/react-grid-layout/css/styles.css'
 import '/node_modules/react-resizable/css/styles.css'
 import './theme.css'
 import 'mac-scrollbar/dist/mac-scrollbar.css';
+import 'react-photo-view/dist/react-photo-view.css';
+import '@szhsin/react-menu/dist/index.css';
+import '@szhsin/react-menu/dist/transitions/slide.css';
 import './index.css'
 import { getBaseName } from 'utils/util';
 import { AliveScope } from 'react-activation';
