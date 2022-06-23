@@ -30,11 +30,17 @@ const MySkeleton: FC<IMySkeletonProp & RefAttributes<unknown>> = forwardRef(({ c
   }, [size])
   return (
     <div className={'h-full w-full'} ref={conRef} >
-      {loading &&
-        <div className={'absolute w-full h-full top-0 left-0 p-3'}>
+      <div className={classNames('absolute w-full h-full top-0 left-0 p-3', { 'hidden': !loading })}>
+        {renderSks()}
+      </div>
+      {/* {loading &&
+        <div className={classNames('absolute w-full h-full top-0 left-0 p-3',{'hidden':!loading})}>
           {renderSks()}
-        </div>}
-      {!loading && children}
+        </div>} */}
+      {/* {!loading && children} */}
+      <div className={classNames('w-full h-full', { 'invisible': loading, })}>
+        {children}
+      </div>
     </div>
   )
 

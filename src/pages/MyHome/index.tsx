@@ -8,7 +8,7 @@ import { useAtom } from 'jotai';
 import { clickTimeAtom } from 'jtStore/home';
 import { gridItem } from 'types';
 import { getNewSize, randomStickerColor } from './itemSizeConfig';
-import { sleep } from 'utils/util';
+import { isLowResolution, sleep } from 'utils/util';
 import { FC } from 'react';
 import { isEqual } from 'lodash';
 import LinkBtn from './comp/LinkBtn';
@@ -87,6 +87,7 @@ const MyHome: FC = () => {
   const [layout, setLayout] = useState(iniLayout.map(e => Object.assign({}, e)))
   const sonLayoutRef = useRef<gridItem[]>()
   const [curI, setCurI] = useState<string>('')
+  const isLowReso = useMemo(() => !isLowResolution(),[])
 
 
   const recoverLayout = () => {
@@ -159,7 +160,7 @@ const MyHome: FC = () => {
       e.clickFn && (pr.clickFn = fnObj[e.clickFn])
       return (
         <div key={e.i} className={classNames(' bg-neutral-800 rounded-md ', Style.cardItem, { 'hidden': e.i == 'fuck' })} style={{ transitionProperty: 'width, height,transform' }}  >
-          <div className={classNames('w-full h-full rounded-md overflow-hidden cursor-pointer',
+          <div className={classNames('w-full h-full rounded-md overflow-hidden cursor-pointer relative',
             { [Style.conActive]: curI == e.i })} onTouchStart={recordMouseTime} onMouseUp={() => { itemClick(e) }} onMouseDown={recordMouseTime} onTouchEnd={() => { itemClick(e) }} >
             {!e.Comp || e.Comp == '' ? e.name :
               <e.Comp ref={(r: any) => { e.ref = r }} {...pr} >
@@ -180,7 +181,7 @@ const MyHome: FC = () => {
     <>
       <div className={classNames('w-full bg-transparent text-cyan-100 text-base overflow-y-auto overflow-x-hidden select-none', Style.homeBg)}
         style={{ minHeight: '520px', height: 'calc(100vh - 64px)' }} ref={conRef} >
-        <GridLayout ref={gridRef} className="layout" layout={layout} cols={12} rowHeight={30} width={size?.width || 1700} isResizable={false} onDragStop={updateLayout}  >
+        <GridLayout ref={gridRef} className="layout" layout={layout} cols={12} rowHeight={30} width={size?.width || 1700} isResizable={false} isDraggable={isLowReso} onDragStop={updateLayout}  >
           {children}
         </GridLayout>
       </div>

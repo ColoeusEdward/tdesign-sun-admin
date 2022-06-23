@@ -77,7 +77,8 @@
     "tdesign-icons-react": "^0.1.0",
     "tdesign-react": "^0.35.1",
     "tvision-color": "^1.4.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "zustand": "^4.0.0-rc.1"
   },
   "browserslist": {
     "production": [

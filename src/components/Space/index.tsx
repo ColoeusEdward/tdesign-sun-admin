@@ -18,7 +18,7 @@ type ISpaceProp = {
 
 const Space: FC<ISpaceProp> = ({ children, ...props }) => {
   const conRef = useRef(null)
-  const lastIndex = children.length - 1
+  const lastIndex = children.length  - 1
   const isJustifySpace = props.justify!.startsWith('space-')
   const margin = useMemo(() => {
     const { size } = props

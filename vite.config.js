@@ -44,6 +44,11 @@ export default (params) => ({
 
   plugins: [
     svgr(),
+    // react({
+    //   babel:{
+    //     babelrc:true
+    //   }
+    // }),
     react(),
     params.mode === 'mock' &&
     viteMockServe({

@@ -51,3 +51,4 @@ declare interface ImportMeta {
     MODE: 'development' | 'test' | 'production';
   };
 }
+declare module 'axios-jsonp';

@@ -22,7 +22,7 @@ const FreeCloudUpload: React.FC<IFreeCloudUploadProp> = forwardRef(({ children }
   }
 
   const submit = () => {
-    console.log(`submit`,valRef.current,cloudPath);
+    console.log(`submit`, valRef.current, cloudPath);
     let data = {
       name_list: valRef.current
       , target: cloudPath
@@ -37,16 +37,17 @@ const FreeCloudUpload: React.FC<IFreeCloudUploadProp> = forwardRef(({ children }
   }))
 
   return (
-    <div className={'h-full flex-col flex '}  >
+    <div className={'h-full flex-col flex'} >
       {children}
       <TextareaToList ref={texatARef} onValChange={valChange} ></TextareaToList>
-      <Row className="px-3"><Input value={cloudPath} onChange={pathChange} placeholder={'输入云盘路径'} clearable /></Row>
+      <div className="px-3">
+        <Input value={cloudPath} onChange={pathChange} placeholder={'输入云盘路径'} clearable />
+      </div>
       <div className=" p-3">
-        <Button shape="round"  block variant="base" onMouseUp={submit} >
+        <Button shape="round" block variant="base" onMouseUp={submit} >
           提 交
         </Button>
       </div>
-
     </div>
   )
 

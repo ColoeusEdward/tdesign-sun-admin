@@ -34,3 +34,17 @@ export type postData = {
   , lastTime: string
   , imgList?: string[]
 }
+
+type postTData = {
+  content: string | any[]
+  , id: string
+  , author: string
+  , time: string
+  , imgList?: string[]
+  , floor: string
+  , reList?: { type: string, val: string, proId: string }[][]
+  , reData: Object
+  , rePn: number
+  , reLoading: boolean
+  , pageCount: number
+}

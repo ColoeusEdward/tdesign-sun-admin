@@ -1,7 +1,10 @@
+import Space from 'components/Space';
 import { getMsgOpt } from 'configs/cfg';
 import define from 'configs/define';
 import { MessagePlugin } from 'tdesign-react';
 import request from 'utils/request';
+import { GiAnticlockwiseRotation, GiClockwiseRotation } from "react-icons/gi";
+
 
 export async function sendRequestG<T, R>(url: string, params?: R) {
   const response = request.get<T>(url, { params })
@@ -19,13 +22,13 @@ export function getBaseName() {
   return root
 }
 
-export const sleep = (ms:number) => {
+export const sleep = (ms: number) => {
   return new Promise((reslove) => {
     setTimeout(reslove, ms)
   })
 }
 
-export const ajaxPromiseAll = (list:any[]) => {
+export const ajaxPromiseAll = (list: any[]) => {
   return new Promise<any[]>((resolve, reject) => {
     return Promise.all(list).then(res => {
       resolve(res);
@@ -35,13 +38,13 @@ export const ajaxPromiseAll = (list:any[]) => {
   })
 }
 
-export const copyToPaste = async (text:string) => {
+export const copyToPaste = async (text: string) => {
   const clipboardObj = navigator.clipboard
   await clipboardObj.writeText(text)
-  MessagePlugin.success({content:'复制成功',...getMsgOpt()})
+  MessagePlugin.success({ content: '复制成功', ...getMsgOpt() })
 }
 
-export const numToChinese = (num:number) => {
+export const numToChinese = (num: number) => {
   var chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
   return chnNumChar[num]
 }
@@ -59,12 +62,12 @@ export const numToChinese = (num:number) => {
 //   return array;
 // }
 
-export const shuffle = (array:any[]) => { //数组洗牌
+export const shuffle = (array: any[]) => { //数组洗牌
   array.sort(() => 0.5 - Math.random());
   return array;
 }
 
-export const getRandomIntInclusive = (min:number, max:number) => { //得到一个两数之间的随机整数，包括两个数在内
+export const getRandomIntInclusive = (min: number, max: number) => { //得到一个两数之间的随机整数，包括两个数在内
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min; //含最大值，含最小值 
@@ -83,9 +86,6 @@ export const debounce = (fn: Function, ms = 16) => {
     timeoutId = setTimeout(() => fn.apply(this, args), ms);
   };
 };
-
-export const all = <T = any>(arr: T[], fn: (t: T) => boolean = Boolean) =>
-  arr.every(fn);
 
 // const atob = (str) => Buffer.from(str, "base64").toString("binary"); //解码base64字符串
 
@@ -108,8 +108,18 @@ export const attempt2 = (fn: (...args: any[]) => any, ...args: any[]) => {
 export const isLowResolution = () => {
   // console.log("🚀 ~ file: index.ts ~ line 297 ~ isLowResolution ~ screen.width", screen.width)
   return screen.width < 1300
-  
+
 }
+
+export const toolBarRender = ({ rotate, onRotate }: any): React.ReactNode => {
+  return (
+    <Space height="64px" align="center" >
+      <GiAnticlockwiseRotation className={' text-2xl'} fill="#fff" onClick={() => { onRotate(rotate - 90) }} />
+      <GiClockwiseRotation className={'text-2xl'} fill="#fff" onClick={() => { onRotate(rotate + 90) }} />
+    </Space>
+  )
+}
+
 
 // export const deepSearch = (obj:object, predicate) => {
 //   let result: Object[] = [];

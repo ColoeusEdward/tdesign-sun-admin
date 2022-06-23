@@ -1,5 +1,6 @@
 {
-  // "plugins": [
-  //   "react-activation/babel"
-  // ]
+  "plugins": [
+    // "react-activation/babel"
+    // "babel-plugin-react-turbo"
+  ]
 }
