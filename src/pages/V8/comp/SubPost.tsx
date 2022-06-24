@@ -1,26 +1,31 @@
 import MySkeleton from "components/MySkeleton";
+import { useAtomValue } from "jotai";
 import { FC, ForwardedRef, forwardRef, ForwardRefExoticComponent, memo, ReactNode, RefAttributes, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { get_page_tb_comment } from "services/nt";
 import { Pagination, Textarea, TextareaValue } from "tdesign-react";
 import { postData, postTData } from "types";
+import { curCommRefAtomRead, curPostRefAtomRead } from "../jotai";
 
 type ISubPostProp = {
   // reList: any[]
   curItem: postData | undefined
   postItem: postTData
+  handleContextMenu: (event: React.MouseEvent<HTMLDivElement>) => void
 }
 
-const SubPost: FC<ISubPostProp & RefAttributes<unknown>> = forwardRef(({ curItem, postItem }, ref) => {
+const SubPost: FC<ISubPostProp & RefAttributes<unknown>> = forwardRef(({ curItem, postItem, handleContextMenu }, ref) => {
   const [loading, setLoading] = useState(false)
   const curPageRef = useRef(1)
   const [reList, setReList] = useState(postItem.reList)
-
+  const curCommRef = useAtomValue(curCommRefAtomRead)
+  const curPostRef = useAtomValue(curPostRefAtomRead)
   useImperativeHandle(ref, () => ({
 
   }))
   const commentClick = (item: any) => {
     // debugger
-    let curComment = { quoteId: item[0].quoteId, proId: item[0].proId, userName: item[0].val.split(': ')[0], repostid: item[0].repostid }
+    curCommRef.current = { quoteId: item[0].quoteId, proId: item[0].proId, userName: item[0].val.split(': ')[0], repostid: item[0].repostid }
+    curPostRef.current = item
   }
 
   const getNewComment = () => {
@@ -54,7 +59,7 @@ const SubPost: FC<ISubPostProp & RefAttributes<unknown>> = forwardRef(({ curItem
   }
 
   let list = reList && reList.map(ee => {
-    return <div className={'p-1 leading-relaxed hover:bg-slate-800 rounded-md'} onMouseDown={(e) => { e.stopPropagation(); commentClick(ee) }} >
+    return <div className={'p-1 leading-relaxed hover:bg-slate-800 rounded-md'} onMouseDown={(e) => { e.stopPropagation(); }} onContextMenu={(ev) => { ev.stopPropagation(); commentClick(ee); handleContextMenu(ev); }} >
       {ee.map((eee: any, idx: number) => {
         let obj: any = {
           text: () => {

@@ -47,3 +47,13 @@
 .noPadDrawer .t-drawer__body {
   padding: 0;
 }
+.t-drawer--open .t-drawer__mask {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+.t-drawer--open>.t-drawer__mask {
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+}

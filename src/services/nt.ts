@@ -83,17 +83,17 @@ export const to_mp4 = async (data?: recordData) => {
 };
 
 export const upload_temp = async (data: recordData, handleUploadEvent: () => void) => {
-  const result = await request.post<any>('/koa/mv_upload/uploadTemp', data, { onUploadProgress: handleUploadEvent });
+  const result = await request.post<any>('/koa/mv_upload/uploadTemp', data, { onUploadProgress: handleUploadEvent,timeout:200000 });
   return result
 };
 
 export const upload_book = async (data: recordData, handleUploadEvent: () => void) => {
-  const result = await request.post<any>('/koa/mv_upload/uploadBook', data, { onUploadProgress: handleUploadEvent });
+  const result = await request.post<any>('/koa/mv_upload/uploadBook', data, { onUploadProgress: handleUploadEvent,timeout:200000  });
   return result
 };
 
 export const deploy = async (data: recordData, handleUploadEvent: () => void) => {
-  const result = await request.post<any>('/koa/mv_upload/deploysun', data, { onUploadProgress: handleUploadEvent });
+  const result = await request.post<any>('/koa/mv_upload/deploysun', data, { onUploadProgress: handleUploadEvent,timeout:200000  });
   return result
 };
 
@@ -222,7 +222,7 @@ export const get_page_tb_comment = async (data?: any) => {
   const result = await request.get<string>(`/koa/newCen/free/getPageTBComment`, { data });
   const str = result.data
   // const reList =  
-  return buildNewReList(str)
+  return  buildNewReList(str)
 };
 
 export const get_tb_post = async (data?: any) => {
@@ -231,23 +231,23 @@ export const get_tb_post = async (data?: any) => {
 };
 
 export const reply_tb = async (data?: any) => {
-  const result = await request.post<string>(`/koa/newCen/free/replyTB`, { data });
-  return result
+  const result = await request.post<any>(`/koa/newCen/free/replyTB`, data);
+  return result.data
 };
 
-export const reply_comment = async (data?: any) => {
-  const result = await request.post<string>(`/koa/newCen/free/replyComment`, { data });
-  return result
+export const reply_comment = async (data: any) => {
+  const result = await request.post<any>(`/koa/newCen/free/replyComment`, data);
+  return result.data
 };
 
 export const get_both_tb_post_comment = async (data: any[]) => {
-  const buildAuthor = (ele:any) => {
+  const buildAuthor = (ele: any) => {
     // console.log("🚀 ~ file: useDetail.tsx ~ line 56 ~ buildAuthor ~ ele", ele)
     // let res = ''
     let isVip = false
     if (ele.children.length > 1) {
       let list: any[] = []
-      ele.children.filter((e: any) => e.type != 'text').forEach((ee:any) => {
+      ele.children.filter((e: any) => e.type != 'text').forEach((ee: any) => {
         ee.attribs && ee.attribs.class == 'pre_icon_wrap pre_icon_wrap_theme1 d_name_icon' && (isVip = true)
         if (ee.name == 'a') {
           ee.children.forEach((e: any) => {
@@ -273,7 +273,7 @@ export const get_both_tb_post_comment = async (data: any[]) => {
     }
     return ele.children[0].children[0].data
   }
-  const buildContent = (ele:any): any => {
+  const buildContent = (ele: any): any => {
     // console.log("🚀 ~ file: useDetail.tsx ~ line 33 ~ buildContent ~ ele", ele)
     let res = ''
     if (ele.children.length == 1 && ele.children[0].type == 'text') {
@@ -303,7 +303,7 @@ export const get_both_tb_post_comment = async (data: any[]) => {
     })
     return res
   }
-  const buildReList = (cdata:any, id: string) => {
+  const buildReList = (cdata: any, id: string) => {
     let strList = cdata.comment_list[id]?.comment_info.map((e: any) => {
       return { str: `${e.show_nickname}: ${e.content}`, info: { userId: e.user_id, repostid: e.comment_id } }
     })
@@ -315,7 +315,7 @@ export const get_both_tb_post_comment = async (data: any[]) => {
       // console.log("🚀 ~ file: useDetail.tsx ~ line 120 ~ buildReList ~ dom", dom)
       let list = dom.children.map((ee: any) => {
         // console.log("🚀 ~ file: useDetail.tsx ~ line 126 ~ list ~ ee", ee)
-        let res:any = {}
+        let res: any = {}
         ee.type == 'text' && (res = { type: 'text', val: ee.data })
         ee['name'] == 'a' && (res = { type: 'text', val: `【` + ee['children'][0].data + `】` })
         ee['name'] == 'img' && (res = { type: 'img', val: ee.attribs.src })
@@ -387,3 +387,24 @@ export const get_both_tb_post_comment = async (data: any[]) => {
     list, total
   }
 }
+
+
+export const get_exist_book = async (data?: any) => {
+  const result = await request.get<string[]>('/koa/newCen/getExistBook', { data });
+  return result.data
+};
+
+export const get_account_list = async (data?: any) => {
+  const result = await request.get<string>('/koa/newCen/getAccountList', { data });
+  return result.data
+};
+
+export const save_account_list = async (data: any) => {
+  const result = await request.post<any>('/koa/newCen/saveAccountList', data);
+  return result
+};
+
+export const delete_accout = async (data: any) => {
+  const result = await request.post<any>('/koa/newCen/deleteAccout', data);
+  return result
+};

@@ -26,6 +26,7 @@ import BackupImg from './comp/BackupImg';
 import MemChart from './comp/MemChart';
 import Weather from './comp/Weather';
 import { useSize } from 'ahooks';
+import Account from './comp/Account';
 
 const originLayout = [
   { type: 'btn', Comp: LinkBtn, ref: null, clickFn: 'recoverLayout', name: '复原', x: 11, y: 0, iconSrc: 'https://img.icons8.com/office/96/undefined/synchronize.png' },
@@ -54,6 +55,7 @@ const originLayout = [
   { type: '2x6', Comp: MemChart, name: 'memPercent', x: 8, y: 0, },
   { type: '2x3', Comp: Weather, name: '天气', x: 9, y: 6, noExpend: true },
   { type: 'btn', Comp: LinkBtn, name: '更新证书', x: 0, y: 7, iconSrc: 'https://img.icons8.com/external-vitaliy-gorbachev-lineal-color-vitaly-gorbachev/100/000000/external-certificate-award-vitaliy-gorbachev-lineal-color-vitaly-gorbachev.png' },
+  { type: '2x4', Comp: Account, name: '账号', x: 4, y: 6, iconSrc: 'https://img.icons8.com/dusk/64/000000/test-account.png' },
 ]
 
 const buildLayout = (oriLay: any[]) => {
@@ -87,7 +89,7 @@ const MyHome: FC = () => {
   const [layout, setLayout] = useState(iniLayout.map(e => Object.assign({}, e)))
   const sonLayoutRef = useRef<gridItem[]>()
   const [curI, setCurI] = useState<string>('')
-  const isLowReso = useMemo(() => !isLowResolution(),[])
+  const isLowReso = useMemo(() => !isLowResolution(), [])
 
 
   const recoverLayout = () => {

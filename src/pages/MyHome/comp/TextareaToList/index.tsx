@@ -26,7 +26,7 @@ const TextareaToList: FC<ITextareaToListProp&RefAttributes<unknown>> = forwardRe
   return (
     <div className={''}  >
       <div className=" p-3" >
-        <Textarea onKeydown={() => {console.log(`kdkdkdk`,);}} className={' text-center '} placeholder="多项用回车分割" value={val} onChange={valChange} autosize={{ minRows: 5, maxRows: 5 }}></Textarea>
+        <Textarea  className={' text-center '} placeholder="多项用回车分割" value={val} onChange={valChange} autosize={{ minRows: 5, maxRows: 5 }}></Textarea>
       </div>
     </div>
   )

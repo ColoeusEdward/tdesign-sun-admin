@@ -14,10 +14,13 @@ import { ControlledMenu, Menu, MenuItem, useMenuState } from "@szhsin/react-menu
 import { Button } from "tdesign-react";
 import { CalendarIcon } from "tdesign-icons-react";
 import Post from "./comp/Post";
-import { sleep, toolBarRender } from "utils/util";
+import { menuClassName, sleep, toolBarRender } from "utils/util";
 import ChangeBa from "./comp/ChangeBa";
 import { useMouse } from "ahooks";
-const menuClassName = 'hover:bg-slate-800 bg-slate-700'
+import { useAtom } from "jotai";
+import { anchorPointAtom, mouseAtom } from "jtStore/home";
+import PostMenu, { postMenuHandler } from "components/PostMenu/PostMenu";
+
 
 type IVListProp = {
   rowClick: Function
@@ -83,7 +86,9 @@ const VList = memo(({ list, curUrlRef, rowClick }: IVListProp) => {
 })
 
 const RefreshBtn = memo(({ getData }: { getData: (e: any) => void }) => {
-  const { clientY } = useMouse()
+  // const { clientY } = useMouse()
+  const [mouse] = useAtom(mouseAtom)
+  const clientY = mouse?.clientY || 0
   const getYposi = () => {
     let yp = 100
     clientY > (innerHeight - 200) && (yp = 0)
@@ -109,10 +114,10 @@ const V8: React.FC = () => {
   // const curItem = useRef<postData>()
   const [loading, setLoading] = useState(false)
   const [dataList, setDataList] = useState<postData[]>([])
-  const [curBa, setCurBa] = useState({ name: "v", fid: '97650' })
-  const [menuProps, toggleMenu] = useMenuState({ unmountOnClose: false, transition: true })
-  const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
+  const [curBa, setCurBa] = useState({ name: 'vtuber', fid: '26066262' })
+  const postMenuRef = useRef<postMenuHandler>(null)
 
+  console.log(`idx rerender`,);
   const getData = () => {
     setLoading(true)
     setCurItem(undefined)
@@ -138,12 +143,11 @@ const V8: React.FC = () => {
 
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
-    setAnchorPoint({ x: e.clientX, y: e.clientY });
-    toggleMenu(true)
+    postMenuRef.current?.activeMenu(e)
   }
   const menuClick = useCallback((e: any) => {
     // console.log("🚀 ~ file: index.tsx ~ line 52 ~ menuClick ~ e", e)
-    toggleMenu(true)
+    // toggleMenu(true)
     let obj: any = {
       jumpUrl: () => {
         window.open('https://tieba.baidu.com' + curUrlRef.current)
@@ -153,20 +157,10 @@ const V8: React.FC = () => {
 
   }, [])
 
-  const menuClose = useCallback(() => {
-    toggleMenu(false)
-  }, [])
   useEffect(() => {
     getData()
   }, [curBa])
 
-  const renderMenu = () => {
-    return (
-      <ControlledMenu {...menuProps} anchorPoint={anchorPoint} menuClassName={'bg-slate-700 text-slate-300'} onClose={menuClose} onItemClick={menuClick} reposition={'initial'} position={'initial'} >
-        <MenuItem className={menuClassName} value={'jumpUrl'} >原文</MenuItem>
-      </ControlledMenu>
-    )
-  }
 
   return (
     <div className={'w-full h-full relative overflow-hidden bg-neutral-800 noPadDrawer'} style={{ height: 'calc(100vh - 64px)' }}>
@@ -177,7 +171,10 @@ const V8: React.FC = () => {
           <Post curItem={curItem} ref={postRef} curBa={curBa} />
         </MacScrollbar>
       </MySkeleton>
-      {renderMenu()}
+      {/* {renderMenu()} */}
+      <PostMenu ref={postMenuRef} menuClick={menuClick} >
+        <MenuItem className={menuClassName} value={'jumpUrl'} >原文</MenuItem>
+      </PostMenu>
       <ChangeBa ba={curBa} setBa={setCurBa} />
       <RefreshBtn getData={getData} />
     </div>

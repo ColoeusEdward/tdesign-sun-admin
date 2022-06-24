@@ -1,4 +1,6 @@
 import { useMouse } from "ahooks";
+import { useAtom } from "jotai";
+import { mouseAtom } from "jtStore/home";
 import { FC, ForwardedRef, forwardRef, ForwardRefExoticComponent, memo, ReactNode, RefAttributes, useCallback, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { FiChevronLeft } from "react-icons/fi";
 import { Button, Drawer, Select, SelectValue, Textarea, TextareaValue } from "tdesign-react";
@@ -12,23 +14,27 @@ type IChangeBaProp = {
 type IChangeBtnProp = {
   setShow: Function
 }
-const baList = [{ name: 'v', fid: '97650' }, { name: 'bilibili', fid: '2265748' }, { name: 'vtuber', fid: '26066262' }]
+const baList = [{ name: 'v', fid: '97650' }, { name: 'bilibili', fid: '2265748' }, { name: 'vtuber', fid: '26066262' }, { name: '航空母舰', fid: '18940' }]
 const innerWidth = window.innerWidth
 const ChangeBtn = memo(({ setShow }: IChangeBtnProp) => {
-  const { clientX } = useMouse()
+  const mouse = useMouse()
+  const { clientX } = mouse
+  const [, setMouse] = useAtom(mouseAtom)
   const getXposi = () => {
     let xp = 40
     clientX > (innerWidth - 300) && (xp = 0)
-    clientX <= (innerWidth - 300) && (xp = 50)
+    clientX <= (innerWidth - 300) && (xp = 70)
     return xp
   }
-
+  useEffect(() => {
+    setMouse(mouse)
+  },[mouse])
   return (
     <div className={'fixed -right-6 top-48'} style={{
       transition: 'transform 0.1s ease-in-out', transform: `translate3d(
     ${getXposi()}px,0px,0px)`
     }}>
-      <Button shape="round" onClick={() => { setShow(true) }} icon={<FiChevronLeft className={'text-lg'} />} ><div className={'w-6'} ></div></Button>
+      <Button shape="round" onClick={() => { setShow(true) }} icon={<FiChevronLeft className={'text-lg'} />} ><div className={'w-10'} ></div></Button>
     </div>
   )
 })

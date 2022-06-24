@@ -1,47 +1,105 @@
 import MySkeleton from "components/MySkeleton";
-import MyUploader from "components/MyUploader/MyUploader";
 import { MacScrollbar } from "mac-scrollbar";
-import { ElementRef, forwardRef, memo, ReactNode, useCallback, useImperativeHandle, useRef, useState, RefAttributes, useEffect } from "react";
+import React, { ElementRef, forwardRef, memo, ReactNode, useCallback, useImperativeHandle, useRef, useState, RefAttributes, useEffect, useMemo, EventHandler } from "react";
 import { get_both_tb_post_comment, get_tb_comment, get_tb_post } from "services/nt";
-import { Drawer, PageInfo, Pagination } from "tdesign-react";
+import { Button, Drawer, PageInfo, Pagination } from "tdesign-react";
 import { postData, postTData } from 'types/index'
-import { ajaxPromiseAll, isLowResolution, toolBarRender } from "utils/util";
+import { ajaxPromiseAll, copyToPaste, isLowResolution, menuClassName, sleep, toolBarRender } from "utils/util";
 import SubPost from "./SubPost";
 import { PhotoProvider, PhotoView } from "react-photo-view";
+import Replay, { ReplayHandle } from "./Replay";
+
+import { useAtom, useAtomValue } from "jotai";
+import { curCommRefAtomRead, curMenuItmeListAtom, curPostRefAtomRead } from "../jotai";
+import PostMenu, { postMenuHandler, buildMenuItemFn } from "components/PostMenu/PostMenu";
+import { MenuItem } from "@szhsin/react-menu";
+import { BiCopyAlt,BiRepost } from "react-icons/bi";
+import { MdOutlineQuickreply } from "react-icons/md";
 
 type IPostProp = {
-  curItem: postData | undefined
+  curItem?: postData
   curBa: { name: string, fid: string }
 }
 interface PostHandle {
   show: () => void
 }
-interface CommentInfo {
+export interface CommentInfo {
   type: string
   proId?: string
-  useName?: string
+  userName?: string
   repostid?: string
+  quoteId?: string
 }
+
+
+const dSize = isLowResolution() ? '90vw' : '700px'
 const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curItem, curBa }, ref) => {
   const [visible, setVisible] = useState(false)
   const [loading, setLoading] = useState(false)
   const [postList, setPostList] = useState<postTData[]>()
-  const [curComment, setCurComment] = useState<CommentInfo>()
+  const curCommRef = useAtomValue(curCommRefAtomRead)
+  const curPostRef = useAtomValue(curPostRefAtomRead)
+  // const [curComment, setCurComment] = useState()
   const curPageRef = useRef(1)
   // const [curPage, setCurPage] = useState(1)
   const [total, setTotal] = useState(1)
+  const postMenuRef = useRef<postMenuHandler>(null)
+  const replyRef = useRef<ReplayHandle>(null)
 
+  console.log(`rerender`,);
   const show = () => {
     setVisible(true)
   }
+  const menuClick = useCallback((e: any) => {
+    // console.log("🚀 ~ file: index.tsx ~ line 52 ~ menuClick ~ e", e)
+    if (e.value == 'copy') {
+      let curPost = curPostRef.current as postTData
+      console.log("🚀 ~ file: Post.tsx ~ line 55 ~ menuClick ~ curPost", curPost)
+      if (curPost.content) {
+        copyToPaste(JSON.stringify(curPost.content))
+      } else {
+        let curPost2 = curPostRef.current as {
+          type: string;
+          val: string;
+          proId: string;
+        }[]
+        let str = curPost2?.reduce((pre, cur) => {
+          let strItem = pre + (cur.type == 'text' ? cur.val : '')
+          return strItem
+        }, '')
+        // console.log("🚀 ~ file: Post.tsx ~ line 65 ~ str ~ str", str)
+        copyToPaste(str)
+      }
+
+      return
+    }
+    replyRef.current?.outerShow()
+    // toggleMenu(true)
+    // let obj: any = {
+    //   jumpUrl: () => {
+    //     window.open('https://tieba.baidu.com' + curItem?.url)
+    //   }
+    // }
+    // obj[e.value] && obj[e.value]()
+
+  }, [])
+  const buildMenuItem = useCallback<buildMenuItemFn>((setCurMenuItemList) => {
+    if (curCommRef.current.userName) {
+      setCurMenuItemList([{ name: `回复【${curCommRef.current.userName}】`, value: 'floorIn', icon: <MdOutlineQuickreply className={'text-lg mr-1'} /> }])
+    } else {
+      setCurMenuItemList([{ name: `回复层`, value: 'floor',icon: <BiRepost className={'text-lg mr-1'} />  }])
+    }
+  }, [])
   const hide = useCallback(() => {
     setVisible(false)
   }, [])
   const getData = () => {
     if (!curItem) return
-    setPostList([])
-    setCurComment(undefined)
+    curCommRef.current = {}
     setLoading(true)
+    sleep(50).then(() => {
+      setPostList([])
+    })
     const tid = curItem.url.split('/')[2]
     get_both_tb_post_comment([{ tid: tid, p: curPageRef.current }, { tid: tid, fid: curBa.fid, p: curPageRef.current }])
       .then(({ list, total }) => {
@@ -55,13 +113,20 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
     curPageRef.current = current
     getData()
   }
-  const submit = useCallback(() => {
+  const refreshAfterReply = useCallback(() => {
+    curPageRef.current * 30 == total && getData()
+    console.log("🚀 ~ file: Post.tsx ~ line 91 ~ refreshAfterReply ~ curPageRef.current * 30", curPageRef.current * 30, total)
+  }, [curItem, total])
 
+  const handleContextMenu = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    // buildMenuItem()
+    e.preventDefault()
+    postMenuRef.current?.activeMenu(e)
   }, [])
 
   useEffect(() => {
     curPageRef.current = 1
-    setTotal(1)
+    setTotal(30)
     curItem && getData()
   }, [curItem])
 
@@ -69,8 +134,9 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
     // compClick
     show
   }))
-  const layerClick = (item: any) => {
-
+  const layerClick = (item: postTData) => {
+    curCommRef.current = { quoteId: item.id }
+    curPostRef.current = item
   }
   const renderRow = () => {
     const renderAuthor = (author: string | any[]) => {
@@ -108,22 +174,23 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
               </div>
             }
             // console.log(`obj[ce.type]`,ce,obj[ce.type]);
-            return <PhotoProvider className={'select-none'} maskOpacity={0.5} speed={() => 300} toolbarRender={toolBarRender} >
-              {obj[ce.type] && obj[ce.type]()}
-            </PhotoProvider>
-
+            return obj[ce.type] && obj[ce.type]()
           })
         }
       }
 
       return (
-        <div className={'text-slate-400 hover:bg-zinc-900/70  bg-zinc-800/70 p-3 m-2 mt-3 rounded-xl'}
+        <div className={'text-slate-400  bg-neutral-700/20 p-3 mx-3 my-2 rounded-xl'}
           style={{ boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)' }}
-          onMouseDown={() => { layerClick(e) }}>
+          onContextMenu={(ev) => { ev.stopPropagation(); layerClick(e); handleContextMenu(ev) }}>
           <div className={'inline-block w-4/5 text-left'}>
             {/* <div className={'text-base'}>{item.title}</div> */}
-            <div className={'text-sm leading-relaxed'}>{renderContent()}</div>
-            <SubPost postItem={e} curItem={curItem} />
+            <div className={'text-sm leading-relaxed'}>
+              <PhotoProvider className={'select-none'} maskOpacity={0.5} speed={() => 300} toolbarRender={toolBarRender} loop={false} >
+                {renderContent()}
+              </PhotoProvider>
+            </div>
+            <SubPost handleContextMenu={handleContextMenu} postItem={e} curItem={curItem} />
             {/* {renderReply()} */}
           </div>
           <div className={'inline-block w-1/5 text-right'}>
@@ -136,14 +203,17 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
     })
   }
   const renderBody = () => {
-
     return (
       <div className={'w-full h-full relative overflow-hidden'}>
         <MySkeleton loading={loading}>
-          <MacScrollbar skin={'dark'} className={'w-full h-full'} >
+          <MacScrollbar skin={'dark'} className={'w-full h-full relative'} >
             {renderRow()}
           </MacScrollbar>
         </MySkeleton>
+        <Replay refreshAfterReply={refreshAfterReply} curBa={curBa} curItem={curItem} ref={replyRef} />
+        <PostMenu menuClick={menuClick} ref={postMenuRef} buildMenuItem={buildMenuItem} >
+          <MenuItem className={menuClassName} value={'copy'} ><BiCopyAlt className={'text-lg mr-1'} /> 复制</MenuItem>
+        </PostMenu>
       </div>
 
     )
@@ -169,11 +239,13 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
       footer={renderFooter()}
       visible={visible}
       onClose={hide}
-      size={isLowResolution() ? '90vw' : '700px'}
+      size={dSize}
     >
-    </Drawer>
+    </Drawer >
   )
 
 })
+
+Post.displayName = 'Post'
 
 export default memo(Post);

@@ -6,9 +6,10 @@ import { Skeleton, Textarea, TextareaValue } from "tdesign-react";
 type IMySkeletonProp = {
   children: ReactNode
   loading: boolean
+  className?: string
 }
 
-const MySkeleton: FC<IMySkeletonProp & RefAttributes<unknown>> = forwardRef(({ children, loading }, ref) => {
+const MySkeleton: FC<IMySkeletonProp & RefAttributes<unknown>> = forwardRef(({ children, loading, className }, ref) => {
   const conRef = useRef(null)
   const size = useSize(conRef)
   const [lineCount, setLineCount] = useState(1)
@@ -28,8 +29,9 @@ const MySkeleton: FC<IMySkeletonProp & RefAttributes<unknown>> = forwardRef(({ c
       setLineCount(lc > 0 ? lc : 1)
     }
   }, [size])
+
   return (
-    <div className={'h-full w-full'} ref={conRef} >
+    <div className={classNames('h-full w-full')} ref={conRef} >
       <div className={classNames('absolute w-full h-full top-0 left-0 p-3', { 'hidden': !loading })}>
         {renderSks()}
       </div>
@@ -38,7 +40,7 @@ const MySkeleton: FC<IMySkeletonProp & RefAttributes<unknown>> = forwardRef(({ c
           {renderSks()}
         </div>} */}
       {/* {!loading && children} */}
-      <div className={classNames('w-full h-full', { 'invisible': loading, })}>
+      <div className={classNames('w-full h-full', { 'invisible': loading, },className)}>
         {children}
       </div>
     </div>

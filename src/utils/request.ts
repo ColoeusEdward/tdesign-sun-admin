@@ -7,7 +7,7 @@ const env = import.meta.env.MODE || 'development';
 const API_HOST = proxy[env].API;
 
 const SUCCESS_CODE = 200;
-const TIMEOUT = 100000;
+const TIMEOUT = 20000;
 let token = localStorage.getItem('meaToken') && JSON.parse(localStorage.getItem('meaToken')!)
 
 const err = (error: any) => {

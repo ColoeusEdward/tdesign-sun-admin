@@ -14,14 +14,14 @@ type IInfoListProp = {
   highLightLineIdx?: number
 }
 
-const InfoList: React.FC<IInfoListProp> = ({ list, loading, title, highLightLineIdx }) => {
+const InfoList: React.FC<IInfoListProp> = ({ list, loading, title, highLightLineIdx, children }) => {
   // const [list, setList] = useState<string[][]>([[]])
 
 
   const renderList = () => {
     return list.map((e, i) => {
       return (
-        <div onMouseUp={(e) => { e.stopPropagation() }}  className={'flex  p-1'} >
+        <div onMouseUp={(e) => { e.stopPropagation() }} className={'flex  p-1'} >
           {e.length == 2 &&
             <div className={'flex items-center  py-1'} style={{ width: '10%' }}>
               <Tag theme="primary" variant="outline">{e[0]}</Tag>
@@ -41,12 +41,14 @@ const InfoList: React.FC<IInfoListProp> = ({ list, loading, title, highLightLine
 
   return (
     <div className={'w-full h-full relative'}>
-      <MySkeleton loading={loading}>
-        <MacScrollbar className={'w-full h-full p-3 relative flex-col'} style={{ overflow: 'auto' }} skin={'white'}>
+      <MySkeleton loading={loading} className={'flex-col'} >
+        <MacScrollbar className={'w-full h-full basis-full p-3 flex-shrink  relative flex-col'} style={{ overflow: 'auto' }} skin={'white'}>
           <div className={'pb-2 text-center  text-lg'} >{title}</div>
-          {renderList()}
+          {!children && renderList()}
+          {children}
         </MacScrollbar>
       </MySkeleton>
+
     </div>
   )
 

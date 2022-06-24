@@ -120,6 +120,8 @@ export const toolBarRender = ({ rotate, onRotate }: any): React.ReactNode => {
   )
 }
 
+export const menuClassName = 'hover:bg-slate-800 bg-slate-700'
+
 
 // export const deepSearch = (obj:object, predicate) => {
 //   let result: Object[] = [];
