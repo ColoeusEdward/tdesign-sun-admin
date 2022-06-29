@@ -47,7 +47,7 @@ export default function useLinkBtnLogic() {
       buildDialog(reboot_lexue)
     },
     'book': () => {
-      window.open('https://meamoe.ml/site/up/bookPage')
+      window.open('https://meamoe.ml/site/sun/bookPage')
     },
     'vscode': () => {
       window.open('https://meamoe.ml/vscode/')

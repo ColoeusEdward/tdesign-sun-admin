@@ -19,12 +19,12 @@ const GridIcon: FC<IIconProp> = ({ iconSrc, name }) => {
     return obj || { display: 'none' }
   }
   const removePopup = () => {
-    let popupDom = document.getElementsByClassName('t-popup t-popup--animation-enter-active t-popup--animation-enter-to appear-done enter-done')[0] as HTMLElement
-    popupDom && (popupDom.style.display = 'none')  //部分解决popup闪烁问题, 果然是直接操作dom更实在
+    // let popupDom = document.getElementsByClassName('t-popup t-popup--animation-enter-active t-popup--animation-enter-to appear-done enter-done')[0] as HTMLElement
+    // popupDom && (popupDom.style.display = 'none')  //部分解决popup闪烁问题, 果然是直接操作dom更实在
   }
   return (
     <div className={'w-full h-full hover:bg-neutral-700'} ref={conRef} onMouseDown={removePopup}>
-      <Tooltip content={name} placement="bottom" showArrow ref={tooltipRef}>
+      <Tooltip content={name} placement="bottom" showArrow>
         <div className={'w-full h-full flex justify-center items-center'} style={sizeStyle()}    >
           <img className="w-24 h-24 " src={iconSrc}></img>
         </div>

@@ -408,3 +408,9 @@ export const delete_accout = async (data: any) => {
   const result = await request.post<any>('/koa/newCen/deleteAccout', data);
   return result
 };
+
+export const upload_tb_img = async (data: {fid:string,url:string}) => {
+  const result = await request.post<any>('/koa//newCen/free/uploadTbImg', data);
+  return result.data
+};
+

@@ -1,5 +1,6 @@
 import { useMouse } from "ahooks";
 import MyFormWrap, { IMyFormFormItem } from "components/MyFormWrap";
+import { getMsgOpt } from "configs/cfg";
 import { useAtom } from "jotai";
 import { bookAtom } from "jtStore/book";
 import { mouseAtom } from "jtStore/home";
@@ -7,7 +8,7 @@ import { FC, ForwardedRef, forwardRef, ForwardRefExoticComponent, memo, ReactNod
 import { FaBook } from "react-icons/fa";
 import { GrBook } from "react-icons/gr";
 import { get_exist_book } from "services/nt";
-import { Button, Drawer, Form, Input, InputNumber, Select, SelectValue, Textarea, TextareaValue, SubmitContext, TdFormProps } from "tdesign-react";
+import { Button, Drawer, Form, Input, InputNumber, Select, SelectValue, Textarea, TextareaValue, SubmitContext, TdFormProps, MessagePlugin } from "tdesign-react";
 import FormItem from "tdesign-react/es/form/FormItem";
 import Option from "tdesign-react/es/select/base/Option";
 import { isLowResolution, mustRules } from "utils/util";
@@ -33,6 +34,8 @@ const BookBottom: FC<IBookBottomProp & RefAttributes<unknown>> = forwardRef(({ }
     return yp
   }
   const handleKeyUp = (val: number, { e }: { e: React.KeyboardEvent<HTMLDivElement> }) => {
+    console.log("🚀 ~ file: BookBottom.tsx ~ line 37 ~ handleKeyUp ~ e.key ", e.key )
+    MessagePlugin.success({ content: e.key, ...getMsgOpt() })
     if (e.key != 'Enter') return
     window.$socket && window.$socket.emit('setPage', bookInfo.page)
   }

@@ -10,6 +10,7 @@ import { bookAtom, bookInfo } from 'jtStore/book'
 import { useDispatch } from 'react-redux'
 import { switchTheme } from 'modules/global'
 import { ETheme } from 'types/index.d';
+import { replaceLine } from './util'
 
 declare global {
   interface Window {

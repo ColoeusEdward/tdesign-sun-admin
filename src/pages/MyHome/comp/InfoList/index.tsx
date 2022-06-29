@@ -32,7 +32,6 @@ const InfoList: React.FC<IInfoListProp> = ({ list, loading, title, highLightLine
             boxShadow: '0 4px 18px 0 rgb(0 0 0 / 25%)'
           }}
             onClick={() => { copyToPaste(e[1]) }}
-            onTouchEnd={(ev) => { copyToPaste(e[1]); ev.stopPropagation() }}
           >{e.length == 2 ? e[1] : e}</div>
         </div>
       )

@@ -47,13 +47,12 @@
 .noPadDrawer .t-drawer__body {
   padding: 0;
 }
-.t-drawer--open .t-drawer__mask {
-  opacity: 0;
-  width: 100%;
-  height: 100%;
+.t-message__list.t-message-placement--top{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.t-drawer--open>.t-drawer__mask {
-  opacity: 1;
-  width: 100%;
-  height: 100%;
+*{
+  box-sizing: border-box;
 }

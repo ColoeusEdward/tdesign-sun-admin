@@ -3,6 +3,7 @@ import { CursorState } from "ahooks/lib/useMouse";
 import { useAtom, useAtomValue } from "jotai";
 import { mouseAtom } from "jtStore/home";
 import { FC, ForwardedRef, forwardRef, ForwardRefExoticComponent, memo, ReactNode, RefAttributes, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { BsFileEarmarkImage } from "react-icons/bs";
 import { FiChevronLeft } from "react-icons/fi";
 import { reply_comment, reply_tb } from "services/nt";
 import { Button, Drawer, Select, SelectValue, Textarea, TextareaValue } from "tdesign-react";
@@ -11,6 +12,7 @@ import { postData } from "types";
 import { isLowResolution } from "utils/util";
 import { curCommRefAtomRead } from "../jotai";
 import { CommentInfo } from "./Post";
+import UploadImgDrawer from "./UploadImgDrawer";
 
 type IReplyProp = {
   curBa: { name: string, fid: string }
@@ -96,11 +98,14 @@ const Reply: FC<IReplyProp & RefAttributes<ReplayHandle>> = forwardRef(({ curBa,
         setLoading(false)
       })
     }
-
-
   }
   const hide = useCallback(() => {
     setDrawShow(false)
+  }, [])
+  const onImgUploadFinish = useCallback((str:string) => {
+    setVal((pre) => {
+      return pre + str
+    })
   }, [])
   useImperativeHandle(ref, () => ({
     outerShow
@@ -108,8 +113,9 @@ const Reply: FC<IReplyProp & RefAttributes<ReplayHandle>> = forwardRef(({ curBa,
 
   const renderBody = () => {
     return (
-      <div className={'p-3'}>
+      <div className={'p-3 relative'}>
         <Textarea placeholder="" value={val} onChange={(e) => { setVal(e) }} autosize={{ minRows: 6, maxRows: 6 }}></Textarea>
+        <UploadImgDrawer curBa={curBa} onUploadFinish={onImgUploadFinish} />
       </div>
     )
   }

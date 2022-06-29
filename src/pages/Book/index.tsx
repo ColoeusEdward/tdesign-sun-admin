@@ -5,21 +5,11 @@ import { ElementRef, memo, ReactNode, useCallback, useEffect, useMemo, useRef, u
 import { get_tb } from "services/nt";
 // import Style from './index.module.less'
 import { postData } from 'types/index'
-import { FaRegComments } from "react-icons/fa";
-import Space from "components/Space";
-import { PhotoProvider, PhotoView } from "react-photo-view";
-import { ControlledMenu, Menu, MenuItem, useMenuState } from "@szhsin/react-menu";
-import { Button } from "tdesign-react";
-import { CalendarIcon } from "tdesign-icons-react";
-import { menuClassName, sleep, toolBarRender } from "utils/util";
 
 import { useMouse } from "ahooks";
 import { useAtom } from "jotai";
-import { anchorPointAtom, mouseAtom } from "jtStore/home";
-import PostMenu, { postMenuHandler } from "components/PostMenu/PostMenu";
 import { bookAtom, localPageAtom, totalBookAtom } from "jtStore/book";
 import BookBottom from "./BookBottom";
-import { get_curbook } from "services/book";
 
 
 type IBookProp = {
@@ -57,7 +47,7 @@ const Book: React.FC = () => {
     <div className={'w-full h-screen flex flex-col justify-center items-center text-neutral-500 relative overflow-hidden bg-black '} >
       <div className={'w-3/12 h-full fixed left-0 top-2'} onClick={prevPage}></div>
       <div className={'w-3/12 h-full fixed right-0 top-2'} onClick={nextPage}></div>
-      <div className={'w-full h-full text-4xl leading-snug break-all text-left p-3 '} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+      <div className={'w-full h-full text-3xl leading-snug break-all text-left p-3 '} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
         {bookInfo.content}
       </div>
       <BookBottom />

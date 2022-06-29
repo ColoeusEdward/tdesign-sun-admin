@@ -1813,16 +1813,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@szhsin/react-menu@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@szhsin/react-menu@npm:3.1.0"
+"@szhsin/react-menu@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@szhsin/react-menu@npm:3.1.1"
   dependencies:
     prop-types: ^15.7.2
     react-transition-state: ^1.1.4
   peerDependencies:
     react: ">=16.14.0"
     react-dom: ">=16.14.0"
-  checksum: 66a6c8012e9afe7a45826c487e9451474e06d8d583876751325eda910241ffcd6ae5a519ad4d527331920c15790d36d8b8ff2f60bd09f097046e3675fbd9af01
+  checksum: 2ebac9a41ce765ae9a3989b0182a15758f90f656e2349cd93b22cf6624cdda0383a9354b06f1a05eaccb5b31437307a50a8a54e011a867882802072754897ec1
   languageName: node
   linkType: hard
 
@@ -1938,12 +1938,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.5":
-  version: 18.0.5
-  resolution: "@types/react-dom@npm:18.0.5"
+"@types/react-dom@npm:^18.0.6":
+  version: 18.0.6
+  resolution: "@types/react-dom@npm:18.0.6"
   dependencies:
     "@types/react": "*"
-  checksum: cd48b81950f499b52a3f0c08261f00046f9b7c96699fa249c9664e257e820daf6ecac815cd1028cebc9d105094adc39d047d1efd79214394b8b2d515574c0787
+  checksum: db571047af1a567631758700b9f7d143e566df939cfe5fbf7535347cc0c726a1cdbb5e3f8566d076e54cf708b6c1166689de194a9ba09ee35efc9e1d45911685
   languageName: node
   linkType: hard
 
@@ -1953,6 +1953,15 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: 190492acb69186c651bb99f19028dcd4c65129eae7de6efd41f51b6a6711af490e7b99ad7156b8731b11ecf2ec7c22bcf13c782bfe65be4b4e5c3362b97095bf
+  languageName: node
+  linkType: hard
+
+"@types/react-is@npm:^17.0.3":
+  version: 17.0.3
+  resolution: "@types/react-is@npm:17.0.3"
+  dependencies:
+    "@types/react": "*"
+  checksum: 6abb7c47d54f012272650df8a962a28bd82f219291e5ef8b4dfa7fe0bb98ae243b060bf9fbe8ceff6213141794855a006db194b490b00ffd15842ae19d0ce1f0
   languageName: node
   linkType: hard
 
@@ -2000,14 +2009,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.0.14":
-  version: 18.0.14
-  resolution: "@types/react@npm:18.0.14"
+"@types/react@npm:^18.0.15":
+  version: 18.0.15
+  resolution: "@types/react@npm:18.0.15"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 608eb57a383eedc54c79949673e5e8314f6b0c61542bff58721c8c47a18c23e2832e77c656050c2c2c004b62cf25582136c7c56fe1b6263a285c065fae31dbcf
+  checksum: e22cc388d1c145aa184787e44dc28db4789976c704cd5db475c170bb76a560eb81def5f346cfe750949bb3d43ad88822b8cbb9f19b1286e3795892a8263e7715
   languageName: node
   linkType: hard
 
@@ -2288,9 +2297,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ahooks@npm:^3.5.0":
-  version: 3.5.0
-  resolution: "ahooks@npm:3.5.0"
+"ahooks@npm:^3.5.2":
+  version: 3.5.2
+  resolution: "ahooks@npm:3.5.2"
   dependencies:
     "@types/js-cookie": ^2.x.x
     ahooks-v3-count: ^1.0.0
@@ -2302,7 +2311,7 @@ __metadata:
     screenfull: ^5.0.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: c8a2f059da098bc2f6916ea325b09effd1619b5251fc1cec22d09c935ea6ef1afb7349587b09d6e9653139aae77c8ec6b8e73e7a638f9e27e0c16b6104ea02f2
+  checksum: 4527bae26ce18e3763b579bfa5f310479071723b9c38bf371b7d23c6cb646e14db9b07c8c165e73138d4fe5ca632d6c96d24b734cda23ff87de09a97f8690622
   languageName: node
   linkType: hard
 
@@ -4584,6 +4593,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immer@npm:^9.0.15":
+  version: 9.0.15
+  resolution: "immer@npm:9.0.15"
+  checksum: 92e3d63e810e3c3c2bb61b70c45443e37ef983ad12924e3edaf03725ae5979618f5b473439bb3bb4a8c4769f25132f18dec10ea15c40f0b20da5691ff96ff611
+  languageName: node
+  linkType: hard
+
 "immer@npm:^9.0.7":
   version: 9.0.14
   resolution: "immer@npm:9.0.14"
@@ -4726,7 +4742,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-core-module@npm:^2.2.0, is-core-module@npm:^2.8.1":
+"is-core-module@npm:^2.2.0, is-core-module@npm:^2.8.1, is-core-module@npm:^2.9.0":
   version: 2.9.0
   resolution: "is-core-module@npm:2.9.0"
   dependencies:
@@ -5872,12 +5888,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-load-config@npm:^3.1.4":
-  version: 3.1.4
-  resolution: "postcss-load-config@npm:3.1.4"
+"postcss-load-config@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "postcss-load-config@npm:4.0.1"
   dependencies:
     lilconfig: ^2.0.5
-    yaml: ^1.10.2
+    yaml: ^2.1.1
   peerDependencies:
     postcss: ">=8.0.9"
     ts-node: ">=9.0.0"
@@ -5886,7 +5902,7 @@ __metadata:
       optional: true
     ts-node:
       optional: true
-  checksum: 1c589504c2d90b1568aecae8238ab993c17dba2c44f848a8f13619ba556d26a1c09644d5e6361b5784e721e94af37b604992f9f3dc0483e687a0cc1cc5029a34
+  checksum: b61f890499ed7dcda1e36c20a9582b17d745bad5e2b2c7bc96942465e406bc43ae03f270c08e60d1e29dab1ee50cb26970b5eb20c9aae30e066e20bd607ae4e4
   languageName: node
   linkType: hard
 
@@ -6125,13 +6141,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-photo-view@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "react-photo-view@npm:1.2.0"
+"react-photo-view@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "react-photo-view@npm:1.2.1"
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 10b4a8cdb33ae42512b77e2f38bb7f66ef4c6ce6211e4f1e3756fa61b81a2da73141fe6740a37f40412eadce64f0df2cd3364d832a1a62138e4cbda0446e35ec
+  checksum: 89cbe8244c95b426b7656b3067c7c6a498ae880854d289376c408613c229f8fc589cd3960f7a71385f782c74356249b21f334ab3ca2d5c5924da919f465d9962
   languageName: node
   linkType: hard
 
@@ -6409,6 +6425,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"resolve@npm:^1.22.1":
+  version: 1.22.1
+  resolution: "resolve@npm:1.22.1"
+  dependencies:
+    is-core-module: ^2.9.0
+    path-parse: ^1.0.7
+    supports-preserve-symlinks-flag: ^1.0.0
+  bin:
+    resolve: bin/resolve
+  checksum: 07af5fc1e81aa1d866cbc9e9460fbb67318a10fa3c4deadc35c3ad8a898ee9a71a86a65e4755ac3195e0ea0cfbe201eb323ebe655ce90526fd61917313a34e4e
+  languageName: node
+  linkType: hard
+
 "resolve@npm:^2.0.0-next.3":
   version: 2.0.0-next.3
   resolution: "resolve@npm:2.0.0-next.3"
@@ -6429,6 +6458,19 @@ __metadata:
   bin:
     resolve: bin/resolve
   checksum: c79ecaea36c872ee4a79e3db0d3d4160b593f2ca16e031d8283735acd01715a203607e9ded3f91f68899c2937fa0d49390cddbe0fb2852629212f3cda283f4a7
+  languageName: node
+  linkType: hard
+
+"resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>":
+  version: 1.22.1
+  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=07638b"
+  dependencies:
+    is-core-module: ^2.9.0
+    path-parse: ^1.0.7
+    supports-preserve-symlinks-flag: ^1.0.0
+  bin:
+    resolve: bin/resolve
+  checksum: 5656f4d0bedcf8eb52685c1abdf8fbe73a1603bb1160a24d716e27a57f6cecbe2432ff9c89c2bd57542c3a7b9d14b1882b73bfe2e9d7849c9a4c0b8b39f02b8b
   languageName: node
   linkType: hard
 
@@ -6888,9 +6930,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.1.3":
-  version: 3.1.3
-  resolution: "tailwindcss@npm:3.1.3"
+"tailwindcss@npm:3.1.5":
+  version: 3.1.5
+  resolution: "tailwindcss@npm:3.1.5"
   dependencies:
     arg: ^5.0.2
     chokidar: ^3.5.3
@@ -6908,18 +6950,18 @@ __metadata:
     postcss: ^8.4.14
     postcss-import: ^14.1.0
     postcss-js: ^4.0.0
-    postcss-load-config: ^3.1.4
+    postcss-load-config: ^4.0.1
     postcss-nested: 5.0.6
     postcss-selector-parser: ^6.0.10
     postcss-value-parser: ^4.2.0
     quick-lru: ^5.1.1
-    resolve: ^1.22.0
+    resolve: ^1.22.1
   peerDependencies:
     postcss: ^8.0.9
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: ff7e159301ad1e55db95e9251c27c7d0f2274ac149874201d4ebcca8db2f1d3aba6f1e22ada88499961936d21ec74a82a6aa461064e1a3d0668017e2b0d3658d
+  checksum: 9b66bb481e63596d299ca994b745f0b99b1f0958148fe7a6b1b43436fe786865215b319b97fd6be1cd1050cf458656af98a0ec35f91cc5af97e3b771e8544746
   languageName: node
   linkType: hard
 
@@ -6937,7 +6979,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tdesign-icons-react@npm:^0.1.0, tdesign-icons-react@npm:~0.1.0":
+"tdesign-icons-react@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "tdesign-icons-react@npm:0.1.1"
+  dependencies:
+    "@babel/runtime": ^7.16.5
+    classnames: ^2.2.6
+  peerDependencies:
+    react: ">=16.13.1"
+    react-dom: ">=16.13.1"
+  checksum: 2589c3c9664c97e2dc29870c79102db4d62f93ca8564d6926bf842bc94dac9423d37937fb36fd292fdbbb6aca75a0f50f6d5fa06488a7abe6e1436b4cbde9057
+  languageName: node
+  linkType: hard
+
+"tdesign-icons-react@npm:~0.1.0":
   version: 0.1.0
   resolution: "tdesign-icons-react@npm:0.1.0"
   dependencies:
@@ -6956,18 +7011,18 @@ __metadata:
   dependencies:
     "@honkhonk/vite-plugin-svgr": ^1.1.0
     "@reduxjs/toolkit": ^1.6.0
-    "@szhsin/react-menu": ^3.1.0
+    "@szhsin/react-menu": ^3.1.1
     "@types/echarts": ^4.9.13
     "@types/lodash": ^4.14.178
     "@types/mockjs": ^1.0.6
     "@types/node": ^17.0.31
     "@types/qrcode.react": ^1.0.2
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
+    "@types/react": ^18.0.15
+    "@types/react-dom": ^18.0.6
     "@types/react-grid-layout": ^1.3.2
     "@types/react-router-dom": ^5.3.3
     "@vitejs/plugin-react": ^1.3.2
-    ahooks: ^3.5.0
+    ahooks: ^3.5.2
     autoprefixer: ^10.4.7
     axios: ^0.27.2
     axios-jsonp: ^1.0.4
@@ -6984,6 +7039,7 @@ __metadata:
     eslint-plugin-react: ^7.30.0
     htmlparser2: ^8.0.1
     husky: ^7.0.4
+    immer: ^9.0.15
     jotai: ^1.7.2
     jsonp: ^0.2.1
     less: ^4.1.2
@@ -7000,15 +7056,16 @@ __metadata:
     react-dom: ^18.2.0
     react-grid-layout: 1.3.4
     react-icons: ^4.4.0
-    react-photo-view: ^1.2.0
+    react-photo-view: ^1.2.1
     react-redux: ^7.2.4
     react-router-dom: ^6.3.0
     socket.io-client: 4.2.0
-    tailwindcss: ^3.1.3
-    tdesign-icons-react: ^0.1.0
-    tdesign-react: ^0.35.1
+    tailwindcss: 3.1.5
+    tdesign-icons-react: ^0.1.1
+    tdesign-react: ^0.36.3
     tvision-color: ^1.4.0
     typescript: ^4.7.4
+    use-immer: ^0.7.0
     uuid: ^8.3.2
     vite: ^2.9.12
     vite-plugin-mock: ^2.9.6
@@ -7016,12 +7073,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"tdesign-react@npm:^0.35.1":
-  version: 0.35.1
-  resolution: "tdesign-react@npm:0.35.1"
+"tdesign-react@npm:^0.36.3":
+  version: 0.36.3
+  resolution: "tdesign-react@npm:0.36.3"
   dependencies:
     "@babel/runtime": ~7.17.2
     "@popperjs/core": ~2.11.2
+    "@types/react-is": ^17.0.3
     "@types/sortablejs": ^1.10.7
     "@types/tinycolor2": ^1.4.3
     classnames: ~2.3.1
@@ -7042,7 +7100,7 @@ __metadata:
   peerDependencies:
     react: ">=16.13.1"
     react-dom: ">=16.13.1"
-  checksum: c457c673695354a9a0fb0d55a9a2b9bacbfb4bba42e5be0d9fb8ff2d23c83f381e504c6115d82b3f93d93e2f956f77c5d9def7e455bbd51ef18cecf7994c28b6
+  checksum: 5d42000e47cd68c109abc90a2454d7bfb7ec62c2473a4be65678e21c870797603209b473cc3b65fdf36f37476e5c6f74b8c9f1079f27ae31e14aab859eaab32f
   languageName: node
   linkType: hard
 
@@ -7272,6 +7330,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"use-immer@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "use-immer@npm:0.7.0"
+  peerDependencies:
+    immer: ">=2.0.0"
+    react: ^16.8.0 || ^17.0.1 || ^18.0.0
+  checksum: 4711403fa2c3648c06b8e6795433eb43adb2c6e9bd00f45971ce6948ba8fc1c3e3cf73820a8d597b22979caa6445d0b791508e147975c3cc435a1ec1e5ce47db
+  languageName: node
+  linkType: hard
+
 "use-resize-observer@npm:^8.0.0":
   version: 8.0.0
   resolution: "use-resize-observer@npm:8.0.0"
@@ -7482,10 +7550,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml@npm:^1.10.0, yaml@npm:^1.10.2":
+"yaml@npm:^1.10.0":
   version: 1.10.2
   resolution: "yaml@npm:1.10.2"
   checksum: ce4ada136e8a78a0b08dc10b4b900936912d15de59905b2bf415b4d33c63df1d555d23acb2a41b23cf9fb5da41c256441afca3d6509de7247daa062fd2c5ea5f
+  languageName: node
+  linkType: hard
+
+"yaml@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "yaml@npm:2.1.1"
+  checksum: f48bb209918aa57cfaf78ef6448d1a1f8187f45c746f933268b7023dc59e5456004611879126c9bb5ea55b0a2b1c2b392dfde436931ece0c703a3d754562bb96
   languageName: node
   linkType: hard
 

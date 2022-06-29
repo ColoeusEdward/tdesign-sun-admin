@@ -27,6 +27,9 @@ import MemChart from './comp/MemChart';
 import Weather from './comp/Weather';
 import { useSize } from 'ahooks';
 import Account from './comp/Account';
+import GoogleImg from './comp/GoogleImg';
+import { useImmer } from 'use-immer';
+import produce from 'immer';
 
 const originLayout = [
   { type: 'btn', Comp: LinkBtn, ref: null, clickFn: 'recoverLayout', name: '复原', x: 11, y: 0, iconSrc: 'https://img.icons8.com/office/96/undefined/synchronize.png' },
@@ -56,6 +59,7 @@ const originLayout = [
   { type: '2x3', Comp: Weather, name: '天气', x: 9, y: 6, noExpend: true },
   { type: 'btn', Comp: LinkBtn, name: '更新证书', x: 0, y: 7, iconSrc: 'https://img.icons8.com/external-vitaliy-gorbachev-lineal-color-vitaly-gorbachev/100/000000/external-certificate-award-vitaliy-gorbachev-lineal-color-vitaly-gorbachev.png' },
   { type: '2x4', Comp: Account, name: '账号', x: 4, y: 6, iconSrc: 'https://img.icons8.com/dusk/64/000000/test-account.png' },
+  { type: '4x1.5', Comp: GoogleImg, name: '谷歌搜图', x: 7, y: 10, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
 ]
 
 const buildLayout = (oriLay: any[]) => {
@@ -78,15 +82,16 @@ const buildLayout = (oriLay: any[]) => {
     return e
   })
 }
-const iniLayout = buildLayout(originLayout)
+const iniLayoutOri = buildLayout(originLayout)
 
+const iniLayout= iniLayoutOri.map(e => Object.assign({}, e))
 const MyHome: FC = () => {
   const timeRef = useRef(0)
   let { id } = useParams()
   const gridRef = useRef<any>()
   const conRef = useRef(null)
   const size = useSize(conRef)
-  const [layout, setLayout] = useState(iniLayout.map(e => Object.assign({}, e)))
+  const [layout, setLayout] = useState(iniLayout)
   const sonLayoutRef = useRef<gridItem[]>()
   const [curI, setCurI] = useState<string>('')
   const isLowReso = useMemo(() => !isLowResolution(), [])
@@ -163,7 +168,7 @@ const MyHome: FC = () => {
       return (
         <div key={e.i} className={classNames(' bg-neutral-800 rounded-md ', Style.cardItem, { 'hidden': e.i == 'fuck' })} style={{ transitionProperty: 'width, height,transform' }}  >
           <div className={classNames('w-full h-full rounded-md overflow-hidden cursor-pointer relative',
-            { [Style.conActive]: curI == e.i })} onTouchStart={recordMouseTime} onMouseUp={() => { itemClick(e) }} onMouseDown={recordMouseTime} onTouchEnd={() => { itemClick(e) }} >
+            { [Style.conActive]: curI == e.i })} onTouchStart={recordMouseTime} onMouseUp={() => { itemClick(e) }} onMouseDown={recordMouseTime}  >
             {!e.Comp || e.Comp == '' ? e.name :
               <e.Comp ref={(r: any) => { e.ref = r }} {...pr} >
                 {/* {!e.expend && <GridIcon name={e.name} iconSrc={e.iconSrc || ''} />} */}

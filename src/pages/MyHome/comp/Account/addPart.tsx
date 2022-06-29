@@ -5,8 +5,6 @@ import { forwardRef, memo, ReactNode, useEffect, useImperativeHandle, useRef, us
 import { get_account_list, LeftStorage, save_account_list, ShowRecordSizeList } from "services/nt";
 import { Button, Card, Drawer, Form, FormRule, Input, Tag } from "tdesign-react";
 import { copyToPaste } from "utils/util";
-import InfoList from "../InfoList";
-import { MdDelete } from "react-icons/md";
 import { BsPlusSquareDotted } from "react-icons/bs";
 import { AccData } from './index'
 import FormItem from "tdesign-react/es/form/FormItem";
