@@ -1,7 +1,7 @@
 import Space from 'components/Space';
 import { getMsgOpt } from 'configs/cfg';
 import define from 'configs/define';
-import { MessagePlugin } from 'tdesign-react';
+import { FormRule, MessagePlugin } from 'tdesign-react';
 import request from 'utils/request';
 import { GiAnticlockwiseRotation, GiClockwiseRotation } from "react-icons/gi";
 
@@ -122,7 +122,7 @@ export const toolBarRender = ({ rotate, onRotate }: any): React.ReactNode => {
 
 export const menuClassName = 'hover:bg-slate-800 bg-slate-700'
 
-
+export const mustRules = [{ required: true, message: '必填', type: 'error' }] as FormRule[]
 // export const deepSearch = (obj:object, predicate) => {
 //   let result: Object[] = [];
 //   for (let p in obj) { // iterate on every property

@@ -57,14 +57,14 @@ const AddPart: React.FC<IAddPartProp> = forwardRef(({ children,getList }, ref) =
   }
   const renderBody = () => {
     return (
-      <>
+      <div className={'w-full h-full flex'}>
         <FormItem label="名字" name="acc" rules={rules}>
           <Input clearable />
         </FormItem>
         <FormItem label="密码" name="psw" rules={rules}>
           <Input clearable />
         </FormItem>
-      </>
+      </div>
     )
   }
   const hide = () => {
@@ -77,7 +77,7 @@ const AddPart: React.FC<IAddPartProp> = forwardRef(({ children,getList }, ref) =
         <Button className={'w-4/5 '} icon={<BsPlusSquareDotted className="text-2xl" />} shape={'round'} onClick={showForm} > </Button>
       </div>
       <div onMouseUp={(e) => { e.stopPropagation() }} onTouchEnd={(e) => { e.stopPropagation() }}>
-        <Form ref={formRef} onSubmit={submit} labelWidth={50} layout={'inline'} onValuesChange={formChange} >
+        <Form ref={formRef} onSubmit={submit} labelWidth={60} layout={'inline'} onValuesChange={formChange} >
           <Drawer
             header={false}
             body={renderBody()}

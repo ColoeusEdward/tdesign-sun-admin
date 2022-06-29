@@ -6,6 +6,10 @@ import { getMsgOpt } from 'configs/cfg'
 import { useAtom } from 'jotai'
 import { memoryAtom } from 'jtStore/home'
 import { useEffect } from 'react'
+import { bookAtom, bookInfo } from 'jtStore/book'
+import { useDispatch } from 'react-redux'
+import { switchTheme } from 'modules/global'
+import { ETheme } from 'types/index.d';
 
 declare global {
   interface Window {
@@ -14,11 +18,17 @@ declare global {
 }
 
 let setMem = (udpate: number[]) => { }
+let setBook = (udpate: bookInfo) => { }
 const JtComp = () => {
-  const [memory, setMemory] = useAtom(memoryAtom)
+  const [, setMemory] = useAtom(memoryAtom)
+  const [, setBookInfo] = useAtom(bookAtom)
+  const dispatch = useDispatch()
   useEffect(() => {
     console.log(`jtc`,);
     setMem = setMemory
+    setBook = setBookInfo
+    if (window.location.href.search('bookPage') != -1)
+      dispatch(switchTheme(ETheme.dark))
   }, [])
   return (<div></div>)
 }
@@ -51,6 +61,9 @@ export function buildSocket(socket: Socket) {
   //   socket.emit('getMem')
   // });
   socket.on("connect", () => {
+    if (window.location.href.search('/bookPage') != -1) {
+      return
+    }
     socket.emit('getMem')
     // socket.emit('getTimeWithTotal')
     // socket.emit('getTimeLoop')
@@ -60,6 +73,10 @@ export function buildSocket(socket: Socket) {
     // socketStore.setYoutubeNeedToken(true)
   })
   socket.on('novelContent', (res) => {
+    setBook({
+      content: res.text,
+      page: res.page
+    })
     // bookStore.setContent(res)
   })
 

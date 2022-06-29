@@ -57,7 +57,7 @@ export default memo(() => {
 
   useEffect(() => {
     console.log(`layouteff`,);
-    dispatch(switchTheme())
+    dispatch(switchTheme(ETheme.dark))
   }, [])
 
   return (

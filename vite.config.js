@@ -1,4 +1,4 @@
-import path from 'path';
+import path, { resolve } from 'path';
 import { viteMockServe } from 'vite-plugin-mock';
 import react from '@vitejs/plugin-react';
 import svgr from '@honkhonk/vite-plugin-svgr';
@@ -59,6 +59,12 @@ export default (params) => ({
 
   build: {
     cssCodeSplit: false,
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        book: resolve(__dirname, 'bookPage/index.html')
+      }
+    }
   },
 
   server: {
