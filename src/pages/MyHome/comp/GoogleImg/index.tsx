@@ -16,7 +16,7 @@ const GoogleImg: React.FC<IGoogleImgProp> = forwardRef(({ children }, ref) => {
 
   const submit = (val: InputValue, { e }: { e: React.KeyboardEvent<HTMLInputElement> }) => {
     // console.log("🚀 ~ file: index.tsx ~ line 22 ~ submit ~ url", url,e.key)
-    if(e.key != 'Enter') return
+    // if(e.key != 'Enter') return
     window.open(`https://www.google.com/searchbyimage?image_url=${url}`)
     setUrl('')
   }
@@ -27,7 +27,7 @@ const GoogleImg: React.FC<IGoogleImgProp> = forwardRef(({ children }, ref) => {
   return (
     <div className={'h-full flex items-center'}  >
       {/* {children} */}
-      <Row className="px-3 w-full"><Input prefixIcon={<FcGoogle />} value={url} onKeydown={submit} onChange={(e) => { setUrl(e) }} placeholder={'输入图片url'} clearable /></Row>
+      <Row className="px-3 w-full"><Input prefixIcon={<FcGoogle />} type={'search'} onEnter={submit} value={url}  onChange={(e) => { setUrl(e) }} placeholder={'输入图片url'} clearable /></Row>
     </div>
   )
 
