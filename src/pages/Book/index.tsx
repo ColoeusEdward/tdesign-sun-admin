@@ -19,7 +19,30 @@ type IBookProp = {
 }
 const innerHeight = window.innerHeight
 
-
+let wakeLock: any = null;
+const requestWakeLock = async () => {
+  if (wakeLock)
+    return false
+  try {
+    wakeLock = await (navigator as any).wakeLock.request('screen');
+    wakeLock.addEventListener('release', () => {
+      console.log('Screen Wake Lock released:', wakeLock.released);
+      wakeLock = null
+      return true
+    });
+    console.log('Screen Wake Lock released:', wakeLock.released);
+  } catch (err: any) {
+    console.error(`${err.name}, ${err.message}`);
+  }
+};
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState == 'hidden') {
+    //切离该页面时执行
+  } else if (document.visibilityState == 'visible') {
+    //切换到该页面时执行
+    requestWakeLock()
+  }
+});
 const Book: React.FC = () => {
   const curLocTextNum = useRef(20)
   // const curItem = useRef<postData>()
@@ -39,8 +62,8 @@ const Book: React.FC = () => {
     window.$socket && window.$socket.emit('nextPage')
   }
   useEffect(() => {
-
-  }, [])
+    requestWakeLock()
+  },[])
 
 
   return (

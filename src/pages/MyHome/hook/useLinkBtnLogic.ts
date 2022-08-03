@@ -12,10 +12,10 @@ const buildDialog = (confirmFn: () => {}) => {
     onConfirm: ({ e }) => {
       // console.log('confirm clicked', e);
       confirmFn()
-      mydialog.hide();
+      mydialog.hide!();
     },
     onClose: ({ e, trigger }) => {
-      mydialog.hide();
+      mydialog.hide!();
     },
   });
 }
@@ -60,6 +60,9 @@ export default function useLinkBtnLogic() {
     },
     '更新证书':() => {
       buildDialog(update_ecc)
+    },
+    '漫画':() => {
+      window.open('https://meamoe.ml/manga/')
     }
   }
   const uploadObj: Record<string, Function> = {

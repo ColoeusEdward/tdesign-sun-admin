@@ -29,11 +29,35 @@
     <td-horizon></td-horizon>
     <td-aegis></td-aegis>
     <div id="app"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="appf-bg" style="background-image: url('/jiye.png');opacity: 0.3;position:absolute;z-index: -99;top:10px;left: 10px;box-sizing: border-box;width: 272px;height: 381px;"></div>
+    <div id="appf" style="position:absolute;z-index: -100;top:0;left: 0;box-sizing: border-box;padding-top: 10px;padding-left: 20px; width: 100vw;height: 100vh;background-color: #000;color:#dfdbc9;"></div>
+
     <script>
       if (window.Cypress) {
         window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
       }
+      let loadTextList = ['系统启动中','系统确认开始','记忆体装置确认: 无异常','战斗履历: 恢复预设','地形资料: 开始载入','生命迹象确认: 无异常','MP剩余量确认: 100%','黑盒温度: 适当','黑盒内压力正常','启动IFF','启动FCS','辅助机通讯链接开始','建立DBU','惯性控制系统启动','环境检测器启动','装备确认: 完毕','系统一切正常','战斗准备完毕']
+      let app = document.getElementById('appf')
+      let loading = true
+
+      const loadFn = async () => {
+        const sleep = (ms) => {
+        return new Promise((reslove) => {
+          setTimeout(reslove, ms)
+        })
+      }
+        let i = 0
+        while(loading && i < loadTextList.length){
+          let p = document.createElement('div')
+          p.style.paddingBottom='10px'
+          p.innerText = loadTextList[i]+'...'
+          app.appendChild(p)
+          i++;
+          await sleep(80)
+        }
+      }
+      loadFn()
     </script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

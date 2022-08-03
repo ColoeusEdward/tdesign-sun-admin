@@ -60,6 +60,7 @@ const originLayout = [
   { type: 'btn', Comp: LinkBtn, name: '更新证书', x: 0, y: 7, iconSrc: 'https://img.icons8.com/external-vitaliy-gorbachev-lineal-color-vitaly-gorbachev/100/000000/external-certificate-award-vitaliy-gorbachev-lineal-color-vitaly-gorbachev.png' },
   { type: '2x4', Comp: Account, name: '账号', x: 4, y: 6, iconSrc: 'https://img.icons8.com/dusk/64/000000/test-account.png' },
   { type: '4x1.5', Comp: GoogleImg, name: '谷歌搜图', x: 7, y: 10, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
+  { type: 'btn', Comp: LinkBtn, name: '漫画', x: 2, y: 4, iconSrc: 'https://img.icons8.com/officexs/80/000000/comics-magazine.png' },
 ]
 
 const buildLayout = (oriLay: any[]) => {
