@@ -56,3 +56,10 @@
 *{
   box-sizing: border-box;
 }
+.flipX{
+  transform: rotateY(180deg);
+}
+
+.flipY{
+  transform: rotateX(180deg);
+}

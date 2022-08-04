@@ -23,4 +23,6 @@ export const curCommRefAtomRead = atom<{ current: CommentInfo }>((get) => {
 const curPostRefAtom = atom<{ current: postTData | { type: string, val: string, proId: string }[] | null }>({ current: null })
 export const curPostRefAtomRead = atom<{ current: postTData | { type: string, val: string, proId: string }[] | null }>((get) => {
   return get(curPostRefAtom)
-}) 
+})
+
+export const isFlipAtom = atom<[boolean, boolean]>([false, false])

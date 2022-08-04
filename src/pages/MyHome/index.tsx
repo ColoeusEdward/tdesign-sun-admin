@@ -167,7 +167,7 @@ const MyHome: FC = () => {
       let pr: any = { name: e.name, type: e.type }
       e.clickFn && (pr.clickFn = fnObj[e.clickFn])
       return (
-        <div key={e.i} className={classNames(' bg-neutral-800 rounded-md ', Style.cardItem, { 'hidden': e.i == 'fuck' })} style={{ transitionProperty: 'width, height,transform' }}  >
+        <div key={e.i} className={classNames(' bg-neutral-800 rounded-md transform-gpu', Style.cardItem, { 'hidden': e.i == 'fuck' })} style={{ transitionProperty: 'width, height,transform' }}  >
           <div className={classNames('w-full h-full rounded-md overflow-hidden cursor-pointer relative',
             { [Style.conActive]: curI == e.i })} onTouchStart={recordMouseTime} onMouseUp={() => { itemClick(e) }} onMouseDown={recordMouseTime}  >
             {!e.Comp || e.Comp == '' ? e.name :

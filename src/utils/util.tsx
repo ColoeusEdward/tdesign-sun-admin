@@ -4,6 +4,9 @@ import define from 'configs/define';
 import { FormRule, MessagePlugin } from 'tdesign-react';
 import request from 'utils/request';
 import { GiAnticlockwiseRotation, GiClockwiseRotation } from "react-icons/gi";
+import { CgEditFlipH, CgEditFlipV } from "react-icons/cg";
+import { useAtom } from 'jotai';
+import { isFlipAtom } from 'pages/V8/jotai';
 
 
 export async function sendRequestG<T, R>(url: string, params?: R) {
@@ -111,11 +114,56 @@ export const isLowResolution = () => {
 
 }
 
-export const toolBarRender = ({ rotate, onRotate }: any): React.ReactNode => {
+export const useToolBarRender = () => {
+  const [, setIsFlip] = useAtom(isFlipAtom)
+  const  resetFlip = () => {
+    setIsFlip([false,false])
+  }
+  const flipx = () => {
+    setIsFlip((pre) => {
+      let [x, y] = pre
+      return [!x, y];
+    })
+  }
+  const flipy = () => {
+    setIsFlip((pre) => {
+      let [x, y] = pre
+      return [x, !y];
+    })
+  }
+  const toolBarRender = ({ rotate, onRotate }: any): React.ReactNode => {
+    return (
+      <Space height="64px" align="center" >
+        <GiAnticlockwiseRotation className={' text-2xl'} fill="#fff" onClick={() => { onRotate(rotate - 90);resetFlip() }} />
+        <GiClockwiseRotation className={'text-2xl'} fill="#fff" onClick={() => { onRotate(rotate + 90);resetFlip() }} />
+        <CgEditFlipH className={'text-2xl'} fill="#fff" onClick={flipx} />
+        <CgEditFlipV className={'text-2xl'} fill="#fff" onClick={flipy} />
+      </Space>
+    )
+  }
+  return toolBarRender
+}
+export const toolBarRender = ({ rotate, onRotate, ...me }: any): React.ReactNode => {
+  const [, setIsFlip] = useAtom(isFlipAtom)
+
+  const flipx = () => {
+    setIsFlip((pre) => {
+      let [x, y] = pre
+      return [!x, y];
+    })
+  }
+  const flipy = () => {
+    setIsFlip((pre) => {
+      let [x, y] = pre
+      return [x, !y];
+    })
+  }
   return (
     <Space height="64px" align="center" >
       <GiAnticlockwiseRotation className={' text-2xl'} fill="#fff" onClick={() => { onRotate(rotate - 90) }} />
       <GiClockwiseRotation className={'text-2xl'} fill="#fff" onClick={() => { onRotate(rotate + 90) }} />
+      <CgEditFlipH className={'text-2xl'} fill="#fff" onClick={flipx} />
+      <CgEditFlipV className={'text-2xl'} fill="#fff" onClick={flipy} />
     </Space>
   )
 }
@@ -124,7 +172,7 @@ export const menuClassName = 'hover:bg-slate-800 bg-slate-700'
 
 export const mustRules = [{ required: true, message: '必填', type: 'error' }] as FormRule[]
 
-export const replaceLine = (content:string) => {
+export const replaceLine = (content: string) => {
   let str = content.replace(/\n\n/g, '\n')
   return str
 }

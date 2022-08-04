@@ -14,12 +14,15 @@ import { ControlledMenu, Menu, MenuItem, useMenuState } from "@szhsin/react-menu
 import { Button } from "tdesign-react";
 import { CalendarIcon } from "tdesign-icons-react";
 import Post from "./comp/Post";
-import { menuClassName, sleep, toolBarRender } from "utils/util";
+import { menuClassName, sleep, toolBarRender, useToolBarRender } from "utils/util";
 import ChangeBa from "./comp/ChangeBa";
 import { useMouse } from "ahooks";
 import { useAtom } from "jotai";
 import { anchorPointAtom, mouseAtom } from "jtStore/home";
 import PostMenu, { postMenuHandler } from "components/PostMenu/PostMenu";
+import classNames from "classnames";
+import { isFlipAtom } from "./jotai";
+import Photo from "components/Photo";
 
 
 type IVListProp = {
@@ -29,13 +32,32 @@ type IVListProp = {
 }
 const innerHeight = window.innerHeight
 const VList = memo(({ list, curUrlRef, rowClick }: IVListProp) => {
+  const [isFlip] = useAtom(isFlipAtom)
+  const tbRender = useToolBarRender()
+  const photoFlip = () => {
+    let photo = document.getElementsByClassName('PhotoView__Photo')[0] as HTMLImageElement
+    if (photo) {
+      let trsform = photo.style.transform
+      let flipRotateList = [isFlip[0] && 'rotateY(180deg)', isFlip[1] && 'rotateX(180deg)']
+      // console.log("🚀 ~ file: index.tsx ~ line 41 ~ photoFlip ~ flipRotateList", flipRotateList)
+      !trsform && (photo.style.transform = flipRotateList.filter(e => e).join(' '))
+      if (trsform) {
+        let res = ''
+        let rota = trsform.match(/(rotate\(\S+\))/)
+        rota && (res = rota[0])
+        res += flipRotateList.filter(e => e).join(' ')
+        photo.style.transform = res
+      }
+    }
+  }
   const renderRow = (item: postData) => {
     const renderImgList = () => {
+      // photoClassName={classNames({ 'flipX': isFlip[0], 'flipY': isFlip[1] })} 
       return (
-        <PhotoProvider className={'select-none'} maskOpacity={0.5} speed={() => 300} toolbarRender={toolBarRender} >
+        <PhotoProvider className={'select-none'}  maskOpacity={0.5} speed={() => 300} toolbarRender={tbRender} portalContainer={document.getElementById('photoCon') || document.body} >
           <Space inline >
             {item.imgList?.map((item, index) => (
-              <PhotoView key={index} src={item} >
+              <PhotoView key={index} src={item}  >
                 <img src={item} onMouseDown={(e) => { e.stopPropagation() }} onContextMenu={(e) => { e.stopPropagation(); }} style={{ width: '50px' }} alt="" />
               </PhotoView>
             )) as ReactNode[]}
@@ -75,12 +97,33 @@ const VList = memo(({ list, curUrlRef, rowClick }: IVListProp) => {
       </div>
     )
   }
+  useEffect(() => {
+    photoFlip()
+    // console.log("🚀 ~ file: index.tsx ~ line 91 ~ useEffect ~ (isFlip[0] || isFlip[1])", (isFlip[0] || isFlip[1]))
+    // document.addEventListener('keydown', (e) => {
+    //   if (['ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp'].findIndex(item => item == e.key) > -1) {
+    //     console.log("🚀 ~ file: index.tsx ~ line 107 ~ document.addEventListener ~ e.key", e.key)
 
+    //   }
+    // })
+  }, [isFlip])
+
+  // useEffect(() => {
+  //   // photoFlip()
+  //   // console.log("🚀 ~ file: index.tsx ~ line 91 ~ useEffect ~ (isFlip[0] || isFlip[1])", (isFlip[0] || isFlip[1]))
+  //   document.addEventListener('keydown', (e) => {
+  //     if (['ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp'].findIndex(item => item == e.key) > -1) {
+  //       console.log("🚀 ~ file: index.tsx ~ line 107 ~ document.addEventListener ~ e.key", e.key)
+
+  //     }
+  //   })
+  // }, [])
   return (
     <>
       {list.map(e => {
         return renderRow(e)
       })}
+      <div id={'photoCon'}> </div>
     </>
   )
 })

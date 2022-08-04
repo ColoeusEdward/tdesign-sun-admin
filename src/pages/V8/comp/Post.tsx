@@ -4,17 +4,18 @@ import React, { ElementRef, forwardRef, memo, ReactNode, useCallback, useImperat
 import { get_both_tb_post_comment, get_tb_comment, get_tb_post } from "services/nt";
 import { Button, Drawer, PageInfo, Pagination } from "tdesign-react";
 import { postData, postTData } from 'types/index'
-import { ajaxPromiseAll, copyToPaste, isLowResolution, menuClassName, sleep, toolBarRender } from "utils/util";
+import { ajaxPromiseAll, copyToPaste, isLowResolution, menuClassName, sleep, toolBarRender, useToolBarRender } from "utils/util";
 import SubPost from "./SubPost";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import Replay, { ReplayHandle } from "./Replay";
 
 import { useAtom, useAtomValue } from "jotai";
-import { curCommRefAtomRead, curMenuItmeListAtom, curPostRefAtomRead } from "../jotai";
+import { curCommRefAtomRead, curMenuItmeListAtom, curPostRefAtomRead, isFlipAtom } from "../jotai";
 import PostMenu, { postMenuHandler, buildMenuItemFn } from "components/PostMenu/PostMenu";
 import { MenuItem } from "@szhsin/react-menu";
-import { BiCopyAlt,BiRepost } from "react-icons/bi";
+import { BiCopyAlt, BiRepost } from "react-icons/bi";
 import { MdOutlineQuickreply } from "react-icons/md";
+import classNames from "classnames";
 
 type IPostProp = {
   curItem?: postData
@@ -45,6 +46,8 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
   const [total, setTotal] = useState(1)
   const postMenuRef = useRef<postMenuHandler>(null)
   const replyRef = useRef<ReplayHandle>(null)
+  const tbRender = useToolBarRender()
+  const [isFlip] = useAtom(isFlipAtom)
 
   console.log(`rerender`,);
   const show = () => {
@@ -87,7 +90,7 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
     if (curCommRef.current.userName) {
       setCurMenuItemList([{ name: `回复【${curCommRef.current.userName}】`, value: 'floorIn', icon: <MdOutlineQuickreply className={'text-lg mr-1'} /> }])
     } else {
-      setCurMenuItemList([{ name: `回复层`, value: 'floor',icon: <BiRepost className={'text-lg mr-1'} />  }])
+      setCurMenuItemList([{ name: `回复层`, value: 'floor', icon: <BiRepost className={'text-lg mr-1'} /> }])
     }
   }, [])
   const hide = useCallback(() => {
@@ -178,7 +181,6 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
           })
         }
       }
-
       return (
         <div className={'text-slate-400  bg-neutral-700/20 p-3 mx-3 my-2 rounded-xl'}
           style={{ boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)' }}
@@ -186,7 +188,7 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
           <div className={'inline-block w-4/5 text-left'}>
             {/* <div className={'text-base'}>{item.title}</div> */}
             <div className={'text-sm leading-relaxed'}>
-              <PhotoProvider className={'select-none'} maskOpacity={0.5} speed={() => 300} toolbarRender={toolBarRender} loop={false} >
+              <PhotoProvider className={'select-none'} photoClassName={classNames({ 'flipX': isFlip[0], 'flipY': isFlip[1] })} maskOpacity={0.5} speed={() => 300} toolbarRender={tbRender} loop={false} >
                 {renderContent()}
               </PhotoProvider>
             </div>
