@@ -30,6 +30,7 @@ import Account from './comp/Account';
 import GoogleImg from './comp/GoogleImg';
 import { useImmer } from 'use-immer';
 import produce from 'immer';
+import SyncToYou from './comp/SyncToYou';
 
 const originLayout = [
   { type: 'btn', Comp: LinkBtn, ref: null, clickFn: 'recoverLayout', name: '复原', x: 11, y: 0, iconSrc: 'https://img.icons8.com/office/96/undefined/synchronize.png' },
@@ -40,7 +41,7 @@ const originLayout = [
   { type: 'uploadBtn', Comp: LinkBtn, name: '部署', x: 10, y: 0, iconSrc: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/deployment-2369058-1978336.png' },
   { type: '2x3', Comp: DeleteFile, name: '删除文件', x: 2, y: 0, iconSrc: 'https://img.icons8.com/bubbles/100/000000/delete-sign.png' },
   { type: '2x3', Comp: FreeCloudUpload, name: '自由上传文件', x: 7, y: 6, iconSrc: 'https://img.icons8.com/bubbles/100/000000/upload.png' },
-  { type: '2x3', Comp: MySkeleton, name: '上传视频至youtube', x: 6, y: 0, iconSrc: 'https://img.icons8.com/fluency/96/000000/youtube-play.png' },
+  { type: '2x3', Comp: SyncToYou, name: '上传视频至youtube', x: 6, y: 0, iconSrc: 'https://img.icons8.com/fluency/96/000000/youtube-play.png' },
   { type: '2x4', Comp: RecordList, name: '查看文件大小', x: 4, y: 3, iconSrc: 'https://icons-for-free.com/iconfiles/png/512/file+format+mp4+paper+icon-1320167130956649663.png' },
   { type: '2x4', Comp: LeftStorageList, name: '剩余空间', x: 0, y: 3, iconSrc: 'https://icons-for-free.com/iconfiles/png/512/storage+dropbox+dropbox+logo+file+storage+file+transfer+upload-1320196083387888656.png' },
   { type: '2x3', Comp: FlvToMp4, name: 'flv转mp4', x: 0, y: 7, iconSrc: 'https://img.icons8.com/color/96/undefined/not-sending-video-frames.png' },
