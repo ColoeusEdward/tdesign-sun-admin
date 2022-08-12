@@ -63,6 +63,12 @@ export default function useLinkBtnLogic() {
     },
     '漫画':() => {
       window.open('https://meamoe.ml/manga/')
+    },
+    '阿里云盘':() => {
+      window.open('https://www.aliyundrive.com/drive/')
+    },
+    '油管频道':() => {
+      window.open('https://studio.youtube.com/channel/UCGJkkwFknnsqE6oHH5EalVg/videos/upload')
     }
   }
   const uploadObj: Record<string, Function> = {

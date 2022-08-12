@@ -62,6 +62,8 @@ const originLayout = [
   { type: '2x4', Comp: Account, name: '账号', x: 4, y: 6, iconSrc: 'https://img.icons8.com/dusk/64/000000/test-account.png' },
   { type: '4x1.5', Comp: GoogleImg, name: '谷歌搜图', x: 7, y: 10, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
   { type: 'btn', Comp: LinkBtn, name: '漫画', x: 2, y: 4, iconSrc: 'https://img.icons8.com/officexs/80/000000/comics-magazine.png' },
+  { type: 'btn', Comp: LinkBtn, name: '阿里云盘', x: 3, y: 4, iconSrc: 'https://img.icons8.com/color/96/000000/network-drive.png' },
+  { type: 'btn', Comp: LinkBtn, name: '油管频道', x: 3, y: 5, iconSrc: 'https://img.icons8.com/color/96/000000/youtube-studio.png' },
 ]
 
 const buildLayout = (oriLay: any[]) => {
