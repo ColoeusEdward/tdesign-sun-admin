@@ -14,7 +14,7 @@ type IChangeBaProp = {
 type IChangeBtnProp = {
   setShow: Function
 }
-const baList = [{ name: 'v', fid: '97650' }, { name: 'bilibili', fid: '2265748' }, { name: 'vtuber', fid: '26066262' }, { name: '航空母舰', fid: '18940' }, { name: '真反二', fid: '27842763' }, { name: '核战避难所', fid: '17641967' }, { name: '极限竞速地平线5', fid: '24379958' }]
+const baList = [{ name: 'v', fid: '97650' }, { name: 'bilibili', fid: '2265748' }, { name: 'vtuber', fid: '26066262' }, { name: '航空母舰', fid: '18940' }, { name: '真反二', fid: '27842763' }, { name: '核战避难所', fid: '17641967' }, { name: '极限竞速地平线5', fid: '24379958' }, { name: '2ch', fid: '839326' }]
 const innerWidth = window.innerWidth
 const ChangeBtn = memo(({ setShow }: IChangeBtnProp) => {
   const mouse = useMouse()

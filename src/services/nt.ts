@@ -83,17 +83,17 @@ export const to_mp4 = async (data?: recordData) => {
 };
 
 export const upload_temp = async (data: recordData, handleUploadEvent: () => void) => {
-  const result = await request.post<any>('/koa/mv_upload/uploadTemp', data, { onUploadProgress: handleUploadEvent,timeout:200000 });
+  const result = await request.post<any>('/koa/mv_upload/uploadTemp', data, { onUploadProgress: handleUploadEvent, timeout: 200000 });
   return result
 };
 
 export const upload_book = async (data: recordData, handleUploadEvent: () => void) => {
-  const result = await request.post<any>('/koa/mv_upload/uploadBook', data, { onUploadProgress: handleUploadEvent,timeout:200000  });
+  const result = await request.post<any>('/koa/mv_upload/uploadBook', data, { onUploadProgress: handleUploadEvent, timeout: 200000 });
   return result
 };
 
 export const deploy = async (data: recordData, handleUploadEvent: () => void) => {
-  const result = await request.post<any>('/koa/mv_upload/deploysun', data, { onUploadProgress: handleUploadEvent,timeout:200000  });
+  const result = await request.post<any>('/koa/mv_upload/deploysun', data, { onUploadProgress: handleUploadEvent, timeout: 200000 });
   return result
 };
 
@@ -222,7 +222,7 @@ export const get_page_tb_comment = async (data?: any) => {
   const result = await request.get<string>(`/koa/newCen/free/getPageTBComment`, { data });
   const str = result.data
   // const reList =  
-  return  buildNewReList(str)
+  return buildNewReList(str)
 };
 
 export const get_tb_post = async (data?: any) => {
@@ -409,13 +409,18 @@ export const delete_accout = async (data: any) => {
   return result
 };
 
-export const upload_tb_img = async (data: {fid:string,url:string}) => {
+export const upload_tb_img = async (data: { fid: string, url: string }) => {
   const result = await request.post<any>('/koa/newCen/free/uploadTbImg', data);
   return result.data
 };
 
-export const sync_video_to_you = async (data: {url:string,token?:string}) => {
+export const sync_video_to_you = async (data: { url: string, token?: string }) => {
   const result = await request.post<any>('/koa/newCen/syncVideoToYou', data);
+  return result.data
+};
+
+export const edit_accountList = async (data: { acc: string, psw: string, i: number }) => {
+  const result = await request.post<any>('/koa/newCen/editAccountList', data);
   return result.data
 };
 

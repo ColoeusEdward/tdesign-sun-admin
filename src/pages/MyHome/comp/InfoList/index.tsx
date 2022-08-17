@@ -41,7 +41,7 @@ const InfoList: React.FC<IInfoListProp> = ({ list, loading, title, highLightLine
   return (
     <div className={'w-full h-full relative'}>
       <MySkeleton loading={loading} className={'flex-col'} >
-        <MacScrollbar className={'w-full h-full basis-full p-3 flex-shrink  relative flex-col'} style={{ overflow: 'auto' }} skin={'white'}>
+        <MacScrollbar className={'w-full h-full basis-full p-3 flex-shrink  flex-col'} style={{ overflow: 'auto' }} skin={'light'}>
           <div className={'pb-2 text-center  text-lg'} >{title}</div>
           {!children && renderList()}
           {children}
