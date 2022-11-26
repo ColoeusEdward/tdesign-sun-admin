@@ -47,6 +47,9 @@
 .noPadDrawer .t-drawer__body {
   padding: 0;
 }
+/* .noPadDrawer .t-drawer__footer {
+  padding: 0;
+} */
 .t-message__list.t-message-placement--top{
   display: flex;
   flex-direction: column;

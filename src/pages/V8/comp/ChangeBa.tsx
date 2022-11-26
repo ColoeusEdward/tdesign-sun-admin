@@ -75,6 +75,7 @@ const ChangeBa: FC<IChangeBaProp & RefAttributes<unknown>> = forwardRef(({ setBa
         visible={drawShow}
         onClose={hide}
         size={size}
+        showInAttachedElement
       >
       </Drawer>
     </>

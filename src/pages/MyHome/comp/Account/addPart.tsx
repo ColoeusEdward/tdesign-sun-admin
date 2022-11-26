@@ -97,7 +97,7 @@ const AddPart: React.FC<IAddPartProp & RefAttributes<unknown>> = forwardRef(({ c
             showInAttachedElement
             footer={
               <div className={'flex justify-center'}>
-                <FormItem >
+                <FormItem className={'mb-0'} style={{margin:0}}>
                   <Button className={'w-96'} type={'submit'} loading={loading} shape="round" >提 交</Button>
                 </FormItem>
               </div>
@@ -107,6 +107,8 @@ const AddPart: React.FC<IAddPartProp & RefAttributes<unknown>> = forwardRef(({ c
             size={'130px'}
             placement={'bottom'}
             showOverlay={true}
+            closeBtn={false}
+            attach={document.querySelector('#account-draw-con') as any}
           >
           </Drawer>
         </Form>

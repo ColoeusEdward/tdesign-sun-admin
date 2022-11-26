@@ -75,7 +75,7 @@ const Account: React.FC<IAccountProp> = forwardRef(({ clickFn, children, name },
     return l
   }
   return (
-    <div className={'w-full h-full relative '}>
+    <div className={'w-full h-full relative'} id={'account-draw-con'}>
       {children}
       <InfoList title={name} loading={loading} list={[]}>
         {renderList()}

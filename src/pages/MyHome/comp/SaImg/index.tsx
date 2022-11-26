@@ -90,7 +90,7 @@ const SaImg: React.FC<SaImgProp> = forwardRef(({ children }, ref) => {
 
       <Row className="px-3 w-full"><Input prefixIcon={<SiPixiv />} type={'search'} onEnter={() => {setVisible(true)}} value={url} onChange={(e) => { setUrl(e) }} placeholder={'输入图片url'} clearable /></Row>
       <img src={url as string} width={'10px'} height={'10px'}  ></img>
-      <Dialog visible={visible} width={'50vw'} footer={false} onOpened={confirm} onCloseBtnClick={() => {setVisible(false)}} >
+      <Dialog visible={visible} width={'50vw'} footer={false} onOpened={confirm} showInAttachedElement closeOnOverlayClick={true} onCloseBtnClick={() => {setVisible(false)}} >
         <div style={{height:'700px'}} className={'pt-6'}>
           <iframe id="myIf" src={''} className={'w-full h-full'}></iframe>
         </div>
