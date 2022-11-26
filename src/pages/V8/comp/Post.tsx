@@ -235,7 +235,7 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
 
   return (
     <Drawer
-      className={'p-0'}
+      className={'p-0 noPadDrawer'}
       showInAttachedElement
       header={curItem?.title}
       body={renderBody()}
