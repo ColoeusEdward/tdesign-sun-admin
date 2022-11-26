@@ -178,7 +178,7 @@ const MyHome: FC = () => {
             {!e.Comp || e.Comp == '' ? e.name :
               <e.Comp ref={(r: any) => { e.ref = r }} {...pr} >
                 {/* {!e.expend && <GridIcon name={e.name} iconSrc={e.iconSrc || ''} />} */}
-                <div className={classNames('w-full h-full', { 'hidden': e.expend })}><GridIcon name={e.name} iconSrc={e.iconSrc || ''} /></div>
+                <div className={classNames('w-full h-full basis-full shrink-0', { 'hidden': e.expend })}><GridIcon name={e.name} iconSrc={e.iconSrc || ''} /></div>
               </e.Comp>
             }
           </div>

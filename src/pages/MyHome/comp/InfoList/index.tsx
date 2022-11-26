@@ -24,7 +24,7 @@ const InfoList: React.FC<IInfoListProp> = ({ list, loading, title, highLightLine
         <div onMouseUp={(e) => { e.stopPropagation() }} className={'flex  p-1'} >
           {e.length == 2 &&
             <div className={'flex items-center  py-1'} style={{ width: '10%' }}>
-              <Tag theme="primary" variant="outline">{e[0]}</Tag>
+              <Tag style={{color:'#ff8000'}} theme="default" >{e[0]}</Tag>
             </div>
           }
           <div className={classNames('inline-block ml-2 px-2 bg-zinc-800 hover:bg-zinc-900 active:bg-zinc-800 hover:border hover:border-solid  hover:border-neutral-600 border border-solid border-neutral-800 rounded-md py-2', { 'text-orange-500': highLightLineIdx == i })} style={{
