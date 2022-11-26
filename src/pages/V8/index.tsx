@@ -143,7 +143,7 @@ const RefreshBtn = memo(({ getData }: { getData: (e: any) => void }) => {
       style={{
         transition: 'transform 0.2s ease-in-out', transform: `translate3d(0px, ${getYposi()}px,0px)`
       }}>
-      <Button className={'w-14 h-14 pt-1 text-5xl rounded-full '} onClick={getData} >
+      <Button className={'w-14 h-14 text-5xl rounded-full '} onClick={getData} >
         <RiRefreshFill />
       </Button>
     </div>
@@ -206,7 +206,7 @@ const V8: React.FC = () => {
 
 
   return (
-    <div className={'w-full h-full relative overflow-hidden bg-neutral-800 noPadDrawer'} style={{ height: 'calc(100vh - 64px)' }}>
+    <div className={'w-full h-full relative overflow-hidden bg-neutral-800 noPadDrawer'} id={'post-draw-container'} style={{ height: 'calc(100vh - 64px)' }}>
       <MySkeleton loading={loading} >
         <MacScrollbar className={'w-full h-full'} skin={'dark'} onContextMenu={handleContextMenu} >
           <VList rowClick={rowClick} list={dataList} curUrlRef={curUrlRef} />

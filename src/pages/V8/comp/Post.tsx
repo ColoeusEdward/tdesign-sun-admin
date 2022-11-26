@@ -206,7 +206,7 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
   }
   const renderBody = () => {
     return (
-      <div className={'w-full h-full relative overflow-hidden'}>
+      <div className={'w-full h-full relative overflow-hidden' } id={'reply-draw-container'}>
         <MySkeleton loading={loading}>
           <MacScrollbar skin={'dark'} className={'w-full h-full relative'} >
             {renderRow()}
@@ -237,6 +237,7 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
     <Drawer
       className={'p-0 noPadDrawer'}
       showInAttachedElement
+      attach="#post-draw-container"
       header={curItem?.title}
       body={renderBody()}
       footer={renderFooter()}

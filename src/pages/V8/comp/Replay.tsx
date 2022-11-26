@@ -7,7 +7,6 @@ import { BsFileEarmarkImage } from "react-icons/bs";
 import { FiChevronLeft } from "react-icons/fi";
 import { reply_comment, reply_tb } from "services/nt";
 import { Button, Drawer, Select, SelectValue, Textarea, TextareaValue } from "tdesign-react";
-import Option from "tdesign-react/es/select/base/Option";
 import { postData } from "types";
 import { isLowResolution } from "utils/util";
 import { curCommRefAtomRead } from "../jotai";
@@ -136,6 +135,7 @@ const Reply: FC<IReplyProp & RefAttributes<ReplayHandle>> = forwardRef(({ curBa,
         size={'300px'}
         placement={'bottom'}
         showOverlay={true}
+        attach={document.querySelector(`#reply-draw-container`)! as any}
       >
       </Drawer>
     </>
