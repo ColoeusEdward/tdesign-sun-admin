@@ -22,9 +22,10 @@ export const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
   if (!token) token = localStorage.getItem('meaToken') && JSON.parse(localStorage.getItem('meaToken')!)
-  config.headers = {
+  config.headers = Object.assign(config.headers || {}, {
     Authorization: `Bearer ${token}`
-  }
+  })
+
   if (config.method == 'get') {
     config.params = config.data
   }

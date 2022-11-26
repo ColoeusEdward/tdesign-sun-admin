@@ -130,6 +130,7 @@ export const get_weather = async () => {
   return result
 }
 
+
 export const get_v8 = async (data?: any) => {
   const result = await request.get<string>('/koa/newCen/free/getV8', { data });
   return result
@@ -423,4 +424,10 @@ export const edit_accountList = async (data: { acc: string, psw: string, i: numb
   const result = await request.post<any>('/koa/newCen/editAccountList', data);
   return result.data
 };
+
+export const post_sa_image = async (data: {url: string }) => {
+  const result = await request.post<string>('/koa/newCen/free/sanoSearch', data,
+  );
+  return result.data
+}
 

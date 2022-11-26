@@ -31,6 +31,7 @@ import GoogleImg from './comp/GoogleImg';
 import { useImmer } from 'use-immer';
 import produce from 'immer';
 import SyncToYou from './comp/SyncToYou';
+import SaImg from './comp/SaImg';
 
 const originLayout = [
   { type: 'btn', Comp: LinkBtn, ref: null, clickFn: 'recoverLayout', name: '复原', x: 11, y: 0, iconSrc: 'https://img.icons8.com/office/96/undefined/synchronize.png' },
@@ -39,7 +40,7 @@ const originLayout = [
   { type: 'btn', Comp: LinkBtn, name: '命令行', x: 4, y: 0, iconSrc: 'https://img.icons8.com/dusk/100/000000/command-line.png' },
   { type: 'btn', Comp: LinkBtn, name: 'aria2', x: 5, y: 0, iconSrc: 'https://img.icons8.com/color/96/undefined/launched-rocket--v1.png' },
   { type: 'uploadBtn', Comp: LinkBtn, name: '部署', x: 10, y: 0, iconSrc: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/deployment-2369058-1978336.png' },
-  { type: '2x3', Comp: DeleteFile, name: '删除文件', x: 2, y: 0, iconSrc: 'https://img.icons8.com/bubbles/100/000000/delete-sign.png' },
+  { type: '2x3', Comp: DeleteFile, name: '删除文件', x: 2, y: 0, iconSrc: 'https://img.icons8.com/color/96/null/delete-forever.png' },
   { type: '2x3', Comp: FreeCloudUpload, name: '自由上传文件', x: 7, y: 6, iconSrc: 'https://img.icons8.com/bubbles/100/000000/upload.png' },
   { type: '2x3', Comp: SyncToYou, name: '上传视频至youtube', x: 6, y: 0, iconSrc: 'https://img.icons8.com/fluency/96/000000/youtube-play.png' },
   { type: '2x4', Comp: RecordList, name: '查看文件大小', x: 4, y: 3, iconSrc: 'https://icons-for-free.com/iconfiles/png/512/file+format+mp4+paper+icon-1320167130956649663.png' },
@@ -61,6 +62,7 @@ const originLayout = [
   { type: 'btn', Comp: LinkBtn, name: '更新证书', x: 0, y: 7, iconSrc: 'https://img.icons8.com/external-vitaliy-gorbachev-lineal-color-vitaly-gorbachev/100/000000/external-certificate-award-vitaliy-gorbachev-lineal-color-vitaly-gorbachev.png' },
   { type: '2x4', Comp: Account, name: '账号', x: 4, y: 6, iconSrc: 'https://img.icons8.com/dusk/64/000000/test-account.png' },
   { type: '4x1.5', Comp: GoogleImg, name: '谷歌搜图', x: 7, y: 10, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
+  { type: '4x1.5', Comp: SaImg, name: 'sa搜图', x: 7, y: 11.5, iconSrc: 'https://saucenao.com/favicon.ico' },
   { type: 'btn', Comp: LinkBtn, name: '漫画', x: 2, y: 4, iconSrc: 'https://img.icons8.com/officexs/80/000000/comics-magazine.png' },
   { type: 'btn', Comp: LinkBtn, name: '阿里云盘', x: 3, y: 4, iconSrc: 'https://img.icons8.com/color/96/000000/network-drive.png' },
   { type: 'btn', Comp: LinkBtn, name: '油管频道', x: 3, y: 5, iconSrc: 'https://img.icons8.com/color/96/000000/youtube-studio.png' },
