@@ -31,11 +31,14 @@ type IVListProp = {
   curUrlRef: React.MutableRefObject<string>
 }
 const innerHeight = window.innerHeight
+let photoIdx = 0
 const VList = memo(({ list, curUrlRef, rowClick }: IVListProp) => {
   const [isFlip] = useAtom(isFlipAtom)
   const tbRender = useToolBarRender()
   const photoFlip = () => {
-    let photo = document.getElementsByClassName('PhotoView__Photo')[0] as HTMLImageElement
+    let list = document.getElementsByClassName('PhotoView__Photo')
+    let photo = (photoIdx < list.length ? list[photoIdx] : list[list.length - 1]) as HTMLImageElement
+    // console.log("🚀 ~ file: index.tsx:40 ~ photoFlip ~ photoIdx", photoIdx)
     if (photo) {
       let trsform = photo.style.transform
       let flipRotateList = [isFlip[0] && 'rotateY(180deg)', isFlip[1] && 'rotateX(180deg)']
@@ -54,7 +57,7 @@ const VList = memo(({ list, curUrlRef, rowClick }: IVListProp) => {
     const renderImgList = () => {
       // photoClassName={classNames({ 'flipX': isFlip[0], 'flipY': isFlip[1] })} 
       return (
-        <PhotoProvider className={'select-none'}  maskOpacity={0.5} speed={() => 300} toolbarRender={tbRender} portalContainer={document.getElementById('photoCon') || document.body} >
+        <PhotoProvider className={'select-none'} maskOpacity={0.5} speed={() => 300} toolbarRender={tbRender} portalContainer={document.getElementById('photoCon') || document.body} onIndexChange={(i) => { photoIdx = i }} onVisibleChange={(v, i) => { photoIdx = i }} >
           <Space inline >
             {item.imgList?.map((item, index) => (
               <PhotoView key={index} src={item}  >

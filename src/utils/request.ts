@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getMsgOpt } from 'configs/cfg';
-import { MessagePlugin } from 'tdesign-react';
+import { MessagePlugin,MessageInfoOptions } from 'tdesign-react';
 import proxy from '../configs/host';
 
 const env = import.meta.env.MODE || 'development';
@@ -13,7 +13,7 @@ let token = localStorage.getItem('meaToken') && JSON.parse(localStorage.getItem(
 const err = (error: any) => {
   return Promise.reject(error)
 }
-
+const msgopt = getMsgOpt()
 export const instance = axios.create({
   baseURL: API_HOST,
   timeout: TIMEOUT,
@@ -43,6 +43,7 @@ instance.interceptors.response.use(
       }
       if (data.code === SUCCESS_CODE) {
         MessagePlugin.success({ content: data.msg, ...getMsgOpt() })
+        // console.log("🚀 ~ file: request.ts ~ line 46 ~ { content: data.msg, ...getMsgOpt() }", { content: data.msg, ...getMsgOpt() })
         return data;
       }
       MessagePlugin.error({ content: data.msg, ...getMsgOpt() })
