@@ -6,6 +6,7 @@ import { selectGlobal, toggleSetting, toggleMenu, ELayout, switchTheme } from 'm
 import Setting from './components/Setting';
 import AppLayout from './components/AppLayout';
 import Style from './index.module.less';
+import { ETheme } from 'types/index.d';
 
 export default memo(() => {
   const globalState = useAppSelector(selectGlobal);
@@ -25,13 +26,14 @@ export default memo(() => {
     // return () => {
     //   window.removeEventListener('resize', handleResize);
     // };
+    console.log(`layouteff`,);
+    dispatch(switchTheme(ETheme.dark))
   }, []);
 
   return (
     <Layout className={Style.panel}>
       <AppContainer />
       <Drawer
-        // destroyOnClose
         visible={globalState.setting}
         size='458px'
         footer={false}

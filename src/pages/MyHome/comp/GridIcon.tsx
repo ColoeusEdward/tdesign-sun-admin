@@ -1,7 +1,7 @@
 import { useSize } from "ahooks";
 import classNames from "classnames";
 import { FC, memo, useEffect, useRef, useState } from "react";
-import { Tooltip } from "tdesign-react";
+import { Tooltip,TooltipLite } from "tdesign-react";
 import { sleep } from "utils/util";
 
 export interface IIconProp {
@@ -24,7 +24,7 @@ const GridIcon: FC<IIconProp> = ({ iconSrc, name }) => {
   }
   return (
     <div className={'w-full h-full hover:bg-neutral-700'} ref={conRef} onMouseDown={removePopup}>
-      <Tooltip content={name} placement="bottom" showArrow>
+      <Tooltip content={name} placement="bottom" >
         <div className={'w-full h-full flex justify-center items-center'} style={sizeStyle()}    >
           <img className="w-24 h-24 " src={iconSrc}></img>
         </div>

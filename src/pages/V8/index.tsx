@@ -53,11 +53,11 @@ const VList = memo(({ list, curUrlRef, rowClick }: IVListProp) => {
       }
     }
   }
-  const renderRow = (item: postData) => {
+  const renderRow = (item: postData,idx:number) => {
     const renderImgList = () => {
       // photoClassName={classNames({ 'flipX': isFlip[0], 'flipY': isFlip[1] })} 
       return (
-        <PhotoProvider className={'select-none'} maskOpacity={0.5} speed={() => 300} toolbarRender={tbRender} portalContainer={document.getElementById('photoCon') || document.body} onIndexChange={(i) => { photoIdx = i }} onVisibleChange={(v, i) => { photoIdx = i }} >
+        <PhotoProvider className={'select-none'} maskOpacity={0.5} speed={() => 300} toolbarRender={tbRender} portalContainer={document.getElementById('photoCon') || document.body} onIndexChange={(i) => { photoIdx = i }} onVisibleChange={(v, i) => { photoIdx = i }}  >
           <Space inline >
             {item.imgList?.map((item, index) => (
               <PhotoView key={index} src={item}  >
@@ -69,17 +69,17 @@ const VList = memo(({ list, curUrlRef, rowClick }: IVListProp) => {
       )
     }
     const renderAuthor = (author: any) => {
-      return author.map((e: any) => {
+      return author.map((e: any,i:number) => {
         let obj: Record<string, Function> = {
           text: () => e.val
-          , img: () => <img className={'relative top-0.5'} style={{ width: '16px' }} src={e.val} />
+          , img: () => <img className={'relative top-0.5'} style={{ width: '16px' }} src={e.val} key={i} />
         }
         return obj[e.type] && obj[e.type]()
       })
     }
 
     return (
-      <div className={'p-3 text-slate-400 hover:bg-neutral-900/60 bg-neutral-900 mx-4 my-4 rounded-lg'} style={{ boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)' }} onMouseDown={(e) => { curUrlRef.current = item.url; rowClick(e, item) }} >
+      <div className={'p-3 text-slate-400 hover:bg-neutral-900/60 bg-neutral-900 mx-4 my-4 rounded-lg'} style={{ boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)' }} onMouseDown={(e) => { curUrlRef.current = item.url; rowClick(e, item) }} key={idx} >
         <div className={'inline-block w-4/5 text-left'}>
           <div className={'text-base'}>{item.title}</div>
           <div className={'text-sm text-slate-500'}>{item.info}</div>
@@ -123,8 +123,8 @@ const VList = memo(({ list, curUrlRef, rowClick }: IVListProp) => {
   // }, [])
   return (
     <>
-      {list.map(e => {
-        return renderRow(e)
+      {list.map((e,i) => {
+        return renderRow(e,i)
       })}
       <div id={'photoCon'}> </div>
     </>

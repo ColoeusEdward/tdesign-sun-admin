@@ -42,7 +42,7 @@ const PostMenu = memo(forwardRef<postMenuHandler, postMenuProp>(({ menuClick, bu
   }))
   return (
     <ControlledMenu {...menuProps} anchorPoint={anchorPoint} menuClassName={'bg-slate-700 text-slate-300'} onClose={menuClose} onItemClick={menuClick} reposition={'initial'} position={'initial'} >
-      {curMenuItemList && curMenuItemList.length > 0 && curMenuItemList.map(e => <MenuItem className={menuClassName} value={e.value} ><>{e.icon}{e.name}</></MenuItem>)}
+      {curMenuItemList && curMenuItemList.length > 0 && curMenuItemList.map((e,idx) => <MenuItem className={menuClassName} value={e.value} key={idx} ><>{e.icon}{e.name}</></MenuItem>)}
       {children}
     </ControlledMenu>
   )

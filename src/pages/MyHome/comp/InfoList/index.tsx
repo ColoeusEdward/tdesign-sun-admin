@@ -21,7 +21,7 @@ const InfoList: React.FC<IInfoListProp> = ({ list, loading, title, highLightLine
   const renderList = () => {
     return list.map((e, i) => {
       return (
-        <div onMouseUp={(e) => { e.stopPropagation() }} className={'flex  p-1'} >
+        <div onMouseUp={(e) => { e.stopPropagation() }} className={'flex  p-1'} key={i} >
           {e.length == 2 &&
             <div className={'flex items-center  py-1'} style={{ width: '10%' }}>
               <Tag style={{color:'#ff8000'}} theme="default" >{e[0]}</Tag>

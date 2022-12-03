@@ -109,7 +109,7 @@ const Space: FC<ISpaceProp> = ({ children, ...props }) => {
       }} >
       {children.map((child, index) => {
         return (
-          <div style={buildStyle(index)}>
+          <div style={buildStyle(index)} key={index}>
             {child}
           </div>
         )

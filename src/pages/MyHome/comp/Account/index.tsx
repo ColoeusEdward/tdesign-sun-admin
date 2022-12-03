@@ -53,7 +53,7 @@ const Account: React.FC<IAccountProp> = forwardRef(({ clickFn, children, name },
   const renderList = () => {
     let l = list.map((e, i) => {
       return (
-        <div onMouseUp={(e) => { e.stopPropagation() }} onTouchEnd={(e) => { e.stopPropagation() }} className={'px-2 py-1'} >
+        <div onMouseUp={(e) => { e.stopPropagation() }} onTouchEnd={(e) => { e.stopPropagation() }} className={'px-2 py-1'} key={i} >
           <div className={classNames(' bg-zinc-800 active:bg-zinc-800 hover:border hover:border-solid  hover:border-neutral-600 border border-solid border-neutral-800 rounded-md w-full flex')} style={{
             boxShadow: '0 4px 18px 0 rgb(0 0 0 / 25%)'
           }}>
@@ -70,7 +70,7 @@ const Account: React.FC<IAccountProp> = forwardRef(({ clickFn, children, name },
       )
     })
     l.push(
-      <AddPart getList={getList} ref={addPartRef} />
+      <AddPart getList={getList} ref={addPartRef} key={window.myCountKey++} />
     )
     return l
   }

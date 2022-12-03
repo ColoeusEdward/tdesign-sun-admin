@@ -77,7 +77,7 @@
     "react-router-dom": "^6.4.3",
     "socket.io-client": "4.5.4",
     "tdesign-icons-react": "^0.1.6",
-    "tdesign-react": "^0.43.1",
+    "tdesign-react": "^0.44.0",
     "tvision-color": "^1.4.0",
     "use-immer": "^0.7.0",
     "uuid": "^8.3.2",

@@ -32,6 +32,7 @@ const socket: Socket = io(define.wsUrl, {
 
 const renderApp = () => {
   setRootByHost()
+  window.myCountKey = 0
   const container = document.getElementById('app');
   const root = createRoot(container!);
   root.render(

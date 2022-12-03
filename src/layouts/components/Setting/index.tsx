@@ -56,8 +56,7 @@ export default memo(() => {
   const globalState = useAppSelector(selectGlobal);
 
   useEffect(() => {
-    console.log(`layouteff`,);
-    dispatch(switchTheme(ETheme.dark))
+    
   }, [])
 
   return (

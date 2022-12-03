@@ -5702,6 +5702,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mitt@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "mitt@npm:3.0.0"
+  checksum: f7be5049d27d18b1dbe9408452d66376fa60ae4a79fe9319869d1b90ae8cbaedadc7e9dab30b32d781411256d468be5538996bb7368941c09009ef6bbfa6bfc7
+  languageName: node
+  linkType: hard
+
 "mkdirp@npm:^1.0.3, mkdirp@npm:^1.0.4":
   version: 1.0.4
   resolution: "mkdirp@npm:1.0.4"
@@ -7373,7 +7380,7 @@ __metadata:
     socket.io-client: 4.5.4
     tailwindcss: 3.2.4
     tdesign-icons-react: ^0.1.6
-    tdesign-react: ^0.43.1
+    tdesign-react: ^0.44.0
     tvision-color: ^1.4.0
     typescript: ^4.9.3
     use-immer: ^0.7.0
@@ -7384,9 +7391,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"tdesign-react@npm:^0.43.1":
-  version: 0.43.1
-  resolution: "tdesign-react@npm:0.43.1"
+"tdesign-react@npm:^0.44.0":
+  version: 0.44.0
+  resolution: "tdesign-react@npm:0.44.0"
   dependencies:
     "@babel/runtime": ~7.17.2
     "@popperjs/core": ~2.11.2
@@ -7397,6 +7404,7 @@ __metadata:
     dayjs: ~1.11.4
     hoist-non-react-statics: ~3.3.2
     lodash: ~4.17.15
+    mitt: ^3.0.0
     raf: ~3.4.1
     react-is: ^18.2.0
     react-popper: ~2.3.0
@@ -7410,7 +7418,7 @@ __metadata:
   peerDependencies:
     react: ">=16.13.1"
     react-dom: ">=16.13.1"
-  checksum: 9a36edb266d51ee7b8569a703a4daf4690e8b8bc5b347f080a64ce4dcd70e0a4f6d50cfcc12e3bf2cd40c7fd20026ff1b440d7bee97bc6789fcf84fd70b51885
+  checksum: 2f8406eaa8ae2b0466b77a3ebc200c5b4ef1a8d2d74bf02c3a6b6a22d180ae346f645cf72376bdd205add92f9b75ac464f6bf9e7f1b1ff64e72095f5d1b5b889
   languageName: node
   linkType: hard
 

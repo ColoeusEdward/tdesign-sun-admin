@@ -18,9 +18,11 @@ const MySkeleton: FC<IMySkeletonProp & RefAttributes<unknown>> = forwardRef(({ c
     // cleanVal
   }))
   const renderSks = () => {
-    return new Array(lineCount).fill((
-      <Skeleton className={'mb-2'} theme='paragraph' animation="gradient" >{'.'}</Skeleton>
-    ))
+    return new Array(lineCount).fill({}).map((e, i) => {
+      return (
+        <Skeleton className={'mb-2'} theme='paragraph' animation="gradient" key={i} >{'.'}</Skeleton>
+      )
+    })
   }
   useEffect(() => {
     if (size) {
@@ -40,7 +42,7 @@ const MySkeleton: FC<IMySkeletonProp & RefAttributes<unknown>> = forwardRef(({ c
           {renderSks()}
         </div>} */}
       {/* {!loading && children} */}
-      <div className={classNames('w-full h-full', { 'invisible': loading, },className)}>
+      <div className={classNames('w-full h-full', { 'invisible': loading, }, className)}>
         {children}
       </div>
     </div>

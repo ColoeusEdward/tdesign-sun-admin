@@ -14,7 +14,8 @@ import { replaceLine } from './util'
 
 declare global {
   interface Window {
-    $socket?: Socket
+    $socket?: Socket,
+    myCountKey: number
   }
 }
 

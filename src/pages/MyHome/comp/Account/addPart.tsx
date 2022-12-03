@@ -18,7 +18,7 @@ let originData: AccData & { i: number }
 let formVal: AccData
 const rules: FormRule[] = [{ required: true, message: '必填', type: 'error' },]
 let isEdit = false
-const AddPart: React.FC<IAddPartProp & RefAttributes<unknown>> = forwardRef(({ children, getList }, ref) => {
+const AddPart: React.FC<IAddPartProp & RefAttributes<unknown>> = forwardRef(({ getList }, ref) => {
   const [loading, setLoading] = useState(false)
   const [list, setList] = useState<AccData[]>([])
   const [drawShow, setDrawShow] = useState(false)

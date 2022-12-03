@@ -147,16 +147,16 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
       if (typeof author == 'string') {
         return author
       }
-      return author.map((e) => {
+      return author.map((e,idx) => {
         let obj: any = {
           text: () => e.val
-          , img: () => <img className={'relative top-0.5'} style={{ width: '16px' }} src={e.val} />
+          , img: () => <img className={'relative top-0.5'} key={idx} style={{ width: '16px' }} src={e.val} />
         }
         obj['vipText'] = obj.text
         return obj[e.type] && obj[e.type]()
       })
     }
-    return postList?.map(e => {
+    return postList?.map((e,idxx) => {
       const renderContent = () => {
         if (typeof e.content == 'string') {
           return e.content
@@ -164,11 +164,11 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
           return e.content.map((ce, idx) => {
             let obj: any = {
               text: () => {
-                return <div className={'inline-block'}>{ce.val}</div>
+                return <div className={'inline-block'} key={idx}>{ce.val}</div>
               }
-              , face: () => <div className={'inline-block relative top-0.5'}><img style={{ width: "30px" }} src={ce.val} /></div>
-              , br: () => <div></div>
-              , img: () => <div className={'inline-block mr-1'} >
+              , face: () => <div className={'inline-block relative top-0.5'} key={idx}><img style={{ width: "30px" }} src={ce.val} /></div>
+              , br: () => <div key={idx}></div>
+              , img: () => <div className={'inline-block mr-1'} key={idx} >
                 <PhotoView src={ce.val} >
                   <img src={ce.val} onMouseDown={(e) => { e.stopPropagation() }} onContextMenu={(e) => { e.stopPropagation(); }} style={{ width: '50px' }} alt="" />
                 </PhotoView>
@@ -184,7 +184,7 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
       return (
         <div className={'text-slate-400  bg-neutral-700/20 p-3 mx-3 my-2 rounded-xl'}
           style={{ boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)' }}
-          onContextMenu={(ev) => { ev.stopPropagation(); layerClick(e); handleContextMenu(ev) }}>
+          onContextMenu={(ev) => { ev.stopPropagation(); layerClick(e); handleContextMenu(ev) }} key={idxx}>
           <div className={'inline-block w-4/5 text-left'}>
             {/* <div className={'text-base'}>{item.title}</div> */}
             <div className={'text-sm leading-relaxed'}>
