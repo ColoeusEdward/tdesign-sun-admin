@@ -67,7 +67,7 @@ const Book: React.FC = () => {
 
 
   return (
-    <div className={'w-full h-screen flex flex-col justify-center items-center text-neutral-500 relative overflow-hidden bg-black '} >
+    <div className={'w-full h-screen flex flex-col justify-center items-center text-neutral-500 relative overflow-hidden bg-black '} id='bookCon' >
       <div className={'w-3/12 h-full fixed left-0 top-2'} onClick={prevPage}></div>
       <div className={'w-3/12 h-full fixed right-0 top-2'} onClick={nextPage}></div>
       <div className={'w-full h-full text-3xl leading-snug break-all text-left p-3 '} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>

@@ -33,7 +33,7 @@ const BookBottom: FC<IBookBottomProp & RefAttributes<unknown>> = forwardRef(({ }
     clientY <= (innerHeight - 200) && (yp = 210)
     return yp
   }
-  const handleKeyUp = (val: number, { e }: { e: React.KeyboardEvent<HTMLDivElement> }) => {
+  const handleKeyUp = (val: string|number, { e }: { e: React.KeyboardEvent<HTMLDivElement> }) => {
     console.log("🚀 ~ file: BookBottom.tsx ~ line 37 ~ handleKeyUp ~ e.key ", e.key )
     MessagePlugin.success({ content: e.key, ...getMsgOpt() })
     if (e.key != 'Enter') return
@@ -59,7 +59,7 @@ const BookBottom: FC<IBookBottomProp & RefAttributes<unknown>> = forwardRef(({ }
   ) : <p onClick={() => { setIsPageClick(true) }} >第{bookInfo.page}页</p>
 
   return (
-    <div className={'w-full h-1/5 bg-zinc-800 flex justify-center bottom-0 items-center text-4xl absolute z-50'}
+    <div className={'w-full h-1/5 bg-zinc-800 flex justify-center bottom-0 items-center text-4xl absolute z-50'} id="bookBottomCon"
       style={{
         transition: 'transform 0.2s ease-in-out', transform: `translate3d(0px, ${getYposi()}px,0px)`
       }}>
@@ -130,9 +130,10 @@ const BookDrawer: FC<IBookDrawerProp & RefAttributes<IBookDrawerHandle>> = memo(
         footer={false}
         visible={drawShow}
         onClose={hide}
-        size={'100%'}
+        size={'20%'}
         placement={'bottom'}
         showOverlay={true}
+        attach={'#bookCon'}
       ></Drawer>
     </>
   )

@@ -182,8 +182,8 @@ const Post: React.FC<IPostProp & RefAttributes<PostHandle>> = forwardRef(({ curI
         }
       }
       return (
-        <div className={'text-slate-400  bg-neutral-700/20 p-3 mx-3 my-2 rounded-xl'}
-          style={{ boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)' }}
+        <div className={'text-slate-400  bg-neutral-700/20 p-3 mx-3 my-2 rounded materialPage'}
+          // style={{ boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)' }}
           onContextMenu={(ev) => { ev.stopPropagation(); layerClick(e); handleContextMenu(ev) }} key={idxx}>
           <div className={'inline-block w-4/5 text-left'}>
             {/* <div className={'text-base'}>{item.title}</div> */}

@@ -168,6 +168,7 @@ export const toolBarRender = ({ rotate, onRotate, ...me }: any): React.ReactNode
   )
 }
 
+// export const menuClassName = 'hover:bg-slate-800 bg-slate-700'
 export const menuClassName = 'hover:bg-slate-800 bg-slate-700'
 
 export const mustRules = [{ required: true, message: '必填', type: 'error' }] as FormRule[]
