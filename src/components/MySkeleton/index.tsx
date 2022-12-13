@@ -28,7 +28,7 @@ const MySkeleton: FC<IMySkeletonProp & RefAttributes<unknown>> = forwardRef(({ c
     if (size) {
       let lc = Math.floor((size.height - 24) / 70)
       // console.log("🚀 ~ file: index.tsx ~ line 27 ~ useEffect ~ lc", lc)
-      setLineCount(lc > 0 ? lc-1 : 1)
+      setLineCount(lc > 0 ? lc : 1)
     }
   }, [size])
 

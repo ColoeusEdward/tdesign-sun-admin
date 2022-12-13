@@ -14,7 +14,7 @@ type IChangeBaProp = {
 type IChangeBtnProp = {
   setShow: Function
 }
-const baList = [{ name: 'v', fid: '97650' }, { name: 'bilibili', fid: '2265748' }, { name: 'vtuber', fid: '26066262' }, { name: '航空母舰', fid: '18940' }, { name: '真反二', fid: '27842763' }, { name: '核战避难所', fid: '17641967' }, { name: '极限竞速地平线5', fid: '24379958' }, { name: '2ch', fid: '839326' }, { name: 'switch交流', fid: '24424201' }]
+const baList = [{ name: 'v', fid: '97650' }, { name: 'bilibili', fid: '2265748' }, { name: 'vtuber', fid: '26066262' }, { name: '航空母舰', fid: '18940' }, { name: '真反二', fid: '27842763' }, { name: '核战避难所', fid: '17641967' }, { name: '极限竞速地平线5', fid: '24379958' }, { name: '2ch', fid: '839326' }, { name: 'switch交流', fid: '24424201' }, { name: 'vtuber自由讨论', fid: '27278534' }]
 const innerWidth = window.innerWidth
 const ChangeBtn = memo(({ setShow }: IChangeBtnProp) => {
   const mouse = useMouse()
@@ -28,7 +28,7 @@ const ChangeBtn = memo(({ setShow }: IChangeBtnProp) => {
   }
   useEffect(() => {
     setMouse(mouse)
-  },[mouse])
+  }, [mouse])
   return (
     <div className={'fixed -right-6 top-48'} style={{
       transition: 'transform 0.1s ease-in-out', transform: `translate3d(
@@ -54,29 +54,30 @@ const ChangeBa: FC<IChangeBaProp & RefAttributes<unknown>> = forwardRef(({ setBa
 
   }))
 
-  const renderBody = () => {
-    return (
-      <div className={'p-3'}>
-        <Select value={ba.fid} onChange={baChange} >
-          {baList.map(e => {
-            return <Option key={e.fid} label={e.name} value={e.fid} />
-          })}
-        </Select>
-      </div>
-    )
-  }
+  // const renderBody = () => {
+  //   return (
+      
+  //   )
+  // }
   return (
     <>
       <ChangeBtn setShow={setDrawShow} />
       <Drawer
         header={'切换'}
-        body={renderBody()}
         footer={false}
         visible={drawShow}
         onClose={hide}
         size={size}
-        showInAttachedElement
+        // showInAttachedElement
+        // attach={'#post-draw-container'}
       >
+        <div className={'p-3 overflow-hidden'}>
+          <Select value={ba.fid} onChange={baChange}  >
+            {baList.map(e => {
+              return <Option key={e.fid} label={e.name} value={e.fid} />
+            })}
+          </Select>
+        </div>
       </Drawer>
     </>
   )

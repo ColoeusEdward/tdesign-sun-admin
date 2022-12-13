@@ -83,7 +83,7 @@ const SubPost: FC<ISubPostProp & RefAttributes<unknown>> = forwardRef(({ curItem
   return (
     <>
       {reList && reList.length > 0 && (
-        <div className={'text-sm bg-black p-1 rounded-md relative pb-2'} >
+        <div className={'text-sm bg-black p-1 rounded-md relative overflow-hidden pb-2'} >
           <MySkeleton loading={loading} >
             <div className={'w-full h-full'}>
               {list}
