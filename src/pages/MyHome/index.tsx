@@ -32,6 +32,7 @@ import { useImmer } from 'use-immer';
 import produce from 'immer';
 import SyncToYou from './comp/SyncToYou';
 import SaImg from './comp/SaImg';
+// import Radio from './comp/Radio';
 
 const originLayout = [
   { type: 'btn', Comp: LinkBtn, ref: null, clickFn: 'recoverLayout', name: '复原', x: 11, y: 0, iconSrc: 'https://img.icons8.com/office/96/undefined/synchronize.png' },
@@ -65,7 +66,8 @@ const originLayout = [
   { type: '4x1.5', Comp: SaImg, name: 'sa搜图', x: 7, y: 11.5, iconSrc: 'https://saucenao.com/favicon.ico' },
   { type: 'btn', Comp: LinkBtn, name: '漫画', x: 2, y: 4, iconSrc: 'https://img.icons8.com/officexs/80/000000/comics-magazine.png' },
   { type: 'btn', Comp: LinkBtn, name: '阿里云盘', x: 3, y: 4, iconSrc: 'https://img.icons8.com/color/96/000000/network-drive.png' },
-  { type: 'btn', Comp: LinkBtn, name: '油管频道', x: 3, y: 5, iconSrc: 'https://img.icons8.com/color/96/000000/youtube-studio.png' },
+  { type: 'btn', Comp: LinkBtn, name: '油管频道', x: 11, y: 7, iconSrc: 'https://img.icons8.com/color/96/000000/youtube-studio.png' },
+  // { type: '2x6', Comp: Radio, name: 'Radio', x: 2, y: 6, },
 ]
 
 const buildLayout = (oriLay: any[]) => {

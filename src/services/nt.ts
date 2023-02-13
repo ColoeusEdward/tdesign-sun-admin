@@ -431,3 +431,18 @@ export const post_sa_image = async (data: {url: string }) => {
   return result.data
 }
 
+export const get_gradio= async () => {
+  const result = await request.get<{label:string,Id:string}[]>('/koa/newCen/getGRadio'
+  );
+  return result.data
+}
+export const get_gradio_info = async (id:string) => {
+  const result = await request.get<any>(`/proxy/gradio/id=${id}?include=media%2Cdjs%2Cmedia.timelines`
+  );
+  return result
+}
+
+
+
+
+

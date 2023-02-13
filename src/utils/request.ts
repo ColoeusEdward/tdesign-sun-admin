@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getMsgOpt } from 'configs/cfg';
-import { MessagePlugin,MessageInfoOptions } from 'tdesign-react';
+import { MessagePlugin, MessageInfoOptions } from 'tdesign-react';
 import proxy from '../configs/host';
 
 const env = import.meta.env.MODE || 'development';
@@ -21,10 +21,15 @@ export const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-  if (!token) token = localStorage.getItem('meaToken') && JSON.parse(localStorage.getItem('meaToken')!)
-  config.headers = Object.assign(config.headers || {}, {
+  if (!token) {
+    let strtoken = localStorage.getItem('meaToken')
+    if (strtoken) {
+      token = JSON.parse(strtoken)
+    }
+  }
+  config.headers = Object.assign(config.headers || {}, config.url!.search('koa') > -1 ? {
     Authorization: `Bearer ${token}`
-  })
+  } : {})
 
   if (config.method == 'get') {
     config.params = config.data

@@ -32,7 +32,17 @@ const result: IRouter[] = [
       title: 'V8',
       Icon: () => <TbBrandDiscord style={{ fontSize: '20px' }} />,
     },
-  }
+  },
+  {
+    path: '/radio',
+    Component: lazy(() => import('pages/Radio')),
+    noMargin: true,
+    meta: {
+      title: 'Radio',
+      Icon: () => <TbBrandDiscord style={{ fontSize: '20px' }} />,
+    },
+  },
+
 ];
 
 export default result;

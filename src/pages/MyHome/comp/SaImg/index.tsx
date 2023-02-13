@@ -1,9 +1,10 @@
-import { forwardRef, memo, ReactNode, useCallback, useImperativeHandle, useRef, useState } from "react";
+import { forwardRef, memo, ReactNode, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { SiPixiv } from "react-icons/si";
 import { post_sa_image } from "services/nt";
-import { Button, Input, InputValue, Row, Textarea, TextareaValue,Dialog } from "tdesign-react";
+import { Button, Input, InputValue, Row, Textarea, TextareaValue, Dialog } from "tdesign-react";
 import TextareaToList from "../TextareaToList";
 import request from 'utils/request';
+import { sleep } from "utils/util";
 
 type SaImgProp = {
   children?: ReactNode
@@ -13,12 +14,19 @@ type SaImgProp = {
 const SaImg: React.FC<SaImgProp> = forwardRef(({ children }, ref) => {
   const [url, setUrl] = useState<InputValue>('')
   const [visible, setVisible] = useState<boolean>(false)
+  // const ifRef = useRef<HTMLIFrameElement | null>(null)
+  // const ifRefCallBack =  useCallback((node:any) => {
+  //   console.log("🚀 ~ file: index.tsx:18 ~ ifRefCallBack ~ node", node)
+  //   if(node && visible) {
+  //     confirm(node)
+  //   }
+  // }, [visible]);
 
   const submit = (val: InputValue, { e }: { e: React.KeyboardEvent<HTMLInputElement> }) => {
     // console.log("🚀 ~ file: index.tsx ~ line 22 ~ submit ~ url", url,e.key)
     // if(e.key != 'Enter') return
     let file = ''
-    let myWindow = window.open('','_blank', 'width:100%,height:100%');
+    let myWindow = window.open('', '_blank', 'width:100%,height:100%');
     const addCss = () => {
       var cssId = 'myCss';  // you could encode the css path itself to generate id..
       if (!myWindow!.document.getElementById(cssId)) {
@@ -49,10 +57,15 @@ const SaImg: React.FC<SaImgProp> = forwardRef(({ children }, ref) => {
   }
 
   const confirm = () => {
-    if(!url) return
+    if (!url) return
+
     var iframe = document.getElementById("myIf") as HTMLIFrameElement;
+    // console.log("🚀 ~ file: index.tsx:62 ~ confirm ~ iframe", iframe)
+
+    // var iframe = ifRef.current as HTMLIFrameElement;
     let file = ''
     let myWindow = iframe.contentWindow;
+    // console.log("🚀 ~ file: index.tsx:67 ~ confirm ~ myWindow", myWindow)
     const addCss = () => {
       var cssId = 'myCss';  // you could encode the css path itself to generate id..
       if (!myWindow!.document.getElementById(cssId)) {
@@ -79,19 +92,30 @@ const SaImg: React.FC<SaImgProp> = forwardRef(({ children }, ref) => {
     setUrl('')
 
   }
-  
+
   useImperativeHandle(ref, () => ({
 
   }))
+
+  // useEffect(() => {
+  //   if(visible){
+
+  //     confirm()
+  //   }
+  // },[visible])
 
   return (
     <div className={'h-full flex items-center'}  >
       {/* {children} */}
 
-      <Row className="px-3 w-full"><Input prefixIcon={<SiPixiv />} type={'search'} onEnter={() => {setVisible(true)}} value={url} onChange={(e) => { setUrl(e) }} placeholder={'输入图片url'} clearable /></Row>
+      <Row className="px-3 w-full"><Input prefixIcon={<SiPixiv />} type={'search'} onEnter={() => { setVisible(true) }} value={url} onChange={(e) => { setUrl(e) }} placeholder={'输入图片url'} clearable /></Row>
       <img src={url as string} width={'10px'} height={'10px'}  ></img>
-      <Dialog visible={visible} width={'50vw'} footer={false} onOpened={confirm} showInAttachedElement closeOnOverlayClick={true} onCloseBtnClick={() => {setVisible(false)}} >
-        <div style={{height:'700px'}} className={'pt-6'}>
+      <Dialog visible={visible} width={'50%'} footer={false} onOpened={() => {
+        sleep(50).then(() => {
+          confirm()
+        })
+      }} closeOnOverlayClick={true} zIndex={10000} onCloseBtnClick={() => { setVisible(false) }} >
+        <div style={{ height: '700px' }} className={'pt-6'}>
           <iframe id="myIf" src={''} className={'w-full h-full'}></iframe>
         </div>
       </Dialog>
