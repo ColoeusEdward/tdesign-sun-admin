@@ -5,7 +5,7 @@ import { forwardRef, memo, ReactNode, useEffect, useImperativeHandle, useRef, us
 import { edit_accountList, get_account_list, get_gradio, get_gradio_info, LeftStorage, save_account_list, ShowRecordSizeList } from "services/nt";
 import { Button, Card, Drawer, Form, FormRule, Input, Select, Tag } from "tdesign-react";
 import { copyToPaste } from "utils/util";
-import { BsPlusSquareDotted } from "react-icons/bs";
+import { BsArrowsFullscreen, BsPlusSquareDotted } from "react-icons/bs";
 import FormItem from "tdesign-react/es/form/FormItem";
 type IOpenRadioProp = {
   children?: ReactNode,
@@ -69,6 +69,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
       setRadioList(e)
     })
   }
+  
   useImperativeHandle(ref, () => ({
     compClick,
     edit
@@ -100,7 +101,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
 
   return (
     <>
-      <div className={'h-8 flex justify-center p-2 absolute right-2 top-2'}
+      <div className={'h-8 flex justify-center p-2 absolute right-2 top-2 '}
       // onMouseUp={(e) => { e.stopPropagation() }} onTouchEnd={(e) => { e.stopPropagation() }}  
       >
         <Button className={'w-16 '} icon={<BsPlusSquareDotted className="text-2xl" />} shape={'round'} onClick={() => { isEdit = false; showForm() }} > </Button>

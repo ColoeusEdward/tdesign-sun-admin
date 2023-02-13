@@ -34,7 +34,7 @@ export default memo((props: { showMenu?: boolean }) => {
           </Button>
         </Col>
         <Col>
-          <Search />
+          {/* <Search /> */}
         </Col>
       </Row>
     );

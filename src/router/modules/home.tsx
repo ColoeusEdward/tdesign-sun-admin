@@ -2,6 +2,7 @@ import { lazy, memo } from 'react';
 import { UserCircleIcon } from 'tdesign-icons-react';
 import { IRouter } from '../index';
 import { TbWindmill, TbBrandDiscord } from 'react-icons/tb';
+import { FiRadio } from 'react-icons/fi';
 const Comp = lazy(() => import('pages/MyHome'))
 
 const result: IRouter[] = [
@@ -39,7 +40,7 @@ const result: IRouter[] = [
     noMargin: true,
     meta: {
       title: 'Radio',
-      Icon: () => <TbBrandDiscord style={{ fontSize: '20px' }} />,
+      Icon: () => <FiRadio style={{ fontSize: '20px' }} />,
     },
   },
 

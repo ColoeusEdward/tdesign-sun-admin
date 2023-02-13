@@ -20,6 +20,7 @@ import { AliveScope } from 'react-activation';
 import define, { setRootByHost } from 'configs/define';
 import { buildSocket } from 'utils/buildSocket';
 import { io, Socket } from 'socket.io-client';
+import 'react-indiana-drag-scroll/dist/style.css'
 const baseName = getBaseName()
 
 const socket: Socket = io(define.wsUrl, {
