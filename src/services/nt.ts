@@ -14,6 +14,11 @@ interface recordData {
   name_list: string[]
   target?: InputValue
 }
+type playLog = {
+  id:number,
+  ts?:number,
+  at:number
+}
 
 const judgeFn = (name: string) => {
   return (e: any) => e.attribs && (e.attribs.class == name || e.attribs.id == name)
@@ -441,7 +446,16 @@ export const get_gradio_info = async (id:string) => {
   );
   return result
 }
-
+export const save_radio_playlog = async (info:playLog) => {
+  const result = await request.post<any>(`/koa/newCen/saveRadioPlayLog`,{info}
+  );
+  return result.data
+}
+export const get_radio_playlog = async (id:number) => {
+  const result = await request.get<playLog>('/koa/newCen/getRadioPlayLog',{data:{id}}
+  );
+  return result.data
+}
 
 
 
