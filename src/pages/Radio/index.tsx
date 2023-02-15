@@ -18,6 +18,7 @@ type IRadioProp = {
   name: string,
 
 }
+let wakeLock: any = null;
 const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   const [adSrc, setAdSrc] = useState('')
   const [timeList, setTimeList] = useState<any[]>([])
@@ -59,6 +60,21 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
       scrollConRef.current!.scrollLeft = distence - width / 2
     }
   }
+  const requestWakeLock = async () => {
+    if (wakeLock)
+      return false
+    try {
+      wakeLock = await (navigator as any).wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => {
+        console.log('Screen Wake Lock released:', wakeLock.released);
+        wakeLock = null
+        return true
+      });
+      console.log('Screen Wake Lock released:', wakeLock.released);
+    } catch (err: any) {
+      console.error(`${err.name}, ${err.message}`);
+    }
+  };
 
   useImperativeHandle(ref, () => ({
 
@@ -104,6 +120,9 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
       clearInterval(interval)
     }
   }, [timeList, curTimeItem, initReady])
+  useEffect(() => {
+    requestWakeLock()
+  },[])
   const buildTimeListDiv = () => {
     return timeList.map(e => {
       return (
