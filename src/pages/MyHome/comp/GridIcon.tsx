@@ -24,11 +24,11 @@ const GridIcon: FC<IIconProp> = ({ iconSrc, name }) => {
   }
   return (
     <div className={'w-full h-full hover:bg-neutral-700'} ref={conRef} onMouseDown={removePopup}>
-      <Tooltip content={name} placement="bottom" >
-        <div className={'w-full h-full flex justify-center items-center'} style={sizeStyle()}    >
+      {/* <Tooltip content={name} placement="bottom" > */}
+        <div title={name} className={'w-full h-full flex justify-center items-center'} style={sizeStyle()}    >
           <img className="w-24 h-24 " src={iconSrc}></img>
         </div>
-      </Tooltip>
+      {/* </Tooltip> */}
     </div>
   )
 

@@ -81,7 +81,7 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   }))
   useEffect(() => {
     if (!adSrc) return
-    audioRef.current!.playbackRate = 2
+    audioRef.current!.playbackRate = 1.75
     const getPlayLog = () => {
       get_radio_playlog(curAudioData.data.id).then(res => {
         audioRef.current!.currentTime = res.at
