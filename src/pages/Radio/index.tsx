@@ -37,9 +37,11 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
       return e
     })
     // console.log("🚀 ~ file: index.tsx:37 ~ tlist ~ tlist", tlist)
-    setTimeList(tlist)
     setAdSrc(url)
-    setCurTimeItem(tlist[0])
+    if (tlist.length != 0) {
+      setCurTimeItem(tlist[0])
+      setTimeList(tlist)
+    }
   }
   const jumpTime = (item: any) => {
     audioRef.current!.currentTime = item.attributes.at
@@ -84,14 +86,17 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
     audioRef.current!.playbackRate = 1.75
     const getPlayLog = () => {
       get_radio_playlog(curAudioData.data.id).then(res => {
-        audioRef.current!.currentTime = res.at
-        let flist = timeList.filter(e => e.attributes.at > res.at)
-        if (flist.length == 0) {
-          flist[0] = { ...timeList[timeList.length - 1] }
-          flist[0].idx++;
+        if (Object.keys(res).length > 0) {
+          audioRef.current!.currentTime = res.at
+          if (timeList && timeList.length > 0) {
+            let flist = timeList.filter(e => e.attributes.at > res.at)
+            if (flist.length == 0) {
+              flist[0] = { ...timeList[timeList.length - 1] }
+              flist[0].idx++;
+            }
+            setCurTimeItem(timeList[flist[0].idx - 1])
+          }
         }
-
-        setCurTimeItem(timeList[flist[0].idx - 1])
         setInitReady(true)
         audioRef.current!.play()
       })
@@ -100,18 +105,21 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   }, [adSrc, curAudioData])
 
   useEffect(() => {
-    if (!timeList[0] || !curTimeItem || !initReady) return
-
-    scrollToCenter()
+    if (!initReady) return
+    if (timeList[0] && curTimeItem) {
+      scrollToCenter()
+    }
     const savePlaylog = () => {
       save_radio_playlog({ id: curAudioData.data.id, at: audioRef.current!.currentTime })
     }
     const doInterval = () => {
-      let nextItem = timeList[curTimeItem.idx + 1]
-      savePlaylog()
-      if (audioRef.current!.currentTime >= nextItem.attributes.at) {
-        setCurTimeItem(nextItem)
+      if (timeList[0] && curTimeItem) {
+        let nextItem = timeList[curTimeItem.idx + 1]
+        if (audioRef.current!.currentTime >= nextItem.attributes.at) {
+          setCurTimeItem(nextItem)
+        }
       }
+      savePlaylog()
     }
     const interval = setInterval(() => {
       doInterval()
@@ -122,7 +130,7 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   }, [timeList, curTimeItem, initReady])
   useEffect(() => {
     requestWakeLock()
-  },[])
+  }, [])
   const buildTimeListDiv = () => {
     return timeList.map(e => {
       return (
@@ -150,16 +158,19 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
       {/* <img style={[]} src="https://miro.medium.com/max/1400/1*e_Loq49BI4WmN7o9ItTADg.gif" ></img> */}
       <div className={'flex flex-col justify-end items-center'} style={{ height: 'calc(100% - 64px)' }}>
 
-        {curTimeItem && curTimeItem.attributes?.asset &&
+        {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.asset &&
           (
             <div className={isFull ? ' max-w-full' : 'max-h-[600px]'}>
               <img src={`https://image.gcores.com/${curTimeItem.attributes.asset}`} className={'w-full h-full object-contain'} />
             </div>
           )
         }
+        {
+          (!curTimeItem || !curTimeItem.attributes) && <div> 暂无时间轴 </div>
+        }
 
         <div className={'h-40 text-center max-w-4xl text-lg mt-2 overflow-y-auto min-h-[100px]'}>
-          {curTimeItem.attributes?.content}
+          {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.content}
         </div>
         {/* 时间轴 */}
         <div className={' justify-self-end w-full mb-2'}>
