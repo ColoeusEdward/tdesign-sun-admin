@@ -227,4 +227,4 @@ const V8: React.FC = () => {
   )
 }
 
-export default withKeepAlive(memo(V8));
+export default withKeepAlive(V8);

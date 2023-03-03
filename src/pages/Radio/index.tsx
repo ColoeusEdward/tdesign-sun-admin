@@ -19,6 +19,26 @@ type IRadioProp = {
 
 }
 let wakeLock: any = null;
+// const TimeLine = ({jumpTime,timeList}:{jumpTime:Function,timeList:any[]}) => {
+//   return timeList.map(e => {
+//     return (
+//       <Tooltip key={e.attributes.at} placement="top" content={e.attributes.time}>
+//         <div className={" w-10 h-32 inline-block bg-[#35363a]  pt-1 [writing-mode:vertical-lr] text-ellipsis overflow-hidden whitespace-nowrap hover:bg-slate-400 " + (curTimeItem.attributes.at == e.attributes.at ? 'bg-slate-600' : '')} onClick={() => { jumpTime(e) }} >
+//           {e.attributes.title}
+//         </div>
+//       </Tooltip>
+//     )
+//   })
+// }
+const TimeLineItem = memo(({ e, jumpTime, isChoose }: { e: any, jumpTime: Function, isChoose?: boolean }) => {
+  return (
+    <Tooltip placement="top" content={e.attributes.time}>
+      <div className={" w-10 h-32 inline-block bg-[#35363a]  pt-1 [writing-mode:vertical-lr] text-ellipsis overflow-hidden whitespace-nowrap hover:bg-slate-400 " + (isChoose || false ? 'bg-slate-600' : '')} onClick={() => { jumpTime(e) }} >
+        {e.attributes.title}
+      </div>
+    </Tooltip>
+  )
+})
 const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   const [adSrc, setAdSrc] = useState('')
   const [timeList, setTimeList] = useState<any[]>([])
@@ -28,25 +48,28 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   const [curAudioData, setCurAudioData] = useState<any>({})
   const scrollConRef = useRef<any | null>(null)
   const [initReady, setInitReady] = useState<boolean>(false)
-  const changeOpenRadio = (data: any) => {
+  const changeOpenRadio = useCallback((data: any) => {
     let url = `https://alioss.gcores.com/uploads/audio/${data.included[0].attributes.audio}`
     setCurAudioData(data)
-    let tlist = data.included.filter((e: any) => e.type == 'timelines').map((e: any, i: number) => {
-      e.idx = i
-      e.attributes.time = parseInt(e.attributes.at * 1 / 60 % 60 as unknown as string) + ":" + e.attributes.at * 1 % 60
-      return e
+    let tlist = data.included.filter((e: any) => e.type == 'timelines').sort((a: any, b: any) => {
+      return a.attributes.at - b.attributes.at
     })
+      .map((e: any, i: number) => {
+        e.idx = i
+        e.attributes.time = parseInt(e.attributes.at * 1 / 60 % 60 as unknown as string) + ":" + e.attributes.at * 1 % 60
+        return e
+      })
     // console.log("🚀 ~ file: index.tsx:37 ~ tlist ~ tlist", tlist)
     setAdSrc(url)
     if (tlist.length != 0) {
       setCurTimeItem(tlist[0])
       setTimeList(tlist)
     }
-  }
-  const jumpTime = (item: any) => {
+  }, [])
+  const jumpTime = useCallback((item: any) => {
     audioRef.current!.currentTime = item.attributes.at
     setCurTimeItem(item)
-  }
+  }, [])
   const fullScreen = () => {
     setIsFull(true)
   }
@@ -115,7 +138,7 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
     const doInterval = () => {
       if (timeList[0] && curTimeItem) {
         let nextItem = timeList[curTimeItem.idx + 1]
-        if (audioRef.current!.currentTime >= nextItem.attributes.at) {
+        if (nextItem && audioRef.current!.currentTime >= nextItem.attributes.at) {
           setCurTimeItem(nextItem)
         }
       }
@@ -131,25 +154,13 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   useEffect(() => {
     requestWakeLock()
   }, [])
-  const buildTimeListDiv = () => {
-    return timeList.map(e => {
-      return (
-        <Tooltip key={e.attributes.at} placement="top" content={e.attributes.time}>
-          <div className={" w-10 h-32 inline-block bg-[#35363a]  pt-1 [writing-mode:vertical-lr] text-ellipsis overflow-hidden whitespace-nowrap hover:bg-slate-400 " + (curTimeItem.attributes.at == e.attributes.at ? 'bg-slate-600' : '')} onClick={() => { jumpTime(e) }} >
-            {e.attributes.title}
-          </div>
-        </Tooltip>
-      )
-    })
-  }
-  // useEffect(() => {
-  //   const timer = setInterval(async () => {
-  //     console.log(await readMemory())
-  //   }, 1000)
-  //   return () => {
-  //     clearInterval(timer)
-  //   }
-  // }, [readMemory])
+  const TimeListDiv = timeList.map(e => {
+    let isChoose = (curTimeItem.attributes.at == e.attributes.at)
+    return (
+      <TimeLineItem key={e.attributes.at} e={e} jumpTime={jumpTime} isChoose={isChoose} />
+    )
+  })
+
   return (
     <div className={'h-full w-full flex-col items-center justify-center pt-1 bg-[#181818] ' + (isFull ? 'absolute top-0 left-0 w-screen h-screen z-[250]' : 'relative')} style={{ height: !isFull ? 'calc(100vh - 64px)' : '100vh' }} >
 
@@ -176,7 +187,7 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
         <div className={' justify-self-end w-full mb-2'}>
           <ScrollContainer className={'h-34 w-full'} ref={scrollConRef as any} >
             <div className={'inline-flex flex-nowrap overflow-y-hidden'}>
-              {buildTimeListDiv()}
+              {TimeListDiv}
             </div>
           </ScrollContainer>
         </div>
@@ -196,5 +207,5 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   )
 
 })
-export default withKeepAlive(memo(Radio));
+export default withKeepAlive(Radio);
 // export default memo(Radio);

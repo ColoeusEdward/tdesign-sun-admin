@@ -204,5 +204,5 @@ const MyHome: FC = () => {
   );
 }
 
-export default withKeepAlive(memo(MyHome));
+export default withKeepAlive(MyHome);
 //  withKeepAlive();
