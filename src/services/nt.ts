@@ -19,6 +19,13 @@ type playLog = {
   ts?:number,
   at:number
 }
+export type wechatnewData = {
+  acf:object,
+  id:number,
+  title:{
+    rendered:string
+  }
+}
 
 const judgeFn = (name: string) => {
   return (e: any) => e.attribs && (e.attribs.class == name || e.attribs.id == name)
@@ -457,6 +464,11 @@ export const get_radio_playlog = async (id:number) => {
   return result.data
 }
 
+export const get_wechat_new = async  (num:number) => {
+  const result = await request.get<wechatnewData[]>(`/proxy/wechatnew/ps=${num}`,{}
+  );
+  return result.data
+}
 
 
 
