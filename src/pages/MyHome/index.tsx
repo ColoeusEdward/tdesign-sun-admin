@@ -32,6 +32,7 @@ import { useImmer } from 'use-immer';
 import produce from 'immer';
 import SyncToYou from './comp/SyncToYou';
 import SaImg from './comp/SaImg';
+import WechatNew from './comp/WechatNew';
 // import Radio from './comp/Radio';
 
 const originLayout = [
@@ -67,6 +68,7 @@ const originLayout = [
   { type: 'btn', Comp: LinkBtn, name: '漫画', x: 2, y: 4, iconSrc: 'https://img.icons8.com/officexs/80/000000/comics-magazine.png' },
   { type: 'btn', Comp: LinkBtn, name: '阿里云盘', x: 3, y: 4, iconSrc: 'https://img.icons8.com/color/96/000000/network-drive.png' },
   { type: 'btn', Comp: LinkBtn, name: '油管频道', x: 11, y: 7, iconSrc: 'https://img.icons8.com/color/96/000000/youtube-studio.png' },
+  { type: '5x10', Comp: WechatNew, name: '新闻', x: 0, y: 10, noExpend: true },
   // { type: '2x6', Comp: Radio, name: 'Radio', x: 2, y: 6, },
 ]
 
@@ -92,7 +94,7 @@ const buildLayout = (oriLay: any[]) => {
 }
 const iniLayoutOri = buildLayout(originLayout)
 
-const iniLayout= iniLayoutOri.map(e => Object.assign({}, e))
+const iniLayout = iniLayoutOri.map(e => Object.assign({}, e))
 const MyHome: FC = () => {
   const timeRef = useRef(0)
   let { id } = useParams()

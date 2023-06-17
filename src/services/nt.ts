@@ -467,7 +467,7 @@ export const get_radio_playlog = async (id:number) => {
 export const get_wechat_new = async  (num:number) => {
   const result = await request.get<wechatnewData[]>(`/proxy/wechatnew/ps=${num}`,{}
   );
-  return result.data
+  return result as unknown as wechatnewData[]
 }
 
 
