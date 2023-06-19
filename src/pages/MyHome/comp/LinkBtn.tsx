@@ -1,6 +1,5 @@
 import MyUploader from "components/MyUploader/MyUploader";
 import { ElementRef, forwardRef, memo, ReactNode, useCallback, useImperativeHandle, useRef, useState } from "react";
-import { TdUploadFile } from "tdesign-react/es/upload/types";
 import useLinkBtnLogic from "../hook/useLinkBtnLogic";
 
 type ILinkBtnProp = {

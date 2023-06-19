@@ -8,7 +8,7 @@ const buildDialog = (confirmFn: () => {}) => {
     theme: 'warning',
     confirmBtn: '🤗🤗🤗',
     cancelBtn: '我不到啊',
-    visible: false,
+    visible: true,
     onConfirm: ({ e }) => {
       // console.log('confirm clicked', e);
       confirmFn()
