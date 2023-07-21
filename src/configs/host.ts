@@ -6,7 +6,7 @@ export default {
   development: {
     // 开发环境接口请求
     API: '/dev',
-    target: 'https://meamoe.ml'
+    target: 'https://meamoe.one'
   },
   test: {
     // 测试环境接口地址
@@ -14,6 +14,7 @@ export default {
   },
   production: {
     // 正式环境接口地址
-    API: 'https://meamoe.ml',
+    API: 'https://meamoe.one',
+    // API: 'https://'+window.location.host,
   },
 };

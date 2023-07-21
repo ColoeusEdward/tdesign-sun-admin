@@ -9,6 +9,11 @@
 
 //   // }
 // }
+export const config = {
+  // root: '/site/sun/',
+  // root:'/'
+  wsUrl: 'wss://'+window.location.host
+}
 
 export const getMsgOpt = (dur=3000) => {
   return {

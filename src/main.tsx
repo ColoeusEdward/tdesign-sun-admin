@@ -21,9 +21,10 @@ import define, { setRootByHost } from 'configs/define';
 import { buildSocket } from 'utils/buildSocket';
 import { io, Socket } from 'socket.io-client';
 import 'react-indiana-drag-scroll/dist/style.css'
+import { config } from 'configs/cfg';
 const baseName = getBaseName()
 
-const socket: Socket = io(define.wsUrl, {
+const socket: Socket = io(config.wsUrl, {
   transports: ["websocket"]
   , reconnectionDelayMax: 10000
   , reconnectionDelay: 5000

@@ -29,28 +29,28 @@ export default function useLinkBtnLogic() {
       buildDialog(mp4_release)
     },
     'aria2': () => {
-      window.open('https://meamoe.ml/aria2/home/')
+      window.open(`https://${window.location.host}/aria2/home/`)
     },
     '命令行': () => {
-      window.open('https://meamoe.ml:8666/')
+      window.open(`https://${window.location.host}:8666/`)
     },
     'onedrive网盘': () => {
-      window.open('https://meamoe.ml/mydrive/')
+      window.open(`https://${window.location.host}/mydrive/`)
     },
     '老upup': () => {
-      window.open('https://meamoe.ml/upload/upload.html')
+      window.open(`https://${window.location.host}/upload/upload.html`)
     },
     '下载文件夹': () => {
-      window.open('https://meamoe.ml/record/')
+      window.open(`https://${window.location.host}/record/`)
     },
     '重启后端': () => {
       buildDialog(reboot_lexue)
     },
     'book': () => {
-      window.open('https://meamoe.ml/site/sun/bookPage')
+      window.open(`https://${window.location.host}/site/sun/bookPage`)
     },
     'vscode': () => {
-      window.open('https://meamoe.ml/vscode/')
+      window.open(`https://${window.location.host}/vscode/`)
     },
     '更新onedrive Index代码': () => {
       buildDialog(git_pull_onedrive_index)
@@ -62,7 +62,7 @@ export default function useLinkBtnLogic() {
       buildDialog(update_ecc)
     },
     '漫画':() => {
-      window.open('https://meamoe.ml/manga/')
+      window.open(`https://${window.location.host}/manga/`)
     },
     '阿里云盘':() => {
       window.open('https://www.aliyundrive.com/drive/')
