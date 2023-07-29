@@ -38,7 +38,7 @@ const WechatNew: React.FC<IWechatNewProp> = forwardRef(({ children }, ref) => {
           {newData && (
             <>
               {newData.map((item, index) => (
-                <div className={'inline-block mr-2 px-2 bg-zinc-800 hover:bg-zinc-900 active:bg-zinc-800 hover:border hover:border-solid  hover:border-neutral-600 border border-solid border-neutral-800 rounded-md py-2 w-[48%] overflow-hidden'} style={{ boxShadow: '0 4px 18px 0 rgb(0 0 0 / 25%)' }} onClick={() => { goNewPage(item.id) }} title={item.title.rendered}  >
+                <div key={index} className={'inline-block mr-2 px-2 bg-zinc-800 hover:bg-zinc-900 active:bg-zinc-800 hover:border hover:border-solid  hover:border-neutral-600 border border-solid border-neutral-800 rounded-md py-2 w-[48%] overflow-hidden'} style={{ boxShadow: '0 4px 18px 0 rgb(0 0 0 / 25%)' }} onClick={() => { goNewPage(item.id) }} title={item.title.rendered}  >
                   <div className={'w-full text-ellipsis overflow-hidden whitespace-nowrap'}>{item.title.rendered}</div>
                 </div>
               ))}

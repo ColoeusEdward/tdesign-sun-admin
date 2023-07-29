@@ -16,7 +16,7 @@ const err = (error: any) => {
 }
 const msgopt = getMsgOpt()
 export const instance = axios.create({
-  baseURL: API_HOST,
+  baseURL: env == 'development' ?  '/dev':API_HOST,
   timeout: TIMEOUT,
   withCredentials: false // send cookies when cross-domain requests
 });

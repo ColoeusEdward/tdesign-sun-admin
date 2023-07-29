@@ -9,10 +9,12 @@
 
 //   // }
 // }
+
+const env = import.meta.env.MODE || 'development';
 export const config = {
   // root: '/site/sun/',
   // root:'/'
-  wsUrl: 'wss://'+window.location.host
+  wsUrl: 'wss://'+ (env=='development' ? 'meamoe.one' :  window.location.host)
 }
 
 export const getMsgOpt = (dur=3000) => {

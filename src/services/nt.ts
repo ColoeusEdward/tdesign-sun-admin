@@ -5,6 +5,7 @@ import { ajaxPromiseAll, sendRequestG } from 'utils/util';
 import jsonpAdapter from 'axios-jsonp'
 import * as htmlparser2 from "htmlparser2";
 import { postData, postTData } from 'types/index'
+import fetchJsonp from 'fetch-jsonp'
 
 type loginRes = {
   Bearer: string
@@ -135,7 +136,10 @@ export const backup_img = async (data?: { imgurl: string }) => {
 };
 
 export const get_weather = async () => {
+  // const result =  await fetchJsonp(`https://tianqi.2345.com/api/getWeatherInfo.php`)
+  
   const result = await request({
+    // url:'/tianqi/getWeatherInfo.php'
     url: 'https://tianqi.2345.com/api/getWeatherInfo.php'
     , adapter: jsonpAdapter
   })
