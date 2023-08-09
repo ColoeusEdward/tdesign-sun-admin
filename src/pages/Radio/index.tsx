@@ -33,7 +33,7 @@ let wakeLock: any = null;
 const TimeLineItem = memo(({ e, jumpTime, isChoose }: { e: any, jumpTime: Function, isChoose?: boolean }) => {
   return (
     // <Tooltip placement="top" content={e.attributes.time}>
-    <div className={" w-10 h-32 inline-block bg-[#35363a]  pt-1 [writing-mode:vertical-lr] text-ellipsis overflow-hidden whitespace-nowrap hover:bg-slate-400 " + (isChoose || false ? 'bg-slate-600' : '')} onClick={() => { jumpTime(e) }} title={e.attributes.time} >
+    <div className={" w-10 h-32 inline-block bg-[#35363a]  pt-1 [writing-mode:vertical-lr] text-ellipsis overflow-hidden whitespace-nowrap hover:bg-slate-400 " + (isChoose || false ? 'bg-slate-600' : '')} onClick={() => { jumpTime(e) }} title={e.attributes.time + ` ${e.attributes.title}`} >
       {e.attributes.title}
     </div>
     // </Tooltip>
@@ -95,7 +95,7 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
         wakeLock = null
         return true
       });
-      console.log('Screen Wake Lock released:', wakeLock.released);
+      console.log('Screen Wake Lock relesed:', wakeLock.released);
     } catch (err: any) {
       console.error(`${err.name}, ${err.message}`);
     }

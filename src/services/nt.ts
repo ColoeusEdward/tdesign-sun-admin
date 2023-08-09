@@ -448,11 +448,11 @@ export const post_sa_image = async (data: {url: string }) => {
 }
 
 export const get_gradio= async () => {
-  const result = await request.get<{label:string,Id:string}[]>('/koa/newCen/getGRadio'
+  const result = await request.get<{label:string,value:string}[]>('/koa/newCen/getGRadio'
   );
   return result.data
 }
-export const get_gradio_info = async (id:string) => {
+export const get_gradio_info = async (id:string|number) => {
   const result = await request.get<any>(`/proxy/gradio/id=${id}?include=media%2Cdjs%2Cmedia.timelines`
   );
   return result
@@ -467,11 +467,23 @@ export const get_radio_playlog = async (id:number) => {
   );
   return result.data
 }
+export const get_last_radio_playlog = async () => {
+  const result = await request.get<playLog>('/koa/newCen/getLastRadioPlayLog'
+  );
+  return result.data
+}
+
 
 export const get_wechat_new = async  (num:number) => {
   const result = await request.get<wechatnewData[]>(`/proxy/wechatnew/ps=${num}`,{}
   );
   return result as unknown as wechatnewData[]
+}
+
+export const wget_to_record = async (url:string) => {
+  const result = await request.post<string>('/koa/newCen/wgetToRecord',{url:{url}}
+  );
+  return result.data
 }
 
 

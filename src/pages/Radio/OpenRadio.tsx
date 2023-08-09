@@ -1,12 +1,13 @@
 import classNames from "classnames";
 import MySkeleton from "components/MySkeleton";;
 import { MacScrollbar } from "mac-scrollbar";
-import { forwardRef, memo, ReactNode, useEffect, useImperativeHandle, useRef, useState, RefAttributes } from "react";
-import { edit_accountList, get_account_list, get_gradio, get_gradio_info, LeftStorage, save_account_list, ShowRecordSizeList } from "services/nt";
+import { forwardRef, memo, ReactNode, useEffect, useImperativeHandle, useRef, useState, RefAttributes,useMemo } from "react";
+import { edit_accountList, get_account_list, get_gradio, get_gradio_info, get_last_radio_playlog, LeftStorage, save_account_list, ShowRecordSizeList } from "services/nt";
 import { Button, Card, Drawer, Form, FormRule, Input, Select, Tag } from "tdesign-react";
-import { copyToPaste } from "utils/util";
+import { copyToPaste, sleep } from "utils/util";
 import { BsArrowsFullscreen, BsPlusSquareDotted } from "react-icons/bs";
 import FormItem from "tdesign-react/es/form/FormItem";
+import { BiLastPage } from "react-icons/bi";
 type IOpenRadioProp = {
   children?: ReactNode,
   radioConfirm: (info: any) => void,
@@ -19,9 +20,10 @@ const rules: FormRule[] = []
 let isEdit = false
 const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(({ radioConfirm }, ref) => {
   const [loading, setLoading] = useState(false)
+  const [lastLoading, setLastLoading] = useState(false)
   const [drawShow, setDrawShow] = useState(false)
-  const [radioList, setRadioList] = useState([{ label: '', Id: '' }]);
-  const [curRadio, setCurRadio] = useState<string>()
+  const [radioList, setRadioList] = useState([{ label: '', value: '' }]);
+  const [curRadio, setCurRadio] = useState<number | string>('')
   const formRef = useRef<any>()
   const compClick = () => {
 
@@ -68,33 +70,56 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
     get_gradio().then(e => {
       setRadioList(e)
     })
+
   }
-  
+  const selectLastRadio = () => {
+    setLastLoading(true)
+    get_last_radio_playlog().then(e => {
+      setCurRadio(e.id)
+      return get_gradio_info(e.id)
+    }).then(res => {
+      radioConfirm(res)
+      setDrawShow(false)
+    }).finally(() => {
+      setLastLoading(false)
+    })
+
+  }
+
   useImperativeHandle(ref, () => ({
     compClick,
     edit
   }))
   // useEffect(() => {
-
-  // }, [])
+  //   console.log(`curRadio`, curRadio);
+  // }, [curRadio])
+  // useEffect(() => {
+  //   setCurRadio('168044')
+  // }, [radioList])
   const showForm = () => {
     setDrawShow(true)
     getRadioList()
   }
 
   const radioChange = (val: any) => {
-    setCurRadio(val as string)
+    setCurRadio(val)
   }
   // https://alioss.gcores.com/uploads/audio/18102b7a-2d8a-49e9-b1aa-5c04d2ce1a64.mp3
-  const renderBody = () => {
-    return (
-      <div className={'w-full h-full flex'}>
-        <FormItem label="电台" className={'w-full'} >
-          <Select onChange={radioChange} value={curRadio} options={radioList} clearable />
-        </FormItem>
-      </div>
-    )
-  }
+  // const renderBody = () => {
+  //   return (
+  //     <div className={'w-full h-full flex'}>
+  //       <FormItem label="电台" className={'w-full'} >
+  //         <Select onChange={radioChange} value={curRadio} options={radioList} clearable />
+  //       </FormItem>
+  //     </div>
+  //   )
+  // }
+
+  const body2 = (
+    <div className={'w-full h-full flex items-center'}>
+        <span className=" w-10 align-middle ">电台  </span> <Select onChange={radioChange} value={curRadio ? String(curRadio) : ''} options={radioList} clearable />
+    </div>
+  )
   const hide = () => {
     setDrawShow(false)
   }
@@ -112,13 +137,14 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
         >
           <Drawer
             header={false}
-            body={renderBody()}
+            body={body2}
             showInAttachedElement
             footer={
               <div className={'flex justify-center'}>
                 <FormItem className={'mb-0'} style={{ margin: 0 }}>
-                  <Button className={'w-96'} onClick={submit} type={'submit'} loading={loading} shape="round" >提 交</Button>
+                  <Button className={' min-w-[24rem] max-w-[50%]'} onClick={submit} type={'submit'} loading={loading} shape="round" >提 交</Button>
                 </FormItem>
+                <Button className=" absolute right-2 " icon={<BiLastPage className="text-2xl" />} onClick={selectLastRadio} loading={lastLoading} ></Button>
               </div>
             }
             visible={drawShow}
