@@ -31,8 +31,10 @@ const LinkBtn: React.FC<ILinkBtnProp> = forwardRef(({ clickFn, children, name, t
   useImperativeHandle(ref, () => ({
     compClick
   }))
+  //
   return (
-    <div className={'w-full h-full overflow-hidden relative'}  >
+    <div className={'w-full h-full overflow-hidden relative'} {...(type == 'uploadBtn'?{onDrop:uploaderRef.current?.handleDrop}:{})} 
+      onDragEnter={(e) => {e.preventDefault()}} onDragOver={(e) => {e.preventDefault()}} >
       {(type == 'btn' || !type) && children}
       {type == 'uploadBtn' && <MyUploader ref={uploaderRef} uploadFn={submit} >{children}</MyUploader>}
     </div>

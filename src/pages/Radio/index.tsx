@@ -11,6 +11,9 @@ import withKeepAlive from "hooks/withKeepAlive";
 import OpenRadio from "./OpenRadio";
 import ScrollContainer from "react-indiana-drag-scroll";
 import { BsArrowsFullscreen } from "react-icons/bs";
+
+//@ts-ignore
+// import { PitchShifter } from "soundtouchjs";
 // import type {elem} from 'react-indiana-drag-scroll'
 
 type IRadioProp = {
@@ -39,6 +42,8 @@ const TimeLineItem = memo(({ e, jumpTime, isChoose }: { e: any, jumpTime: Functi
     // </Tooltip>
   )
 })
+
+
 const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   const [adSrc, setAdSrc] = useState('')
   const [timeList, setTimeList] = useState<any[]>([])
@@ -48,8 +53,47 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   const [curAudioData, setCurAudioData] = useState<any>({})
   const scrollConRef = useRef<any | null>(null)
   const [initReady, setInitReady] = useState<boolean>(false)
-  const changeOpenRadio = useCallback((data: any) => {
+  // const [semitone, setSemitone] = useState(0);  //音调key
+  // const [shifter, setShifter] = useState<any>();     //调音器实例
+  // const mp3OnLoad = (ev: ProgressEvent<FileReader>) => {
+  //   const newShifter = (buffer: AudioBuffer) => {
+  //     const myShifter = new PitchShifter(audioCtx, buffer, buffer.length);
+  //     myShifter.semitone
+  //     // myShifter.on("play", onPlay);
+  //     // setDuration(myShifter.formattedDuration);
+  //     setShifter(myShifter);
+  //   };
+  //   let buffer = new Uint8Array(ev.target?.result as ArrayBuffer).buffer 
+  //   if (shifter) {
+  //     shifter.off()
+  //   }
+  //   if (buffer) {
+  //     audioCtx.decodeAudioData(buffer as ArrayBuffer).then(audioBuffer => {
+  //       newShifter(audioBuffer);
+  //     });
+  //   }
+  // }
+  // const loadMp3 = (url: string) => {
+  //   const fileReader = new FileReader();
+  //   fileReader.onload = mp3OnLoad;
+  //   fetch(url)
+  //     .then(response => response.blob())
+  //     .then(blob => {
+  //       fileReader.readAsDataURL(blob);
+  //     })
+  // }
+  // const playAudio = () => {
+  //   if (shifter) {
+  //     shifter.connect(gainNode);
+  //     gainNode.connect(audioCtx.destination);
+  //     audioCtx.resume();
+  //   }
+  // }
+  const changeOpenRadio = useCallback((data: any, isUpKey: boolean) => {
     let url = `https://alioss.gcores.com/uploads/audio/${data.included[0].attributes.audio}`
+    if (isUpKey) {
+      url = `https://meamoe.one/record2/output-${data.included[0].attributes.audio}`
+    }
     setCurAudioData(data)
     let tlist = data.included.filter((e: any) => e.type == 'timelines').sort((a: any, b: any) => {
       return a.attributes.at - b.attributes.at

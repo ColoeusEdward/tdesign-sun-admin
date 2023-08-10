@@ -1,16 +1,18 @@
 import classNames from "classnames";
 import MySkeleton from "components/MySkeleton";;
 import { MacScrollbar } from "mac-scrollbar";
-import { forwardRef, memo, ReactNode, useEffect, useImperativeHandle, useRef, useState, RefAttributes,useMemo } from "react";
-import { edit_accountList, get_account_list, get_gradio, get_gradio_info, get_last_radio_playlog, LeftStorage, save_account_list, ShowRecordSizeList } from "services/nt";
-import { Button, Card, Drawer, Form, FormRule, Input, Select, Tag } from "tdesign-react";
+import { forwardRef, memo, ReactNode, useEffect, useImperativeHandle, useRef, useState, RefAttributes, useMemo } from "react";
+import { edit_accountList, get_account_list, get_gradio, get_gradio_info, get_gradio_info_simple, get_last_radio_playlog, LeftStorage, SaveGadioAndUpKey, save_account_list, ShowRecordSizeList } from "services/nt";
+import { Button, Card, Drawer, Dropdown, Form, FormRule, Input, MessagePlugin, NotificationPlugin, Select, Switch, Tag, TdDropdownProps } from "tdesign-react";
 import { copyToPaste, sleep } from "utils/util";
 import { BsArrowsFullscreen, BsPlusSquareDotted } from "react-icons/bs";
 import FormItem from "tdesign-react/es/form/FormItem";
 import { BiLastPage } from "react-icons/bi";
+import { RiDownloadCloudFill } from "react-icons/ri";
+import { getMsgOpt } from "configs/cfg";
 type IOpenRadioProp = {
   children?: ReactNode,
-  radioConfirm: (info: any) => void,
+  radioConfirm: (info: any, isUpKey: boolean) => void,
   // name: string
 }
 
@@ -21,10 +23,22 @@ let isEdit = false
 const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(({ radioConfirm }, ref) => {
   const [loading, setLoading] = useState(false)
   const [lastLoading, setLastLoading] = useState(false)
+  const [cacheLoading, setCacheLoading] = useState(false)
   const [drawShow, setDrawShow] = useState(false)
   const [radioList, setRadioList] = useState([{ label: '', value: '' }]);
   const [curRadio, setCurRadio] = useState<number | string>('')
+  const [isUpKey, setIsUpKey] = useState<boolean>(false)
   const formRef = useRef<any>()
+  const options = [
+    {
+      content: '定位最新并跳转',
+      value: 0,
+    },
+    {
+      content: '定位最新',
+      value: 1,
+    },
+  ];
   const compClick = () => {
 
   }
@@ -42,7 +56,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
     // console.log(`curra`,curRadio);
     if (!curRadio) return
     get_gradio_info(curRadio).then(res => {
-      radioConfirm(res)
+      radioConfirm(res, isUpKey)
     })
     setDrawShow(false)
     // formRef.current.validate()
@@ -78,11 +92,28 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
       setCurRadio(e.id)
       return get_gradio_info(e.id)
     }).then(res => {
-      radioConfirm(res)
+      radioConfirm(res, isUpKey)
       setDrawShow(false)
     }).finally(() => {
       setLastLoading(false)
     })
+  }
+
+  const cacheCurRadioFile = () => {
+    if(!curRadio){
+      MessagePlugin.warning({content: '请先选择一条数据',...getMsgOpt()})
+      return 
+    }
+    get_gradio_info_simple(curRadio).then((data: any) => {
+      let url = `https://alioss.gcores.com/uploads/audio/${data.included[0].attributes.audio}`
+      setCacheLoading(true)
+      return SaveGadioAndUpKey(url)
+    }).then(() => {
+
+    }).finally(() => {
+      setCacheLoading(false)
+    })
+
 
   }
 
@@ -104,6 +135,21 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
   const radioChange = (val: any) => {
     setCurRadio(val)
   }
+  const rightDropDownClick: TdDropdownProps['onClick'] = (data) => {
+    let v = data.value as number
+    let fn = [
+      () => { selectLastRadio() },
+      () => {
+        setLastLoading(true)
+        get_last_radio_playlog().then(e => {
+          setCurRadio(e.id)
+        }).finally(() => {
+          setLastLoading(false)
+        })
+      },
+    ]
+    fn[v] && fn[v]()
+  }
   // https://alioss.gcores.com/uploads/audio/18102b7a-2d8a-49e9-b1aa-5c04d2ce1a64.mp3
   // const renderBody = () => {
   //   return (
@@ -117,12 +163,17 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
 
   const body2 = (
     <div className={'w-full h-full flex items-center'}>
-        <span className=" w-10 align-middle ">电台  </span> <Select onChange={radioChange} value={curRadio ? String(curRadio) : ''} options={radioList} clearable />
+      <span className=" w-10 align-middle ">电台  </span> <Select onChange={radioChange} value={curRadio ? String(curRadio) : ''} options={radioList} clearable />
     </div>
   )
   const hide = () => {
     setDrawShow(false)
+
   }
+
+  // useEffect(() => {
+  //   NotificationPlugin.success({ title:'Gradio OK',duration:10000,content:'机核下载处理成功',closeBtn:true })
+  // },[])
 
   return (
     <>
@@ -141,10 +192,19 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
             showInAttachedElement
             footer={
               <div className={'flex justify-center'}>
-                <FormItem className={'mb-0'} style={{ margin: 0 }}>
-                  <Button className={' min-w-[24rem] max-w-[50%]'} onClick={submit} type={'submit'} loading={loading} shape="round" >提 交</Button>
-                </FormItem>
-                <Button className=" absolute right-2 " icon={<BiLastPage className="text-2xl" />} onClick={selectLastRadio} loading={lastLoading} ></Button>
+                <div className=" absolute left-2 ">
+                  <Button icon={<RiDownloadCloudFill className="text-2xl" />} onClick={cacheCurRadioFile} loading={lastLoading} ></Button>
+                </div>
+
+                <Button className={' min-w-[10rem] max-w-[24rem]'} onClick={submit} type={'submit'} loading={loading} shape="round" >提 交</Button>
+
+                <div className=" absolute right-2 ">
+                  <Switch value={isUpKey} className={'mr-2'} size={'large'} onChange={(val) => { setIsUpKey(val) }}  ></Switch>
+                  <Dropdown onClick={rightDropDownClick} options={options} trigger={'click'} >
+                    <Button icon={<BiLastPage className="text-2xl" />} loading={lastLoading} ></Button>
+                  </Dropdown>
+                </div>
+
               </div>
             }
             visible={drawShow}

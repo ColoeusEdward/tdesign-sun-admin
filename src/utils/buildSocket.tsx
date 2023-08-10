@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io-client'
 // import { useSocketStore } from "@/store/modules/socket"
 // import { useBookStore } from '@/store/modules/book'
-import { MessagePlugin } from 'tdesign-react'
+import { MessagePlugin, NotificationPlugin } from 'tdesign-react'
 import { getMsgOpt } from 'configs/cfg'
 import { useAtom } from 'jotai'
 import { memoryAtom } from 'jtStore/home'
@@ -80,6 +80,10 @@ export function buildSocket(socket: Socket) {
       page: res.page
     })
     // bookStore.setContent(res)
+  })
+
+  socket.on('GradioOK', (res) => {
+    NotificationPlugin.success({ title:'Gradio OK',duration:0,content:'机核下载处理成功',offset:[-20,20],closeBtn:true })
   })
 
   window.$socket = socket

@@ -457,6 +457,12 @@ export const get_gradio_info = async (id:string|number) => {
   );
   return result
 }
+export const get_gradio_info_simple = async (id:string|number) => {
+  const result = await request.get<any>(`/proxy/gradio/id=${id}?include=media%2Cdjs`
+  );
+  return result
+}
+
 export const save_radio_playlog = async (info:playLog) => {
   const result = await request.post<any>(`/koa/newCen/saveRadioPlayLog`,{info}
   );
@@ -481,7 +487,13 @@ export const get_wechat_new = async  (num:number) => {
 }
 
 export const wget_to_record = async (url:string) => {
-  const result = await request.post<string>('/koa/newCen/wgetToRecord',{url:{url}}
+  const result = await request.post<string>('/koa/newCen/wgetToRecord',{url}
+  );
+  return result.data
+}
+
+export const SaveGadioAndUpKey = async (url:string) => {
+  const result = await request.post<string>('/koa/newCen/saveGadioAndUpKey',{url}
   );
   return result.data
 }

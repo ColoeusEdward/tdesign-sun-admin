@@ -1,7 +1,7 @@
 import { useSize } from "ahooks";
 import classNames from "classnames";
 import WaveProcess from "components/WaveProcess";
-import { FC, ForwardedRef, forwardRef, ForwardRefExoticComponent, memo, ReactNode, RefAttributes, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { DragEventHandler, FC, ForwardedRef, forwardRef, ForwardRefExoticComponent, memo, ReactNode, RefAttributes, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { CheckCircleFilledIcon } from "tdesign-icons-react";
 import { Skeleton, Textarea, TextareaValue, Upload, UploadFile } from "tdesign-react";
 import { sleep } from "utils/util";
@@ -11,8 +11,12 @@ type IMyUploaderProp = {
   children: ReactNode
   uploadFn?: Function
 }
+type IMyUploaderRef = {
+  trigger: Function,
+  handleDrop: DragEventHandler
+}
 
-const MyUploader: FC<IMyUploaderProp & RefAttributes<{ trigger: Function }>> = forwardRef(({ children, uploadFn }, ref) => {
+const MyUploader: FC<IMyUploaderProp & RefAttributes<IMyUploaderRef>> = forwardRef(({ children, uploadFn }, ref) => {
   const conRef = useRef(null)
   const triggerRef = useRef<HTMLDivElement>(null)
   const [uploading, setUploading] = useState(false)
@@ -61,9 +65,22 @@ const MyUploader: FC<IMyUploaderProp & RefAttributes<{ trigger: Function }>> = f
     triggerRef.current?.click()
   }
 
+  const handleDrop: DragEventHandler = (e) => {
+    e.preventDefault()
+    var fileList = Array.from(e.dataTransfer.files);  //  es6 格式
+    // console.log(fileList)
+    setUploading(true)
+    uploadFn && uploadFn(fileList.pop(), handleProgressEvent)
+      .then(() => sleep(3000))
+      .finally(() => {
+        setUploading(false)
+      })
+  }
+
   useImperativeHandle(ref, () => ({
     // cleanVal
-    trigger
+    trigger,
+    handleDrop
   }))
 
   // useEffect(() => {
@@ -72,7 +89,7 @@ const MyUploader: FC<IMyUploaderProp & RefAttributes<{ trigger: Function }>> = f
 
   return (
     <>
-      <div className={'absolute -z-20'}>
+      <div className={'absolute -z-20'} onDrop={handleDrop} >
         <Upload
           headers={{ 'naive-info': 'hello!' }}
           action="2"
@@ -83,7 +100,7 @@ const MyUploader: FC<IMyUploaderProp & RefAttributes<{ trigger: Function }>> = f
           theme="custom"
           beforeUpload={beforeUpload as any}
         >
-          <div ref={triggerRef}></div>
+          <div className={'w-full  h-full'} ref={triggerRef}></div>
         </Upload>
       </div>
       {children}
