@@ -104,9 +104,9 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
       MessagePlugin.warning({content: '请先选择一条数据',...getMsgOpt()})
       return 
     }
+    setCacheLoading(true)
     get_gradio_info_simple(curRadio).then((data: any) => {
       let url = `https://alioss.gcores.com/uploads/audio/${data.included[0].attributes.audio}`
-      setCacheLoading(true)
       return SaveGadioAndUpKey(url)
     }).then(() => {
 

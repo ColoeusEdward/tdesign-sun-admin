@@ -89,7 +89,7 @@ const MyUploader: FC<IMyUploaderProp & RefAttributes<IMyUploaderRef>> = forwardR
 
   return (
     <>
-      <div className={'absolute -z-20'} onDrop={handleDrop} >
+      <div className={'absolute z-[2300] w-full h-full overflow-hidden bg-transparent'} onDrop={handleDrop} >
         <Upload
           headers={{ 'naive-info': 'hello!' }}
           action="2"
