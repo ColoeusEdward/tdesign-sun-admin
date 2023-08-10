@@ -193,7 +193,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
             footer={
               <div className={'flex justify-center'}>
                 <div className=" absolute left-2 ">
-                  <Button icon={<RiDownloadCloudFill className="text-2xl" />} onClick={cacheCurRadioFile} loading={lastLoading} ></Button>
+                  <Button icon={<RiDownloadCloudFill className="text-2xl" />} onClick={cacheCurRadioFile} loading={cacheLoading} ></Button>
                 </div>
 
                 <Button className={' min-w-[10rem] max-w-[24rem]'} onClick={submit} type={'submit'} loading={loading} shape="round" >提 交</Button>
