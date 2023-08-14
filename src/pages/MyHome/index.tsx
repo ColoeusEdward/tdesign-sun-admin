@@ -63,7 +63,7 @@ const originLayout = [
   { type: '2x6', Comp: MemChart, name: 'memPercent', x: 8, y: 0, },
   { type: '2x3', Comp: Weather, name: '天气', x: 9, y: 6, noExpend: true },
   { type: 'btn', Comp: LinkBtn, name: '更新证书', x: 0, y: 7, iconSrc: 'https://img.icons8.com/external-vitaliy-gorbachev-lineal-color-vitaly-gorbachev/100/000000/external-certificate-award-vitaliy-gorbachev-lineal-color-vitaly-gorbachev.png' },
-  { type: '2x2', Comp: Account, name: '账号', x: 4, y: 6, iconSrc: 'https://img.icons8.com/dusk/64/000000/test-account.png',expendType:'2x4' },
+  { type: '2x2', Comp: Account, name: '账号', x: 4, y: 6, iconSrc: 'https://img.icons8.com/dusk/64/000000/test-account.png', expendType: '2x4' },
   { type: '4x1.5', Comp: GoogleImg, name: '谷歌搜图', x: 7, y: 10, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
   { type: '4x1.5', Comp: SaImg, name: 'sa搜图', x: 7, y: 11.5, iconSrc: 'https://saucenao.com/favicon.ico' },
   { type: 'btn', Comp: LinkBtn, name: '漫画', x: 2, y: 4, iconSrc: 'https://img.icons8.com/officexs/80/000000/comics-magazine.png' },
@@ -72,12 +72,18 @@ const originLayout = [
   { type: '5x10', Comp: WechatNew, name: '新闻', x: 0, y: 10, noExpend: true },
   // { type: '2x6', Comp: Radio, name: 'Radio', x: 2, y: 6, },
   { type: '4x1.5', Comp: WgetToRecord, name: 'wget', x: 2, y: 7, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
+  { type: 'btn', Comp: LinkBtn, name: 'mnt文件夹', x: 2, y: 8.5, iconSrc: 'https://img.icons8.com/color/96/hdd.png', size: '1x2.5' },
 ]
 
 const buildLayout = (oriLay: any[]) => {
   let obj: any = {
     btn: (e: gridItem) => {
-      Object.assign(e, { w: 1, h: 3 })
+      if (!e.size) {
+        Object.assign(e, { w: 1, h: 3 })
+      }else{
+        let slist = e.size.split('x')
+        Object.assign(e, { w: slist[0] * 1, h: slist[1] * 1 })
+      }
     },
     other: (e: gridItem) => {
       let list = e.type.split('x')

@@ -43,6 +43,9 @@ export default function useLinkBtnLogic() {
     '下载文件夹': () => {
       window.open(`https://${window.location.host}/record/`)
     },
+    'mnt文件夹': () => {
+      window.open(`https://${window.location.host}/record2/`)
+    },
     '重启后端': () => {
       buildDialog(reboot_lexue)
     },
