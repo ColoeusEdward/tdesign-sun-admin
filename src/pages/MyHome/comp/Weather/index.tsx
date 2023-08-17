@@ -41,7 +41,7 @@ const Weather: React.FC<IWeatherProp> = forwardRef(({ children }, ref) => {
     loopGet()
   }, [])
   return (
-    <div className={'flex w-full h-full justify-center items-center'} onClick={() => {window.open('https://www.msn.cn/zh-cn/weather/forecast/')}} >
+    <div className={'flex w-full h-full justify-center items-center'} onClick={() => {window.open('https://www.msn.cn/zh-cn/weather/forecast/in-%E5%B9%BF%E4%B8%9C%E7%9C%81,%E4%B8%9C%E8%8E%9E%E5%B8%82?cvid=6c156bfa958d465cbd69b09d9026ff05&loc=eyJsIjoi5Lic6I6e5biCIiwiciI6IuW5v%2BS4nOecgSIsInIyIjoi5Lic6I6e5biCIiwiYyI6IuS4reWNjuS6uuawkeWFseWSjOWbvSIsImkiOiJDTiIsInQiOjEsImciOiJ6aC1jbiIsIngiOiIxMTMuNjg4MDAzNTQwMDM5MDYiLCJ5IjoiMjIuODI3OTk5MTE0OTkwMjM0In0%3D&weadegreetype=C')}} >
       {weatherData && (
         <>
           <div className={'flex flex-auto h-full w-1/4 justify-center items-start flex-col py-3 pl-3 space-y-4'} >
