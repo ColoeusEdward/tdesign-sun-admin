@@ -5,7 +5,10 @@ import proxy from '../configs/host';
 
 const env = import.meta.env.MODE || 'development';
 // const API_HOST = proxy[env].API;
-const API_HOST = `https://${window.location.host}`;
+let API_HOST = `https://${window.location.host}`;
+if(env == 'electron'){
+  API_HOST = `https://meamoe.one`
+}
 
 const SUCCESS_CODE = 200;
 const TIMEOUT = 20000;

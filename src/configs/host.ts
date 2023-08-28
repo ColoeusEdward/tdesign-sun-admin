@@ -1,4 +1,4 @@
-export default {
+const hmap = {
   mock: {
     // 本地mock数据
     API: '',
@@ -17,4 +17,10 @@ export default {
     API: 'https://meamoe.one',
     // API: 'https://'+window.location.host,
   },
+  electron: {
+    API: 'https://meamoe.one',
+    target: 'https://meamoe.one'
+  }
 };
+
+export default hmap

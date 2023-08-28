@@ -48,7 +48,7 @@ declare module 'hex-to-hsl';
 
 declare interface ImportMeta {
   env: {
-    MODE: 'development' | 'test' | 'production';
+    MODE: 'development' | 'test' | 'production' | 'electron';
   };
 }
 declare module 'axios-jsonp';

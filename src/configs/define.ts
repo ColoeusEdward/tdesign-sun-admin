@@ -5,10 +5,14 @@ const define = {
   // wsUrl: 'wss://'+window.location.host
 }
 export const setRoot = (mode: string) => {
-  define.root = mode == 'development' ? '/' : '/site/sun/'
+  let rootMap: Record<string, string> = {
+    'development': '/',
+    'electron': './',
+  }
+  define.root = rootMap[mode] || '/site/sun/' 
 }
 export const setRootByHost = () => {
-  define.root = window.location.host.search('localhost') != -1 ? '/' : '/site/sun/'
+  // define.root = window.location.host.search('localhost') != -1 ? '/' : '/site/sun/'
 }
 
 export default define

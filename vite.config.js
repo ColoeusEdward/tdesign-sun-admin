@@ -56,7 +56,7 @@ export default (params) => ({
       localEnabled: true,
     }),
   ],
-
+  publicDir: 'public',
   build: {
     cssCodeSplit: false,
     rollupOptions: {
@@ -68,8 +68,9 @@ export default (params) => ({
   },
 
   server: {
+    strictPort: true, // * 固定端口(如果端口被占用则中止)
     host: '0.0.0.0',
-    port: 3003,
+    port: 8820,
     proxy: {
       '/dev': {
         // 用于开发环境下的转发请求

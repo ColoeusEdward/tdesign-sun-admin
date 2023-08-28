@@ -180,7 +180,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
       <div className={'h-8 flex justify-center p-2 absolute right-2 top-2 '}
       // onMouseUp={(e) => { e.stopPropagation() }} onTouchEnd={(e) => { e.stopPropagation() }}  
       >
-        <Button className={'w-16 '} icon={<BsPlusSquareDotted className="text-2xl" />} shape={'round'} onClick={() => { isEdit = false; showForm() }} > </Button>
+        <Button className={'w-16 '} icon={<BsPlusSquareDotted className="text-2xl" />} shape={'round'} accessKey="c" onClick={() => { isEdit = false; showForm() }} > </Button>
       </div>
       <div >
         <Form ref={formRef} labelWidth={60} layout={'inline'} onValuesChange={formChange}
