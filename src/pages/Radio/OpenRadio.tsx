@@ -27,7 +27,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
   const [drawShow, setDrawShow] = useState(false)
   const [radioList, setRadioList] = useState([{ label: '', value: '' }]);
   const [curRadio, setCurRadio] = useState<number | string>('')
-  const [isUpKey, setIsUpKey] = useState<boolean>(false)
+  const [isUpKey, setIsUpKey] = useState<boolean>(true)
   const formRef = useRef<any>()
   const options = [
     {
