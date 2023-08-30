@@ -18,7 +18,7 @@ export default memo((props: { showMenu?: boolean }) => {
     return null;
   }
   const invokeDevTool = () => {
-    window.ipc.send('devTools');
+    window.ipc.send('devTools','open');
   }
 
   let HeaderLeft;
