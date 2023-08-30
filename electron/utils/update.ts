@@ -33,7 +33,7 @@ export function createAutoUpdate(mwindow: BrowserWindow) {
     //监听'error'事件
     autoUpdater.on('error', (err) => {
       console.log(err)
-      dialog.showMessageBoxSync(mwindow,{
+      dialog.showMessageBoxSync(mwindow, {
         type: 'info',
         title: '应用更新错误',
         message: JSON.stringify(err)
@@ -43,6 +43,11 @@ export function createAutoUpdate(mwindow: BrowserWindow) {
     //监听'update-available'事件，发现有新版本时触发
     autoUpdater.on('update-available', () => {
       console.log('found new version')
+      dialog.showMessageBoxSync(mwindow, {
+        type: 'info',
+        title: 'test更新',
+        message: 'found new version'
+      })
     })
 
     //默认会自动下载新版本，如果不想自动下载，设置autoUpdater.autoDownload = false
