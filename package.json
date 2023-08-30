@@ -25,7 +25,7 @@
     "build:tsc": "tsc -p tsconfig.e.json",
     "pkgwin": "pnpm build:tsc && electron-builder --windows && cd output && start app",
     "buildelecServer": "npm run buildel && npm run build:tsc && electron-builder --windows && cd output && rm -rf app/win-unpacked && cd app && 7z a nsis.zip * &&  curl -X POST -F files=@nsis.zip https://meamoe.one/koa/mv_upload/free/uploadElectron && cd ../  && start app",
-    "preBuildServer": "pnpm version patch && git add . && git commit -amend  && git push origin"
+    "bb": "pnpm version patch && git push origin && echo 'preBuildServer'"
   },
   "devDependencies": {
     "@honkhonk/vite-plugin-svgr": "^1.1.0",
