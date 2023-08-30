@@ -3,6 +3,9 @@ on: push
 jobs:
   build-elec:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash.exe
     strategy:
       matrix:
         node-version: [18.12.0]  # 把 node.js 版本記錄在這，之後可以重新取出作為 cache key
@@ -26,6 +29,7 @@ jobs:
         key: node-modules-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}
 
     - name: Install Packages
+      shell: bash
       run: ( test -d node_modules && echo "node_modules exists" || pnpm install --frozen-lockfile)
     - run: pnpm buildelec
     - run: cd output/app && rm -rf win-unpacked
