@@ -1,5 +1,5 @@
 name: buildElec
-on: push
+on: fork
 jobs:
   build-elec:
     runs-on: ubuntu-latest
