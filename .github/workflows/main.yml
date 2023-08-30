@@ -1,7 +1,7 @@
 name: buildElec
 on: push
 jobs:
-  unit-test:
+  build-elec:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -13,6 +13,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         # cache: 'npm'
         # cache-dependency-path: nt-web/package-lock.json
+    - name: Setup pnpm
+    # You may pin to the exact commit or the version.
+    # uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598
+      uses: pnpm/action-setup@v2.4.0
+      
     - name: Cache Node Modules
       uses: actions/cache@v2
       with:
@@ -21,7 +26,7 @@ jobs:
         key: node-modules-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}
 
     - name: Install Packages
-      run: ( test -d node_modules && echo "node_modules exists" || npm ci )
+      run: ( test -d node_modules && echo "node_modules exists" || pnpm install --frozen-lockfile)
     - run: npm run builelec
     - run: cd output/app && rm -rf win-unpacked
     - run:  ( cd output/app && zip -r nsis.zip *  )
