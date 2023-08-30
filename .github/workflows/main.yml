@@ -30,7 +30,7 @@ jobs:
 
     - name: Install Packages
       shell: bash
-      run: ( test -d node_modules && echo "node_modules exists" || npm i)
+      run: ( test -d node_modules && echo "node_modules exists" || npm i --legacy-peer-deps)
     - run: npm run buildelecServer
     - run: cd output/app && rm -rf win-unpacked
 
