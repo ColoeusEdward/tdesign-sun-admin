@@ -33,6 +33,7 @@ exports.createWindow = void 0;
  */
 const electron_1 = require("electron");
 const path = __importStar(require("path"));
+const shortcut_1 = require("./shortcut");
 /**
  * packages.json,script中通过cross-env NODE_ENV=production设置的环境变量
  * 'production'|'development'
@@ -63,7 +64,8 @@ function createWindow() {
     Window.setResizable(true);
     // 加载调试工具
     NODE_ENV === 'development' && Window.webContents.openDevTools();
-    // 由优雅写法
+    //  Window.webContents.openDevTools();
+    // 由优雅写法a
     // 启动窗口时隐藏,直到渲染进程加载完成「ready-to-show 监听事件」 再显示窗口,防止加载时闪烁
     Window.once('ready-to-show', () => {
         Window.show(); // 显示窗口
@@ -76,5 +78,6 @@ function createWindow() {
     else
         Window.loadFile(`./dist/index.html`);
     // else Window.loadURL('http://localhost:3920/');
+    (0, shortcut_1.createShortcut)(Window);
 }
 exports.createWindow = createWindow;

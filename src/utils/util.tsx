@@ -21,7 +21,8 @@ export async function sendRequestP<T, R>(url: string, params?: R) {
 
 export function getBaseName() {
   var env = import.meta.env.MODE || 'development';
-  var root = env === 'development' ? '/' : define.root
+  var root = (env === 'development' || env === 'electron') ? '/' : define.root
+  console.log("🚀 ~ file: util.tsx:25 ~ getBaseName ~ root:", root)
   return root
 }
 

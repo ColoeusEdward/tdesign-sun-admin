@@ -17,11 +17,13 @@ import '@szhsin/react-menu/dist/transitions/slide.css';
 import './index.css'
 import { getBaseName } from 'utils/util';
 import { AliveScope } from 'react-activation';
-import define, { setRootByHost } from 'configs/define';
+import define, { setRoot, setRootByHost } from 'configs/define';
 import { buildSocket } from 'utils/buildSocket';
 import { io, Socket } from 'socket.io-client';
 import 'react-indiana-drag-scroll/dist/style.css'
 import { config } from 'configs/cfg';
+const env = import.meta.env.MODE
+setRoot(env)
 const baseName = getBaseName()
 
 const socket: Socket = io(config.wsUrl, {
@@ -31,20 +33,31 @@ const socket: Socket = io(config.wsUrl, {
 })
 
 
-
 const renderApp = () => {
   setRootByHost()
   window.myCountKey = 0
   const container = document.getElementById('app');
   const root = createRoot(container!);
-  root.render(
-    <Provider store={store}>
-      {buildSocket(socket)}
-      <BrowserRouter basename={baseName} >
+  let renderRouter = (
+    <BrowserRouter basename={baseName} >
+      <AliveScope>
+        <App />
+      </AliveScope>
+    </BrowserRouter>
+  )
+  if (env == 'electron') {
+    renderRouter = (
+      <HashRouter basename={baseName} >
         <AliveScope>
           <App />
         </AliveScope>
-      </BrowserRouter>
+      </HashRouter>
+    )
+  }
+  root.render(
+    <Provider store={store}>
+      {buildSocket(socket)}
+      {renderRouter}
     </Provider>
   )
   // ReactDOM.render(

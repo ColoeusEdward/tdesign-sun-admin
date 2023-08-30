@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Layout, Button, Row, Col } from 'tdesign-react';
-import { ViewListIcon } from 'tdesign-icons-react';
+import { RefreshIcon, ToolsIcon, ViewListIcon } from 'tdesign-icons-react';
 import { useAppDispatch, useAppSelector } from 'modules/store';
 import { selectGlobal, toggleMenu } from 'modules/global';
 import HeaderIcon from './HeaderIcon';
@@ -17,6 +17,9 @@ export default memo((props: { showMenu?: boolean }) => {
   if (!globalState.showHeader) {
     return null;
   }
+  const invokeDevTool = () => {
+    window.ipc.send('devTools');
+  }
 
   let HeaderLeft;
   if (props.showMenu) {
@@ -29,11 +32,20 @@ export default memo((props: { showMenu?: boolean }) => {
     HeaderLeft = (
       <Row gutter={16} align='middle'>
         <Col>
-          <Button shape='square' size='large' variant='text' onClick={() => dispatch(toggleMenu(null))}>
+          <Button className={'noElectronDrag'} shape='square' size='large' variant='text' onClick={() => dispatch(toggleMenu(null))}>
             <ViewListIcon />
           </Button>
         </Col>
         <Col>
+          <Button className={'noElectronDrag'} shape='square' size='large' variant='text' onClick={() => window.location.reload()}>
+            <RefreshIcon />
+          </Button>
+          {/* <Search /> */}
+        </Col>
+         <Col>
+          <Button className={'noElectronDrag'} shape='square' size='large' variant='text' onClick={invokeDevTool}>
+            <ToolsIcon />
+          </Button>
           {/* <Search /> */}
         </Col>
       </Row>

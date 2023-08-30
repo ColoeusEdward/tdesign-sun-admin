@@ -4,6 +4,7 @@ import { BrowserRouterProps } from 'react-router-dom';
 // 把modules文件夹下的所有ts文件自动生成映射关系
 const modules = import.meta.globEager('./modules/**.{ts,tsx}')
 const moduleRouterList: IRouter[] = []
+const env = import.meta.env.MODE
 
 Object.keys(modules).forEach((key: string) => {
   const nameMatch: string[] | null = key.match(/^\.\/modules\/(.+)\.(ts|tsx)/)
@@ -47,7 +48,7 @@ const routes: IRouter[] = [
   },
   {
     path: '/',
-    redirect: '/home',
+    redirect: env == 'electron' ? '/radio' : '/home',
   },
 ];
 

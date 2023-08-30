@@ -14,6 +14,7 @@ import { createAppMenu } from './utils/menu';
 import { onCalendar } from "./utils/calendar";
 // 是否开启调试工具
 import { onDevTools } from "./utils/devTools";
+// app.commandLine.appendSwitch('disable-web-security');
 
 // const remote = require('electron').remote;
 app.on("ready", () => {

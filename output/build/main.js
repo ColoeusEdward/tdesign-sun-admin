@@ -16,6 +16,7 @@ const menu_1 = require("./utils/menu");
 const calendar_1 = require("./utils/calendar");
 // 是否开启调试工具
 const devTools_1 = require("./utils/devTools");
+// app.commandLine.appendSwitch('disable-web-security');
 // const remote = require('electron').remote;
 electron_1.app.on("ready", () => {
     (0, createWindow_1.createWindow)(); // 创建窗口

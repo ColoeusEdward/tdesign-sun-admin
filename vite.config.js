@@ -10,6 +10,7 @@ function getBase(params) {
   // console.log(`host`,host[params.mode]);
   // var env = params.mode || 'development';
   var root = define.root
+  console.log("🚀 ~ file: vite.config.js:13 ~ getBase ~ root:", root)
   return root
 }
 export default (params) => ({
@@ -69,7 +70,8 @@ export default (params) => ({
 
   server: {
     strictPort: true, // * 固定端口(如果端口被占用则中止)
-    host: '0.0.0.0',
+    // host: '0.0.0.0',
+    host: true,
     port: 8820,
     proxy: {
       '/dev': {

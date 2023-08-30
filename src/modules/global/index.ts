@@ -36,7 +36,7 @@ let localCollapsed = localStorage.getItem('menuCollapsed') && JSON.parse(localSt
 let localMainColor = localStorage.getItem('mainColor') && JSON.parse(localStorage.getItem('mainColor')!)
 const initialState: IGlobalState = {
   loading: true,
-  collapsed: localCollapsed || window.innerWidth < 1000, // 宽度小于1000 菜单闭合
+  collapsed: localCollapsed, // 宽度小于1000 菜单闭合 window.innerWidth < 1000
   setting: false,
   version,
   theme: defaultTheme,

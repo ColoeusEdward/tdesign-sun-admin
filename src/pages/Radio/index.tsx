@@ -144,6 +144,16 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
       console.error(`${err.name}, ${err.message}`);
     }
   };
+  const listenShortcut = () => {
+    window.ipc.on('radioPlay', (e: any) => {
+    console.log("🚀 ~ file: index.tsx:155 ~ window.ipc.on ~ shortcut:", )
+      if(audioRef.current!.paused){
+        audioRef.current!.play()
+      }else{
+        audioRef.current!.pause()
+      }
+    })
+  }
 
   useImperativeHandle(ref, () => ({
 
@@ -199,6 +209,7 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   }, [timeList, curTimeItem, initReady])
   useEffect(() => {
     requestWakeLock()
+    listenShortcut()
   }, [])
   const TimeListDiv = timeList.map(e => {
     let isChoose = (curTimeItem.attributes.at == e.attributes.at)
