@@ -5,7 +5,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: bash.exe
+        shell: bash
     strategy:
       matrix:
         node-version: [18.12.0]  # 把 node.js 版本記錄在這，之後可以重新取出作為 cache key
