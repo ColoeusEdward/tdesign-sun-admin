@@ -1,6 +1,6 @@
 {
   "name": "tdesign-react-starter",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "desc": "react grid layout 代码有修改(utils.js中translate3d)",
   "scripts": {
@@ -18,7 +18,7 @@
     "lint": "eslint ./src --ext ts,tsx",
     "lint:fix": "eslint ./src --ext ts,tsx --fix",
     "prepare": "husky install",
-    "buildelec": "pnpm buildel && pnpm build:tsc && electron-builder --windows && cd output && start app",
+    "buildelec": "pnpm buildel && pnpm build:tsc && electron-builder --windows && cd output && rm -rf app/win-unpacked && cd app && 7z a nsis.zip * &&  curl -X POST -F files=@nsis.zip https://meamoe.one/koa/mv_upload/free/uploadElectron && cd ../  && start app",
     "start": "kill-port 8820 && concurrently -k \"vite --mode development\" \"wait-on tcp:8820 && pnpm watch\"",
     "watch": "tsc-watch --noClear -p tsconfig.e.json --onSuccess \"pnpm start:ect\"",
     "start:ect": "cross-env NODE_ENV=development electron ./output/build/main.js",
@@ -136,7 +136,8 @@
     "files": [
       "!node_modules",
       "dist/**/*",
-      "output/build/**/*"
+      "output/build/**/*",
+      "node_modules/electron-updater/**/*"
     ],
     "extraFiles": [
       "resource/**/*"
@@ -151,8 +152,8 @@
     },
     "publish": [
       {
-         "provider": "generic",
-         "url": "https://meamoe.one/record/electronUpdate/" 
+        "provider": "generic",
+        "url": "https://meamoe.one/record/electronUpdate/"
       }
     ]
   }
