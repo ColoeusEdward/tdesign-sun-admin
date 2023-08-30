@@ -32,36 +32,36 @@ jobs:
       shell: bash
       run: ( test -d node_modules && echo "node_modules exists" || npm i --legacy-peer-deps)
     - run: npm run buildelecServer
-    - run: cd output/app && rm -rf win-unpacked
+    # - run: cd output/app && rm -rf win-unpacked
 
-    - name: Easy Zip Files
-      # You may pin to the exact commit or the version.
-      # uses: vimtor/action-zip@26a249fb00d43ca98dad77a4b3838025fc226aa1
-      uses: vimtor/action-zip@v1.1
-      with:
-        # Files or directories to zip
-        files: output/app
-        # Name of output zip file
-        dest: nsis.zip # optional, default is result.zip
-        # Whether to add subdirectories to simply zip all files to the root
-        # recursive: # optional, default is true
+    # - name: Easy Zip Files
+    #   # You may pin to the exact commit or the version.
+    #   # uses: vimtor/action-zip@26a249fb00d43ca98dad77a4b3838025fc226aa1
+    #   uses: vimtor/action-zip@v1.1
+    #   with:
+    #     # Files or directories to zip
+    #     files: output/app
+    #     # Name of output zip file
+    #     dest: nsis.zip # optional, default is result.zip
+    #     # Whether to add subdirectories to simply zip all files to the root
+    #     # recursive: # optional, default is true
     # - run:  ( cd output/app && zip -r nsis.zip *  )
 
     - name: Post file to server
       run: |
-        FILE_PATH="nsis.zip"
+        FILE_PATH="output/app/nsis.zip"
         SERVER_URL="https://meamoe.one/koa/mv_upload/free/uploadElectron"
         curl -X POST -F "files=@$FILE_PATH" $SERVER_URL
     
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.1.2
-      with:
-          # Artifact name
-          name: build-elec # optional, default is artifact
-          # A file, directory or wildcard pattern that describes what to upload
-          # path: ${{ github.workspace }}/nt-web/dist
-          path: |
-            ${{ github.workspace }}/nsis.zip
+    # - name: Upload a Build Artifact
+    #   uses: actions/upload-artifact@v3.1.2
+    #   with:
+    #       # Artifact name
+    #       name: build-elec # optional, default is artifact
+    #       # A file, directory or wildcard pattern that describes what to upload
+    #       # path: ${{ github.workspace }}/nt-web/dist
+    #       path: |
+    #         ${{ github.workspace }}/nsis.zip
           # The desired behavior if no files are found using the provided path.
 
 
