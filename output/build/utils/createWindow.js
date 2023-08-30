@@ -34,6 +34,7 @@ exports.createWindow = void 0;
 const electron_1 = require("electron");
 const path = __importStar(require("path"));
 const shortcut_1 = require("./shortcut");
+const update_1 = require("./update");
 /**
  * packages.json,script中通过cross-env NODE_ENV=production设置的环境变量
  * 'production'|'development'
@@ -79,5 +80,6 @@ function createWindow() {
         Window.loadFile(`./dist/index.html`);
     // else Window.loadURL('http://localhost:3920/');
     (0, shortcut_1.createShortcut)(Window);
+    (0, update_1.createAutoUpdate)(Window);
 }
 exports.createWindow = createWindow;
