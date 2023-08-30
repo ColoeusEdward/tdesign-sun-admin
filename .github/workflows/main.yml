@@ -1,5 +1,5 @@
 name: buildElec
-on: fork
+on: push
 jobs:
   build-elec:
     runs-on: windows-latest
@@ -31,7 +31,7 @@ jobs:
     - name: Install Packages
       shell: bash
       run: ( test -d node_modules && echo "node_modules exists" || npm i)
-    - run: npm run buildelec
+    - run: npm run buildelecServer
     - run: cd output/app && rm -rf win-unpacked
 
     - name: Easy Zip Files
