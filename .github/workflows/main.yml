@@ -1,5 +1,5 @@
 name: buildElec
-on: push
+on: fork
 jobs:
   build-elec:
     runs-on: windows-latest
@@ -16,10 +16,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         # cache: 'npm'
         # cache-dependency-path: nt-web/package-lock.json
-    - name: Setup pnpm
-    # You may pin to the exact commit or the version.
-    # uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598
-      uses: pnpm/action-setup@v2.4.0
+    # - name: Setup pnpm
+    # # You may pin to the exact commit or the version.
+    # # uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598
+    #   uses: pnpm/action-setup@v2.4.0
       
     - name: Cache Node Modules
       uses: actions/cache@v2
@@ -30,8 +30,8 @@ jobs:
 
     - name: Install Packages
       shell: bash
-      run: ( test -d node_modules && echo "node_modules exists" || pnpm install --frozen-lockfile)
-    - run: pnpm buildelec
+      run: ( test -d node_modules && echo "node_modules exists" || npm i)
+    - run: npm run buildelec
     - run: cd output/app && rm -rf win-unpacked
 
     - name: Easy Zip Files
