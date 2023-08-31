@@ -1,7 +1,7 @@
 import path, { resolve } from 'path';
 import { viteMockServe } from 'vite-plugin-mock';
 import react from '@vitejs/plugin-react';
-import svgr from '@honkhonk/vite-plugin-svgr';
+import svgr from 'vite-plugin-svgr';
 import host from './src/configs/host'
 import define, { setRoot } from './src/configs/define'
 function getBase(params) {
