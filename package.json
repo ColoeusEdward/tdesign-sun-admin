@@ -137,8 +137,10 @@
       ]
     },
     "files": [
+      "!node_modules",
       "dist/**/*",
-      "output/build/**/*"
+      "output/build/**/*",
+      "node_modules/electron-updater/**/*"
     ],
     "extraFiles": [
       "resource/**/*"
