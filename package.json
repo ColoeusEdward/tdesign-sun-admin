@@ -28,7 +28,7 @@
     "bb": "pnpm version patch && git push origin && echo 'preBuildServer'"
   },
   "devDependencies": {
-    "@honkhonk/vite-plugin-svgr": "^1.1.0",
+    "vite-plugin-svgr": "^3.2.0",
     "@types/echarts": "^4.9.13",
     "@types/lodash": "^4.14.178",
     "@types/mockjs": "^1.0.6",
