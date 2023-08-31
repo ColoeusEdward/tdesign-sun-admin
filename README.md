@@ -93,3 +93,22 @@ npm run lint:fix
 
 TDesign 遵循 [MIT 协议](https://github.com/Tencent/tdesign-react-starter/LICENSE)。
 
+```
+"node_modules/tiny-typed-emitter/**/*",
+"node_modules/semver/**/*",
+"node_modules/lru-cache/**/*",
+"node_modules/yallist/**/*",
+"node_modules/lodash.isequal/**/*",
+"node_modules/lodash.escaperegexp/**/*",
+"node_modules/lazy-val/**/*",
+"node_modules/js-yaml/**/*",
+"node_modules/argparse/**/*",
+"node_modules/fs-extra/**/*",
+"node_modules/universalify/**/*",
+"node_modules/jsonfile/**/*",
+"node_modules/graceful-fs/**/*",
+"node_modules/builder-util-runtime/**/*",
+"node_modules/sax/**/*",
+"node_modules/debug/**/*",
+"node_modules/ms/**/*"
+```
