@@ -144,7 +144,8 @@
       "node_modules/builder-util/**/*",
       "node_modules/builder-util-runtime/**/*",
       "node_modules/debug/**/*",
-      "node_modules/sax/**/*"
+      "node_modules/sax/**/*",
+      "node_modules/ms/**/*"
     ],
     "extraFiles": [
       "resource/**/*"
