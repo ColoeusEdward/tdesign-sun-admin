@@ -1,5 +1,5 @@
 name: buildElec
-on: fork
+on: push
 jobs:
   build-elec:
     runs-on: windows-latest
