@@ -145,7 +145,22 @@
       "node_modules/builder-util-runtime/**/*",
       "node_modules/debug/**/*",
       "node_modules/sax/**/*",
-      "node_modules/ms/**/*"
+      "node_modules/ms/**/*",
+      "node_modules/fs-extra/**/*",
+      "node_modules/js-yaml/**/*",
+      "node_modules/lazy-val/**/*",
+      "node_modules/lodash.escaperegexp/**/*",
+      "node_modules/lodash.isequal/**/*",
+      "node_modules/semver/**/*",
+      "node_modules/typed-emitter/**/*",
+      "node_modules/typed-emitter/**/*",
+      "node_modules/typed-emitter/**/*",
+      "node_modules/argparse/**/*",
+      "node_modules/lru-cache/**/*",
+      "node_modules/rxjs/**/*",
+      "node_modules/graceful-fs/**/*",
+      "node_modules/jsonfile/**/*",
+      "node_modules/universalify/**/*"
     ],
     "extraFiles": [
       "resource/**/*"
