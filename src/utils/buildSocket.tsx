@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 import { switchTheme } from 'modules/global'
 import { ETheme } from 'types/index.d';
 import { replaceLine } from './util'
+let cacheCount = 0
 
 declare global {
   interface Window {
@@ -83,7 +84,10 @@ export function buildSocket(socket: Socket) {
   })
 
   socket.on('GradioOK', (res) => {
-    NotificationPlugin.success({ title:'Gradio OK',duration:0,content:'机核下载处理成功',offset:[-20,20],closeBtn:true })
+    if (cacheCount > 0) {  //第一次加载时跳过， 因为第一次都是自动检查
+      NotificationPlugin.success({ title: 'Gradio OK', duration: 0, content: '机核下载处理成功', offset: [-20, 20], closeBtn: true })
+    }
+    cacheCount++;
   })
 
   window.$socket = socket

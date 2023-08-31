@@ -57,6 +57,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
     if (!curRadio) return
     get_gradio_info(curRadio).then(res => {
       radioConfirm(res, isUpKey)
+      autoCacheNextRadio(curRadio)
     })
     setDrawShow(false)
     // formRef.current.validate()
@@ -88,21 +89,36 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
   }
   const selectLastRadio = () => {
     setLastLoading(true)
+    let tempCurRadio: string | number = ''
     get_last_radio_playlog().then(e => {
       setCurRadio(e.id)
+      tempCurRadio = e.id
       return get_gradio_info(e.id)
     }).then(res => {
       radioConfirm(res, isUpKey)
+      autoCacheNextRadio(tempCurRadio)
       setDrawShow(false)
     }).finally(() => {
       setLastLoading(false)
     })
   }
 
+  const autoCacheNextRadio = (tempCurRadio: string | number) => {
+    let nextIdx = radioList.findIndex(e => e.value == tempCurRadio)
+    if (nextIdx - 1 < 0) {
+      return
+    }
+    let next = radioList[nextIdx - 1]
+    get_gradio_info_simple(next.value).then((data: any) => {
+      let url = `https://alioss.gcores.com/uploads/audio/${data.included[0].attributes.audio}`
+      return SaveGadioAndUpKey(url)
+    })
+  }
+
   const cacheCurRadioFile = () => {
-    if(!curRadio){
-      MessagePlugin.warning({content: '请先选择一条数据',...getMsgOpt()})
-      return 
+    if (!curRadio) {
+      MessagePlugin.warning({ content: '请先选择一条数据', ...getMsgOpt() })
+      return
     }
     setCacheLoading(true)
     get_gradio_info_simple(curRadio).then((data: any) => {

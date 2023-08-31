@@ -145,6 +145,7 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
     }
   };
   const listenShortcut = () => {
+    if(!window.ipc) return
     window.ipc.on('radioPlay', (e: any) => {
     console.log("🚀 ~ file: index.tsx:155 ~ window.ipc.on ~ shortcut:", )
       if(audioRef.current!.paused){
