@@ -1,6 +1,6 @@
 {
   "name": "tdesign-react-starter",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "private": true,
   "desc": "react grid layout 代码有修改(utils.js中translate3d)",
   "scripts": {
