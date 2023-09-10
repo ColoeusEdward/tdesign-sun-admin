@@ -52,3 +52,7 @@ declare interface ImportMeta {
   };
 }
 declare module 'axios-jsonp';
+
+/// <reference types="./@types/svg" />
+/// <reference types="vite/client" />
+/// <reference types="vite-plugin-svgr/client" />

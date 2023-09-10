@@ -4,7 +4,7 @@ import { LogoGithubIcon, HelpCircleIcon, SettingIcon } from 'tdesign-icons-react
 import { useAppDispatch } from 'modules/store';
 import { toggleSetting } from 'modules/global';
 
-import LogoFullIcon from 'assets/svg/assets-logo-full.svg?component';
+import { ReactComponent as LogoFullIcon } from 'assets/svg/assets-logo-full.svg';
 import Style from './index.module.less';
 
 export default function Header() {

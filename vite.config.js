@@ -44,7 +44,9 @@ export default (params) => ({
   },
 
   plugins: [
-    svgr(),
+    svgr({
+      exportAsDefault: false,
+    }),
     // react({
     //   babel:{
     //     babelrc:true
