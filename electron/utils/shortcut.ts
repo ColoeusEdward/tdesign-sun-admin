@@ -17,6 +17,9 @@ export function createShortcut(mwindow:BrowserWindow) {
   globalShortcut.register('Alt+B', () => {
     mwindow.webContents.send('radioPlay')
   })
+  globalShortcut.register('Alt+F5', () => {
+    mwindow.webContents.send('reload')
+  })
 }
 
 
