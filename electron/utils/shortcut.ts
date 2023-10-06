@@ -8,7 +8,7 @@
 import { BrowserWindow, globalShortcut, ipcMain, Menu } from 'electron'
 
 
-export function createShortcut(mwindow:BrowserWindow) {
+export function createShortcut(mwindow: BrowserWindow) {
   // ipcMain.handle('radioPlay', (event, arg) => {
   //   return new Promise((resolve, reject) => {
   //     resolve('play')
@@ -19,6 +19,10 @@ export function createShortcut(mwindow:BrowserWindow) {
   })
   globalShortcut.register('Alt+F5', () => {
     mwindow.webContents.send('reload')
+  })
+
+  globalShortcut.register('Alt+F12', () => {
+    mwindow.webContents.openDevTools()
   })
 }
 
