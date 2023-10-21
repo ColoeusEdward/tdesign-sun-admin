@@ -28,7 +28,6 @@
     "bb": "pnpm version patch && git push origin && echo 'preBuildServer'"
   },
   "devDependencies": {
-    "vite-plugin-svgr": "^3.2.0",
     "@types/echarts": "^4.9.13",
     "@types/lodash": "^4.14.178",
     "@types/mockjs": "^1.0.6",
@@ -62,6 +61,7 @@
     "typescript": "^4.9.5",
     "vite": "4.3.9",
     "vite-plugin-mock": "^2.9.6",
+    "vite-plugin-svgr": "^3.2.0",
     "wait-on": "^7.0.1"
   },
   "dependencies": {
@@ -98,8 +98,8 @@
     "react-router-dom": "^6.4.3",
     "socket.io-client": "4.5.4",
     "soundtouchjs": "^0.1.30",
-    "tdesign-icons-react": "^0.2.5",
-    "tdesign-react": "^1.1.17",
+    "tdesign-icons-react": "^0.3.2",
+    "tdesign-react": "^1.3.0",
     "tvision-color": "^1.4.0",
     "use-immer": "^0.7.0",
     "uuid": "^8.3.2",

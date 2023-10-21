@@ -10,6 +10,8 @@ import FormItem from "tdesign-react/es/form/FormItem";
 import { BiLastPage } from "react-icons/bi";
 import { RiDownloadCloudFill } from "react-icons/ri";
 import { getMsgOpt } from "configs/cfg";
+import { useAtom } from "jotai";
+import { radioFastInitCountAtom } from "jtStore/home";
 type IOpenRadioProp = {
   children?: ReactNode,
   radioConfirm: (info: any, isUpKey: boolean) => void,
@@ -28,7 +30,9 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
   const [radioList, setRadioList] = useState([{ label: '', value: '' }]);
   const [curRadio, setCurRadio] = useState<number | string>('')
   const [isUpKey, setIsUpKey] = useState<boolean>(true)
+  const [fastInitCount] = useAtom(radioFastInitCountAtom)
   const formRef = useRef<any>()
+
   const options = [
     {
       content: '定位最新并跳转',
@@ -187,6 +191,13 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
 
   }
 
+  useEffect(() => {
+    console.log("🚀 ~ file: OpenRadio.tsx:197 ~ constOpenRadio:React.FC<IOpenRadioProp&RefAttributes<unknown>>=forwardRef ~ fastInitCount:", fastInitCount)
+    if (fastInitCount > 0) {
+      MessagePlugin.success({ content: '电台快速触发', ...getMsgOpt() })
+      rightDropDownClick({ value: 0 }, {} as any)
+    }
+  }, [fastInitCount])
   // useEffect(() => {
   //   NotificationPlugin.success({ title:'Gradio OK',duration:10000,content:'机核下载处理成功',closeBtn:true })
   // },[])
