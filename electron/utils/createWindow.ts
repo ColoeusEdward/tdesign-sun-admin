@@ -46,6 +46,10 @@ function createWindow() {
     Window.show(); // 显示窗口
   });
 
+  Window.webContents.session.setProxy({
+    proxyRules: "socks5://127.0.0.1:7890",
+  })
+
   // * 主窗口加载外部链接
   // 开发环境,加载vite启动的vue项目地址
   if (NODE_ENV === 'development') Window.loadURL('http://localhost:8820/');
