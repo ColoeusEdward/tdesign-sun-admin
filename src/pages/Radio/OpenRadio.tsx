@@ -90,8 +90,8 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
     setGetRadioLoading(true)
     return get_gradio().then(e => {
       setRadioList(e)
-      return new Promise<void>((resolve, reject) => {
-        resolve()
+      return new Promise((resolve, reject) => {
+        resolve(e)
       })
     }).finally(() => {
       setGetRadioLoading(false)
@@ -101,14 +101,14 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
   const selectLastRadio = () => {
     setLastLoading(true)
     let tempCurRadio: string | number = ''
-    ajaxPromiseAll<[void,playLog]>([getRadioList(),get_last_radio_playlog()])
+    ajaxPromiseAll<[any,playLog]>([getRadioList(),get_last_radio_playlog()])
     .then(([,e])=> {
       setCurRadio(e.id)
       tempCurRadio = e.id
       return get_gradio_info(e.id)
     }).then(res => {
       radioConfirm(res, isUpKey)
-      autoCacheNextRadio(tempCurRadio)
+      // autoCacheNextRadio(tempCurRadio)
       setDrawShow(false)
     }).finally(() => {
       setLastLoading(false)
@@ -122,6 +122,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
     }
     let next = radioList[nextIdx - 1]
     get_gradio_info_simple(next.value).then((data: any) => {
+      console.log("🚀 ~ file: OpenRadio.tsx:125 ~ get_gradio_info_simple ~ data:", data)
       let url = `https://alioss.gcores.com/uploads/audio/${data.included[0].attributes.audio}`
       return SaveGadioAndUpKey(url)
     })
@@ -206,7 +207,9 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
       rightDropDownClick({ value: 0 }, {} as any)
     }
   }, [fastInitCount])
-
+  useEffect(() => {
+    autoCacheNextRadio(curRadio)
+  },[curRadio])
   // useEffect(() => {
   //   getRadioList()
   // }, [])
