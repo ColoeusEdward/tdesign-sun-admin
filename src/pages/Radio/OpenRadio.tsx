@@ -2,9 +2,9 @@ import classNames from "classnames";
 import MySkeleton from "components/MySkeleton";;
 import { MacScrollbar } from "mac-scrollbar";
 import { forwardRef, memo, ReactNode, useEffect, useImperativeHandle, useRef, useState, RefAttributes, useMemo } from "react";
-import { edit_accountList, get_account_list, get_gradio, get_gradio_info, get_gradio_info_simple, get_last_radio_playlog, LeftStorage, SaveGadioAndUpKey, save_account_list, ShowRecordSizeList } from "services/nt";
+import { edit_accountList, get_account_list, get_gradio, get_gradio_info, get_gradio_info_simple, get_last_radio_playlog, LeftStorage, playLog, SaveGadioAndUpKey, save_account_list, ShowRecordSizeList } from "services/nt";
 import { Button, Card, Drawer, Dropdown, Form, FormRule, Input, MessagePlugin, NotificationPlugin, Select, Switch, Tag, TdDropdownProps } from "tdesign-react";
-import { copyToPaste, sleep } from "utils/util";
+import { ajaxPromiseAll, copyToPaste, sleep } from "utils/util";
 import { BsArrowsFullscreen, BsPlusSquareDotted } from "react-icons/bs";
 import FormItem from "tdesign-react/es/form/FormItem";
 import { BiLastPage } from "react-icons/bi";
@@ -31,6 +31,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
   const [curRadio, setCurRadio] = useState<number | string>('')
   const [isUpKey, setIsUpKey] = useState<boolean>(true)
   const [fastInitCount] = useAtom(radioFastInitCountAtom)
+  const [getRadioLoading, setGetRadioLoading] = useState(false)
   const formRef = useRef<any>()
 
   const options = [
@@ -86,15 +87,22 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
 
   }
   const getRadioList = () => {
-    get_gradio().then(e => {
+    setGetRadioLoading(true)
+    return get_gradio().then(e => {
       setRadioList(e)
+      return new Promise<void>((resolve, reject) => {
+        resolve()
+      })
+    }).finally(() => {
+      setGetRadioLoading(false)
     })
 
   }
   const selectLastRadio = () => {
     setLastLoading(true)
     let tempCurRadio: string | number = ''
-    get_last_radio_playlog().then(e => {
+    ajaxPromiseAll<[void,playLog]>([getRadioList(),get_last_radio_playlog()])
+    .then(([,e])=> {
       setCurRadio(e.id)
       tempCurRadio = e.id
       return get_gradio_info(e.id)
@@ -198,6 +206,10 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
       rightDropDownClick({ value: 0 }, {} as any)
     }
   }, [fastInitCount])
+
+  // useEffect(() => {
+  //   getRadioList()
+  // }, [])
   // useEffect(() => {
   //   NotificationPlugin.success({ title:'Gradio OK',duration:10000,content:'机核下载处理成功',closeBtn:true })
   // },[])

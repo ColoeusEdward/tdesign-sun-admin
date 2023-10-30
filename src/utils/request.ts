@@ -62,6 +62,9 @@ instance.interceptors.response.use(
     return Promise.reject(response?.data);
   },
   (e) => {
+    if(e.message.search('timeout') > -1){
+      MessagePlugin.error({ content: '请求超时', ...getMsgOpt() })
+    }
     if (e.message.search('401') > -1) {
       MessagePlugin.error({ content: 'token过期, 请重新登录', ...getMsgOpt() })
       localStorage.setItem('meaToken', '')

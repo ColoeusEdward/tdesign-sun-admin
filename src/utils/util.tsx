@@ -8,6 +8,7 @@ import { CgEditFlipH, CgEditFlipV } from "react-icons/cg";
 import { useAtom } from 'jotai';
 import { isFlipAtom } from 'pages/V8/jotai';
 
+type customList<T> = T extends [] ? [] : T
 
 export async function sendRequestG<T, R>(url: string, params?: R) {
   const response = request.get<T>(url, { params })
@@ -32,10 +33,10 @@ export const sleep = (ms: number) => {
   })
 }
 
-export const ajaxPromiseAll = (list: any[]) => {
-  return new Promise<any[]>((resolve, reject) => {
+export const ajaxPromiseAll = <T extends Array<any>,>(list: any) => {
+  return new Promise<T>((resolve, reject) => {
     return Promise.all(list).then(res => {
-      resolve(res);
+      resolve(res as T);
     }).catch(err => {
       reject(err);
     })
@@ -117,8 +118,8 @@ export const isLowResolution = () => {
 
 export const useToolBarRender = () => {
   const [, setIsFlip] = useAtom(isFlipAtom)
-  const  resetFlip = () => {
-    setIsFlip([false,false])
+  const resetFlip = () => {
+    setIsFlip([false, false])
   }
   const flipx = () => {
     setIsFlip((pre) => {
@@ -135,8 +136,8 @@ export const useToolBarRender = () => {
   const toolBarRender = ({ rotate, onRotate }: any): React.ReactNode => {
     return (
       <Space height="64px" align="center" >
-        <GiAnticlockwiseRotation className={' text-2xl'} fill="#fff" onClick={() => { onRotate(rotate - 90);resetFlip() }} />
-        <GiClockwiseRotation className={'text-2xl'} fill="#fff" onClick={() => { onRotate(rotate + 90);resetFlip() }} />
+        <GiAnticlockwiseRotation className={' text-2xl'} fill="#fff" onClick={() => { onRotate(rotate - 90); resetFlip() }} />
+        <GiClockwiseRotation className={'text-2xl'} fill="#fff" onClick={() => { onRotate(rotate + 90); resetFlip() }} />
         <CgEditFlipH className={'text-2xl'} fill="#fff" onClick={flipx} />
         <CgEditFlipV className={'text-2xl'} fill="#fff" onClick={flipy} />
       </Space>

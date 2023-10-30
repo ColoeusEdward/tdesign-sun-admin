@@ -15,7 +15,7 @@ interface recordData {
   name_list: string[]
   target?: InputValue
 }
-type playLog = {
+export type playLog = {
   id:number,
   ts?:number,
   at:number
