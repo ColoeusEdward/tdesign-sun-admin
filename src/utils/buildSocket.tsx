@@ -84,9 +84,11 @@ export function buildSocket(socket: Socket) {
   })
 
   socket.on('GradioOK', (res) => {
-    if (cacheCount > 0) {  //第一次加载时跳过， 因为第一次都是自动检查
-      NotificationPlugin.success({ title: 'Gradio OK', duration: 0, content: '机核下载处理成功', offset: [-20, 20], closeBtn: true })
+    let dur = 0
+    if (cacheCount == 0) {  //第一次加载时自动消， 因为第一次都是自动检查
+      dur = 2000
     }
+    NotificationPlugin.success({ title: 'Gradio OK', duration: dur, content: '机核下载处理成功', offset: [-20, 20], closeBtn: true })
     cacheCount++;
   })
 
