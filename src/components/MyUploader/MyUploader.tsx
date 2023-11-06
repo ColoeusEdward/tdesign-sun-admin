@@ -67,6 +67,9 @@ const MyUploader: FC<IMyUploaderProp & RefAttributes<IMyUploaderRef>> = forwardR
 
   const handleDrop: DragEventHandler = (e) => {
     e.preventDefault()
+    // if(uploading){
+    //   return
+    // }
     var fileList = Array.from(e.dataTransfer.files);  //  es6 格式
     // console.log(fileList)
     setUploading(true)
@@ -89,7 +92,7 @@ const MyUploader: FC<IMyUploaderProp & RefAttributes<IMyUploaderRef>> = forwardR
 
   return (
     <>
-      <div className={'absolute z-[2300] w-full h-full overflow-hidden bg-transparent'} onDrop={handleDrop} >
+      <div className={'absolute z-[2300] w-full h-full overflow-hidden bg-transparent'}>
         <Upload
           headers={{ 'naive-info': 'hello!' }}
           action="2"
