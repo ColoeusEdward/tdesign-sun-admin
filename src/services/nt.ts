@@ -492,8 +492,8 @@ export const wget_to_record = async (url:string) => {
   return result.data
 }
 
-export const SaveGadioAndUpKey = async (url:string) => {
-  const result = await request.post<string>('/koa/newCen/saveGadioAndUpKey',{url}
+export const SaveGadioAndUpKey = async (url:string,name?:string) => {
+  const result = await request.post<string>('/koa/newCen/saveGadioAndUpKey',{url,name}
   );
   return result.data
 }

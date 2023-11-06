@@ -117,6 +117,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
 
   const autoCacheNextRadio = (tempCurRadio: string | number) => {
     let nextIdx = radioList.findIndex(e => e.value == tempCurRadio)
+    // console.log("🚀 ~ file: OpenRadio.tsx:120 ~ autoCacheNextRadio ~ nextIdx:", nextIdx)
     if (nextIdx - 1 < 0) {
       return
     }
@@ -124,7 +125,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
     get_gradio_info_simple(next.value).then((data: any) => {
       console.log("🚀 ~ file: OpenRadio.tsx:125 ~ get_gradio_info_simple ~ data:", data)
       let url = `https://alioss.gcores.com/uploads/audio/${data.included[0].attributes.audio}`
-      return SaveGadioAndUpKey(url)
+      return SaveGadioAndUpKey(url,data.data.attributes.title)
     })
   }
 
@@ -136,7 +137,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
     setCacheLoading(true)
     get_gradio_info_simple(curRadio).then((data: any) => {
       let url = `https://alioss.gcores.com/uploads/audio/${data.included[0].attributes.audio}`
-      return SaveGadioAndUpKey(url)
+      return SaveGadioAndUpKey(url,data.data.attributes.title)
     }).then(() => {
 
     }).finally(() => {
@@ -219,7 +220,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
 
   return (
     <>
-      <div className={'h-8 flex justify-center p-2 absolute right-2 top-2 '}
+      <div className={'h-8 flex justify-center p-2 absolute right-2 top-2 '} style={{zIndex:'500'}}
       // onMouseUp={(e) => { e.stopPropagation() }} onTouchEnd={(e) => { e.stopPropagation() }}  
       >
         <Button className={'w-16 '} icon={<BsPlusSquareDotted className="text-2xl" />} shape={'round'} accessKey="c" onClick={() => { isEdit = false; showForm() }} > </Button>

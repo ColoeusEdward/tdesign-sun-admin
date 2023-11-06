@@ -145,15 +145,23 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
     }
   };
   const listenShortcut = () => {
-    if(!window.ipc) return
+    if (!window.ipc) return
     window.ipc.on('radioPlay', (e: any) => {
-    console.log("🚀 ~ file: index.tsx:155 ~ window.ipc.on ~ shortcut:", )
-      if(audioRef.current!.paused){
+      console.log("🚀 ~ file: index.tsx:155 ~ window.ipc.on ~ shortcut:",)
+      if (audioRef.current!.paused) {
         audioRef.current!.play()
-      }else{
+      } else {
         audioRef.current!.pause()
       }
     })
+  }
+  const right15 = () => {
+    if (!audioRef.current) return
+    audioRef.current.currentTime = audioRef.current.currentTime + 15
+  }
+  const left15 = () => {
+    if (!audioRef.current) return
+    audioRef.current.currentTime = audioRef.current.currentTime - 15
   }
 
   useImperativeHandle(ref, () => ({
@@ -223,24 +231,28 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
     <div className={'h-full w-full flex-col items-center justify-center pt-1 bg-[#181818] ' + (isFull ? 'absolute top-0 left-0 w-screen h-screen z-[250]' : 'relative')} style={{ height: !isFull ? 'calc(100vh - 64px)' : '100vh' }} >
 
       <OpenRadio radioConfirm={changeOpenRadio} />
-      {!isFull && <Button className={'w-16 absolute top-2 left-2'} icon={<BsArrowsFullscreen className="text-2xl" />} shape={'round'} onClick={() => { fullScreen() }} > </Button>}
+      {!isFull && <Button className={'w-16 absolute top-2 left-2 z-[500]'} icon={<BsArrowsFullscreen className="text-2xl" />} shape={'round'} onClick={() => { fullScreen() }} > </Button>}
       {/* <img style={[]} src="https://miro.medium.com/max/1400/1*e_Loq49BI4WmN7o9ItTADg.gif" ></img> */}
-      <div className={'flex flex-col justify-end items-center'} style={{ height: 'calc(100% - 64px)' }}>
-
-        {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.asset &&
-          (
-            <div className={isFull ? ' max-w-full' : 'max-h-[600px]'}>
-              <img src={`https://image.gcores.com/${curTimeItem.attributes.asset}`} className={'w-full h-full object-contain'} />
-            </div>
-          )
-        }
-        {
-          (!curTimeItem || !curTimeItem.attributes) && <div> 暂无时间轴 </div>
-        }
-
-        <div className={'h-40 text-center max-w-4xl text-lg mt-2 overflow-y-auto min-h-[100px]'}>
-          {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.content}
+      <div className={'flex flex-col justify-end items-center relative'} style={{ height: 'calc(100% - 64px)' }}>
+        <div className=" absolute w-full top-0 " style={{ height: 'calc(100% - 160px)',zIndex:'400' }} >
+          <div className=" inline-block h-full w-1/2" onDoubleClick={left15}   ></div>
+          <div className=" inline-block h-full w-1/2" onDoubleClick={right15} ></div>
         </div>
+        {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.asset &&
+            (
+              <div className={isFull ? ' max-w-full' : 'max-h-[600px]'}>
+                <img src={`https://image.gcores.com/${curTimeItem.attributes.asset}`} className={'w-full h-full object-contain'} />
+              </div>
+            )
+          }
+          {
+            (!curTimeItem || !curTimeItem.attributes) && <div> 暂无时间轴 </div>
+          }
+
+          <div className={'h-40 text-center max-w-4xl text-lg mt-2 overflow-y-auto min-h-[100px]'}>
+            {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.content}
+          </div>
+
         {/* 时间轴 */}
         <div className={' justify-self-end w-full mb-2'}>
           <ScrollContainer className={'h-34 w-full'} ref={scrollConRef as any} >
