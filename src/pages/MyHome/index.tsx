@@ -35,6 +35,7 @@ import SaImg from './comp/SaImg';
 import WechatNew from './comp/WechatNew';
 import WgetToRecord from './comp/WgetToRecord';
 import NpmJump from './comp/NpmJump';
+import PixivNum from './comp/PixivNum';
 // import Radio from './comp/Radio';
 
 const originLayout = [
@@ -75,6 +76,7 @@ const originLayout = [
   { type: '4x1.5', Comp: WgetToRecord, name: 'wget', x: 2, y: 7, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
   { type: 'btn', Comp: LinkBtn, name: 'mnt文件夹', x: 2, y: 8.5, iconSrc: 'https://img.icons8.com/color/96/hdd.png', size: '1x2.5' },
   { type: '3x2.49', Comp: NpmJump, name: 'npm', x: 3, y: 8.5, iconSrc: 'https://img.icons8.com/bubbles/2x/undo.png' },
+  { type: '1x1.5', Comp: PixivNum, name: 'pixiv号', x: 6, y: 13, iconSrc: 'https://saucenao.com/favicon.ico' },
 ]
 
 const buildLayout = (oriLay: any[]) => {
