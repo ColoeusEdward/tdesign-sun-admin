@@ -234,24 +234,28 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
       {!isFull && <Button className={'w-16 absolute top-2 left-2 z-[500]'} icon={<BsArrowsFullscreen className="text-2xl" />} shape={'round'} onClick={() => { fullScreen() }} > </Button>}
       {/* <img style={[]} src="https://miro.medium.com/max/1400/1*e_Loq49BI4WmN7o9ItTADg.gif" ></img> */}
       <div className={'flex flex-col justify-end items-center relative'} style={{ height: 'calc(100% - 64px)' }}>
-        <div className=" absolute w-full top-0 " style={{ height: 'calc(100% - 160px)',zIndex:'400' }} >
+        <div className=" absolute w-full top-0 " style={{ height: 'calc(100% - 160px)', zIndex: '400' }} >
           <div className=" inline-block h-full w-1/2" onDoubleClick={left15}   ></div>
           <div className=" inline-block h-full w-1/2" onDoubleClick={right15} ></div>
         </div>
         {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.asset &&
-            (
-              <div className={isFull ? ' max-w-full' : 'max-h-[600px]'}>
-                <img src={`https://image.gcores.com/${curTimeItem.attributes.asset}`} className={'w-full h-full object-contain'} />
-              </div>
-            )
-          }
-          {
-            (!curTimeItem || !curTimeItem.attributes) && <div> 暂无时间轴 </div>
-          }
+          (
+            <div className={isFull ? ' max-w-full' : 'max-h-[600px]'}>
+              <img src={`https://image.gcores.com/${curTimeItem.attributes.asset}`} className={'w-full h-full object-contain'} />
+            </div>
+          )
+        }
+        {
+          (!curTimeItem || !curTimeItem.attributes) && <div> 暂无时间轴 </div>
+        }
 
-          <div className={'h-40 text-center max-w-4xl text-lg mt-2 overflow-y-auto min-h-[100px]'}>
+        <div className={'h-40 text-center max-w-4xl text-lg mt-2 overflow-y-auto min-h-[100px] relative '}>
+          {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.content}
+          <div className=" absolute top-0 left-0 w-full h-full text-center text-white text-lg z-[450]">
             {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.content}
+
           </div>
+        </div>
 
         {/* 时间轴 */}
         <div className={' justify-self-end w-full mb-2'}>
