@@ -251,7 +251,7 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
 
         <div className={'h-40 text-center max-w-4xl text-lg mt-2 overflow-y-auto min-h-[100px] relative '}>
           {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.content}
-          <div className=" absolute top-0 left-0 w-full h-full text-center text-white text-lg z-[450]">
+          <div className=" absolute top-0 left-0 w-full h-full text-center text-white text-lg z-[450] overflow-y-auto ">
             {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.content}
 
           </div>
