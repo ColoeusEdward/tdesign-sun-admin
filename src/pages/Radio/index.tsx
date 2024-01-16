@@ -11,7 +11,7 @@ import withKeepAlive from "hooks/withKeepAlive";
 import OpenRadio from "./OpenRadio";
 import ScrollContainer from "react-indiana-drag-scroll";
 import { BsArrowsFullscreen } from "react-icons/bs";
-
+import { FaRadio } from "react-icons/fa6";
 //@ts-ignore
 // import { PitchShifter } from "soundtouchjs";
 // import type {elem} from 'react-indiana-drag-scroll'
@@ -163,7 +163,9 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
     if (!audioRef.current) return
     audioRef.current.currentTime = audioRef.current.currentTime - 15
   }
-
+  const goRadio = () => {
+    window.open(`https://www.gcores.com/radios/${curAudioData.data.id}`, '_blank');
+  }
   useImperativeHandle(ref, () => ({
 
   }))
@@ -232,6 +234,7 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
 
       <OpenRadio radioConfirm={changeOpenRadio} />
       {!isFull && <Button className={'w-16 absolute top-2 left-2 z-[500]'} icon={<BsArrowsFullscreen className="text-2xl" />} shape={'round'} onClick={() => { fullScreen() }} > </Button>}
+      {curAudioData.data && <Button className={'w-16 absolute top-12 left-2 z-[500]'} icon={<FaRadio className="text-2xl" />} shape={'round'} onClick={() => { goRadio() }} > </Button>}
       {/* <img style={[]} src="https://miro.medium.com/max/1400/1*e_Loq49BI4WmN7o9ItTADg.gif" ></img> */}
       <div className={'flex flex-col justify-end items-center relative'} style={{ height: 'calc(100% - 64px)' }}>
         <div className=" absolute w-full top-0 " style={{ height: 'calc(100% - 160px)', zIndex: '400' }} >
