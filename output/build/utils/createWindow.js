@@ -45,11 +45,11 @@ function createWindow() {
     // 生成窗口实例
     const Window = new electron_1.BrowserWindow({
         minWidth: 1700,
-        minHeight: 800,
-        // width: 1600, // * 指定启动app时的默认窗口尺寸
-        // height: 920, // * 指定启动app时的默认窗口尺寸
+        minHeight: 920,
+        width: 1700,
+        height: 920,
         frame: false,
-        transparent: true,
+        transparent: false,
         hasShadow: true,
         show: false,
         resizable: true,
@@ -70,6 +70,9 @@ function createWindow() {
     // 启动窗口时隐藏,直到渲染进程加载完成「ready-to-show 监听事件」 再显示窗口,防止加载时闪烁
     Window.once('ready-to-show', () => {
         Window.show(); // 显示窗口
+    });
+    Window.webContents.session.setProxy({
+        proxyRules: "socks5://127.0.0.1:7890",
     });
     // * 主窗口加载外部链接
     // 开发环境,加载vite启动的vue项目地址

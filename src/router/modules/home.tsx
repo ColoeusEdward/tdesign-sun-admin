@@ -3,6 +3,7 @@ import { UserCircleIcon } from 'tdesign-icons-react';
 import { IRouter } from '../index';
 import { TbWindmill, TbBrandDiscord } from 'react-icons/tb';
 import { FiRadio } from 'react-icons/fi';
+import { RiRadioButtonLine } from 'react-icons/ri';
 const Comp = lazy(() => import('pages/MyHome'))
 
 const result: IRouter[] = [
@@ -43,7 +44,15 @@ const result: IRouter[] = [
       Icon: () => <FiRadio style={{ fontSize: '20px' }} />,
     },
   },
-
+  // {
+  //   path: '/gRadio',
+  //   Component: lazy(() => import('pages/GRadio')),
+  //   noMargin: true,
+  //   meta: {
+  //     title: 'GRadio',
+  //     Icon: () => <RiRadioButtonLine  style={{ fontSize: '20px' }} />,
+  //   },
+  // },
 ];
 
 export default result;

@@ -20,6 +20,7 @@
     "prepare": "husky install",
     "buildelec": "pnpm version patch && pnpm buildel && pnpm build:tsc && electron-builder --windows && cd output && rm -rf app/win-unpacked && cd app && 7z a nsis.zip * &&  curl -X POST -F files=@nsis.zip https://meamoe.one/koa/mv_upload/free/uploadElectron && cd ../  && start app",
     "start": "kill-port 8820 && concurrently -k \"vite --mode development\" \"wait-on tcp:8820 && pnpm watch\"",
+    "staa": "kill-port 8820 && concurrently -k \"vite --mode development\" \"wait-on tcp:8820 && pnpm watch\"",
     "watch": "tsc-watch --noClear -p tsconfig.e.json --onSuccess \"pnpm start:ect\"",
     "start:ect": "cross-env NODE_ENV=development electron ./output/build/main.js",
     "build:tsc": "tsc -p tsconfig.e.json",

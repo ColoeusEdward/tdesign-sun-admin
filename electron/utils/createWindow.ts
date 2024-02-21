@@ -18,12 +18,12 @@ const NODE_ENV = process.env.NODE_ENV;
 function createWindow() {
   // 生成窗口实例
   const Window = new BrowserWindow({
-    minWidth: 1800,
+    minWidth: 1700,
     minHeight: 920,
-    // width: 1600, // * 指定启动app时的默认窗口尺寸
-    // height: 920, // * 指定启动app时的默认窗口尺寸
+    width: 1700, // * 指定启动app时的默认窗口尺寸
+    height: 920, // * 指定启动app时的默认窗口尺寸
     frame: false, // * app边框(包括关闭,全屏,最小化按钮的导航栏) @false: 隐藏
-    transparent: true, // * app 背景透明
+    transparent: false, // * app 背景透明
     hasShadow: true, // * app 边框阴影
     show: false, // 启动窗口时隐藏,直到渲染进程加载完成「ready-to-show 监听事件」 再显示窗口,防止加载时闪烁
     resizable: true, // 禁止手动修改窗口尺寸
