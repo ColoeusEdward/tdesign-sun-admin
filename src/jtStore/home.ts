@@ -11,4 +11,4 @@ export const mouseAtom = atom<CursorState | undefined>(undefined)
 export const anchorPointAtom = atom<{ x: number, y: number }>({ x: 0, y: 0 })
 
 export const radioFastInitCountAtom = atom(0)  
-
+export const radioBroFastInitCountAtom = atom(0) 

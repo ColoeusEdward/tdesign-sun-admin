@@ -7,6 +7,7 @@ import { GiAnticlockwiseRotation, GiClockwiseRotation } from "react-icons/gi";
 import { CgEditFlipH, CgEditFlipV } from "react-icons/cg";
 import { useAtom } from 'jotai';
 import { isFlipAtom } from 'pages/V8/jotai';
+import { get_radio_playlog } from 'services/nt';
 
 type customList<T> = T extends [] ? [] : T
 
@@ -178,6 +179,16 @@ export const mustRules = [{ required: true, message: '必填', type: 'error' }] 
 export const replaceLine = (content: string) => {
   let str = content.replace(/\n\n/g, '\n')
   return str
+}
+
+export const getLogAndOpenBro = (eId:number) => {
+  get_radio_playlog(eId).then(res => {
+    let time = 0
+    if (Object.keys(res).length > 0) {
+      time = res.at
+    }
+    window.ipc.send('openGadioBro', { id: eId, time });
+  })
 }
 // export const deepSearch = (obj:object, predicate) => {
 //   let result: Object[] = [];

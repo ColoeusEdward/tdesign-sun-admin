@@ -33,8 +33,10 @@ exports.createWindow = void 0;
  */
 const electron_1 = require("electron");
 const path = __importStar(require("path"));
+const gcore_1 = require("./gcore");
 const shortcut_1 = require("./shortcut");
 const update_1 = require("./update");
+const util_1 = require("./util");
 /**
  * packages.json,script中通过cross-env NODE_ENV=production设置的环境变量
  * 'production'|'development'
@@ -46,14 +48,14 @@ function createWindow() {
     const Window = new electron_1.BrowserWindow({
         minWidth: 1700,
         minHeight: 920,
-        width: 1700,
-        height: 920,
-        frame: false,
-        transparent: false,
-        hasShadow: true,
-        show: false,
-        resizable: true,
-        icon: './dist/fav.png',
+        width: 1700, // * 指定启动app时的默认窗口尺寸
+        height: 920, // * 指定启动app时的默认窗口尺寸
+        frame: false, // * app边框(包括关闭,全屏,最小化按钮的导航栏) @false: 隐藏
+        transparent: false, // * app 背景透明
+        hasShadow: true, // * app 边框阴影
+        show: false, // 启动窗口时隐藏,直到渲染进程加载完成「ready-to-show 监听事件」 再显示窗口,防止加载时闪烁
+        resizable: true, // 禁止手动修改窗口尺寸
+        icon: './dist/fav.png', // 图标
         webPreferences: {
             // webSecurity:false,
             // 加载脚本
@@ -71,9 +73,9 @@ function createWindow() {
     Window.once('ready-to-show', () => {
         Window.show(); // 显示窗口
     });
-    Window.webContents.session.setProxy({
-        proxyRules: "socks5://127.0.0.1:7890",
-    });
+    // Window.webContents.session.setProxy({
+    //   proxyRules: "socks5://127.0.0.1:7890",
+    // })
     // * 主窗口加载外部链接
     // 开发环境,加载vite启动的vue项目地址
     if (NODE_ENV === 'development')
@@ -84,5 +86,33 @@ function createWindow() {
     // else Window.loadURL('http://localhost:3920/');
     (0, shortcut_1.createShortcut)(Window);
     (0, update_1.createAutoUpdate)(Window);
+    (0, gcore_1.createGcore)(Window);
+    global.data.Window = Window;
+    electron_1.ipcMain.on('openGadioBro', (event, data) => {
+        // console.log("🚀 ~ ipcMain.on ~ val:", val)
+        const view = new electron_1.BrowserView({
+            webPreferences: {
+                // webSecurity:false,
+                // 加载脚本
+                preload: path.join(__dirname, '..', 'preload.js'),
+                nodeIntegration: true,
+                contextIsolation: true,
+                devTools: true,
+            },
+        });
+        Window.setBrowserView(view);
+        view.setBounds({ x: 60, y: 60, width: 1640, height: 860 });
+        view.webContents.loadURL(`https://www.gcores.com/radios/${data.id}/timelines`);
+        global.data.broView = view;
+        (0, util_1.sleep)(4000).then(() => {
+            // broPlay()
+            (0, util_1.browserGadioPlayFirst)(view, data);
+            (0, util_1.loopSavePlayLog)(view);
+            // view.webContents.openDevTools()
+        });
+    });
+    electron_1.ipcMain.on('closeGadioBro', (event, val) => {
+        global.data.broView?.webContents.close();
+    });
 }
 exports.createWindow = createWindow;

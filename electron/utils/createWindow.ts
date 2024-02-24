@@ -5,10 +5,12 @@
  * @LastEditTime: 2023-02-03 10:17:50
  * @LastEditors: 
  */
-import { BrowserWindow } from 'electron';
+import { BrowserView, BrowserWindow, ipcMain } from 'electron';
 import * as path from 'path';
-import { createShortcut } from './shortcut';
+import { createGcore } from './gcore';
+import { broPlay, createShortcut } from './shortcut';
 import { createAutoUpdate } from './update';
+import { browserGadioPlayFirst, loopSavePlayLog, sleep } from './util';
 /**
  * packages.json,script中通过cross-env NODE_ENV=production设置的环境变量
  * 'production'|'development'
@@ -39,16 +41,16 @@ function createWindow() {
   Window.setResizable(true)
   // 加载调试工具
   NODE_ENV === 'development' && Window.webContents.openDevTools();
-//  Window.webContents.openDevTools();
+  //  Window.webContents.openDevTools();
   // 由优雅写法a
   // 启动窗口时隐藏,直到渲染进程加载完成「ready-to-show 监听事件」 再显示窗口,防止加载时闪烁
   Window.once('ready-to-show', () => {
     Window.show(); // 显示窗口
   });
 
-  Window.webContents.session.setProxy({
-    proxyRules: "socks5://127.0.0.1:7890",
-  })
+  // Window.webContents.session.setProxy({
+  //   proxyRules: "socks5://127.0.0.1:7890",
+  // })
 
   // * 主窗口加载外部链接
   // 开发环境,加载vite启动的vue项目地址
@@ -58,6 +60,36 @@ function createWindow() {
   // else Window.loadURL('http://localhost:3920/');
   createShortcut(Window)
   createAutoUpdate(Window)
+  createGcore(Window)
+  global.data.Window = Window
+  ipcMain.on('openGadioBro', (event, data) => {
+    // console.log("🚀 ~ ipcMain.on ~ val:", val)
+    const view = new BrowserView({
+      webPreferences: {
+        // webSecurity:false,
+        // 加载脚本
+        preload: path.join(__dirname, '..', 'preload.js'),
+        nodeIntegration: true,
+        contextIsolation: true,
+        devTools:true, 
+      },
+    }
+    )
+    Window.setBrowserView(view)
+    view.setBounds({ x: 60, y: 60, width: 1640, height: 860 })
+    view.webContents.loadURL(`https://www.gcores.com/radios/${data.id}/timelines`)
+    global.data.broView = view
+    sleep(4000).then(() => {
+      // broPlay()
+      browserGadioPlayFirst(view,data)
+      loopSavePlayLog(view)
+      // view.webContents.openDevTools()
+    })
+  })
+  ipcMain.on('closeGadioBro', (event, val) => {
+    global.data.broView?.webContents.close()
+  })
+
 }
 // 导出模块
 export { createWindow };

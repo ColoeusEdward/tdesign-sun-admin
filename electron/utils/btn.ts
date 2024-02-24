@@ -5,7 +5,7 @@
 //  * @LastEditTime: 2023-01-04 10:36:42
 //  * @LastEditors:  
 //  */
-import { BrowserWindow, ipcMain, screen, app } from "electron";
+import { BrowserWindow, ipcMain, screen, app, BrowserView } from "electron";
 import { Rectangle } from "electron/main";
 /**
 * @description 进程通讯 渲染进程点击顶部关闭,最小化...按钮时,传递 {val}参数,
@@ -27,6 +27,8 @@ export function onBtn() {
     window?.webContents.reload()
 
   })
+
+  
 }
 
 

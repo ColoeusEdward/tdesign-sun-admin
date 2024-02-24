@@ -6,8 +6,14 @@
  * @LastEditors:  
  */
 import { BrowserWindow, globalShortcut, ipcMain, Menu } from 'electron'
+import { browserGadioPlay } from './util'
 
-
+export const broPlay = () => {
+  if(global.data.broView){
+    let view = global.data.broView
+    browserGadioPlay(view)
+  }
+}
 export function createShortcut(mwindow: BrowserWindow) {
   // ipcMain.handle('radioPlay', (event, arg) => {
   //   return new Promise((resolve, reject) => {
@@ -16,7 +22,13 @@ export function createShortcut(mwindow: BrowserWindow) {
   // })
   globalShortcut.register('Alt+B', () => {
     mwindow.webContents.send('radioPlay')
+    broPlay()
   })
+
+  globalShortcut.register('Alt+X', () => {
+    mwindow.webContents.send('broRadioPlay')
+  })
+  
   globalShortcut.register('Alt+F5', () => {
     mwindow.webContents.send('reload')
   })

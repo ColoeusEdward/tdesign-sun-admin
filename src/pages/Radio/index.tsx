@@ -51,6 +51,8 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [isFull, setIsFull] = useState<boolean>(false)
   const [curAudioData, setCurAudioData] = useState<any>({})
+  const curBroAudioDataRef = useRef<any>({})
+  // const [curBroAudioData, setCurBroAudioData] = useState<any>({})
   const scrollConRef = useRef<any | null>(null)
   const [initReady, setInitReady] = useState<boolean>(false)
   // const [semitone, setSemitone] = useState(0);  //音调key
@@ -89,7 +91,12 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   //     audioCtx.resume();
   //   }
   // }
-  const changeOpenRadio = useCallback((data: any, isUpKey: boolean) => {
+  const changeOpenRadio = useCallback((data: any, isUpKey: boolean, isBro: boolean) => {
+    if (isBro) {
+      console.log("🚀 ~ changeOpenRadio ~ data:", data)
+      curBroAudioDataRef.current = data
+      return
+    }
     let url = `https://alioss.gcores.com/uploads/audio/${data.included[0].attributes.audio}`
     if (isUpKey) {
       url = `https://meamoe.one/record2/output-${data.included[0].attributes.audio}`
@@ -154,6 +161,11 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
         audioRef.current!.pause()
       }
     })
+    
+    window.ipc.on('broSavePlayLog', (event: any, val: any) => {
+      // console.log("🚀 ~ window.ipc.on ~ curBroAudioData:", curBroAudioDataRef.current,val)
+      save_radio_playlog({ id: curBroAudioDataRef.current.data.id, at: val})
+    })
   }
   const right15 = () => {
     if (!audioRef.current) return
@@ -169,6 +181,7 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
   useImperativeHandle(ref, () => ({
 
   }))
+  
   useEffect(() => {
     if (!adSrc) return
     audioRef.current!.playbackRate = 1.75
@@ -254,7 +267,7 @@ const Radio: React.FC<IRadioProp> = forwardRef(({ children }, ref) => {
 
         <div className={'h-40 text-center max-w-4xl text-lg mt-2 overflow-y-hidden min-h-[100px] relative '}>
           <span className={' invisible'}>
-          {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.content}
+            {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.content}
           </span>
           <div className=" absolute top-0 left-0 w-full h-full text-center text-white text-lg z-[450] overflow-y-auto ">
             {curTimeItem && curTimeItem.attributes && curTimeItem.attributes.content}

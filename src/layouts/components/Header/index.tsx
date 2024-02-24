@@ -8,8 +8,10 @@ import { HeaderMenu } from '../Menu';
 import Search from './Search';
 import Style from './index.module.less';
 import { useAtom } from 'jotai';
-import { radioFastInitCountAtom } from 'jtStore/home';
+import { radioBroFastInitCountAtom, radioFastInitCountAtom } from 'jtStore/home';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { ImRadioChecked } from 'react-icons/im';
+import { TbRadioactiveOff } from 'react-icons/tb';
 
 const { Header } = Layout;
 
@@ -19,6 +21,7 @@ export default memo((props: { showMenu?: boolean }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const [, setFastCount] = useAtom(radioFastInitCountAtom)
+  const [, setBroFastCount] = useAtom(radioBroFastInitCountAtom)
 
   if (!globalState.showHeader) {
     return null;
@@ -32,8 +35,22 @@ export default memo((props: { showMenu?: boolean }) => {
     }
     setFastCount((val) => {
 
-      return val+1;
+      return val + 1;
     })
+  }
+
+  const openGadioBro = () => {
+    // 
+    if (location.pathname != '/radio') {
+      navigate('/radio')
+    }
+    setBroFastCount((val) => {
+      return val + 1;
+    })
+  }
+
+  const closeGadioBro = () => {
+    window.ipc.send('closeGadioBro')
   }
 
   let HeaderLeft;
@@ -68,6 +85,25 @@ export default memo((props: { showMenu?: boolean }) => {
             <CdIcon />
           </Button>
           {/* <Search /> */}
+        </Col>
+        <Col>
+          <Button className={'noElectronDrag'} shape='square' size='large' variant='text' onClick={openGadioBro}>
+            <ImRadioChecked />
+          </Button>
+        </Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col>
+          <Button className={'noElectronDrag'} shape='square' size='large' variant='text' onClick={closeGadioBro}>
+            <TbRadioactiveOff />
+          </Button>
         </Col>
       </Row>
     );

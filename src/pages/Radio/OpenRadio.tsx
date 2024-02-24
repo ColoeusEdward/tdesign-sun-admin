@@ -2,19 +2,19 @@ import classNames from "classnames";
 import MySkeleton from "components/MySkeleton";;
 import { MacScrollbar } from "mac-scrollbar";
 import { forwardRef, memo, ReactNode, useEffect, useImperativeHandle, useRef, useState, RefAttributes, useMemo } from "react";
-import { edit_accountList, get_account_list, get_gradio, get_gradio_info, get_gradio_info_simple, get_last_radio_playlog, LeftStorage, playLog, SaveGadioAndUpKey, save_account_list, ShowRecordSizeList } from "services/nt";
+import { edit_accountList, get_account_list, get_gradio, get_gradio_info, get_gradio_info_simple, get_last_radio_playlog, get_radio_playlog, LeftStorage, playLog, SaveGadioAndUpKey, save_account_list, ShowRecordSizeList } from "services/nt";
 import { Button, Card, Drawer, Dropdown, Form, FormRule, Input, MessagePlugin, NotificationPlugin, Select, Switch, Tag, TdDropdownProps } from "tdesign-react";
-import { ajaxPromiseAll, copyToPaste, sleep } from "utils/util";
+import { ajaxPromiseAll, copyToPaste, getLogAndOpenBro, sleep } from "utils/util";
 import { BsArrowsFullscreen, BsPlusSquareDotted } from "react-icons/bs";
 import FormItem from "tdesign-react/es/form/FormItem";
 import { BiLastPage } from "react-icons/bi";
 import { RiDownloadCloudFill } from "react-icons/ri";
 import { getMsgOpt } from "configs/cfg";
 import { useAtom } from "jotai";
-import { radioFastInitCountAtom } from "jtStore/home";
+import { radioBroFastInitCountAtom, radioFastInitCountAtom } from "jtStore/home";
 type IOpenRadioProp = {
   children?: ReactNode,
-  radioConfirm: (info: any, isUpKey: boolean) => void,
+  radioConfirm: (info: any, isUpKey: boolean, isBro: boolean) => void,
   // name: string
 }
 
@@ -31,7 +31,9 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
   const [curRadio, setCurRadio] = useState<number | string>('')
   const [isUpKey, setIsUpKey] = useState<boolean>(true)
   const [fastInitCount] = useAtom(radioFastInitCountAtom)
+  const [broFastInitCount] = useAtom(radioBroFastInitCountAtom)
   const [getRadioLoading, setGetRadioLoading] = useState(false)
+  const [isBro, setIsBro] = useState(true)  //是否走机核官网
   const formRef = useRef<any>()
 
   const options = [
@@ -61,8 +63,9 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
     // console.log(`curra`,curRadio);
     if (!curRadio) return
     get_gradio_info(curRadio).then(res => {
-      radioConfirm(res, isUpKey)
-      autoCacheNextRadio(curRadio)
+      isBro && getLogAndOpenBro(curRadio as number)
+      radioConfirm(res, isUpKey, isBro)
+      !isBro && autoCacheNextRadio(curRadio)
     })
     setDrawShow(false)
     // formRef.current.validate()
@@ -98,34 +101,36 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
     })
 
   }
+
   const selectLastRadio = () => {
     setLastLoading(true)
     let tempCurRadio: string | number = ''
-    ajaxPromiseAll<[any,playLog]>([getRadioList(),get_last_radio_playlog()])
-    .then(([,e])=> {
-      setCurRadio(e.id)
-      tempCurRadio = e.id
-      return get_gradio_info(e.id)
-    }).then(res => {
-      radioConfirm(res, isUpKey)
-      // autoCacheNextRadio(tempCurRadio)
-      setDrawShow(false)
-    }).finally(() => {
-      setLastLoading(false)
-    })
+    let eId = 0
+    ajaxPromiseAll<[any, playLog]>([getRadioList(), get_last_radio_playlog()])
+      .then(([, e]) => {
+        setCurRadio(e.id)
+        tempCurRadio = e.id
+        eId = e.id
+        return get_gradio_info(e.id)
+      }).then((res) => {
+        isBro && getLogAndOpenBro(eId)
+        radioConfirm(res, isUpKey, isBro)
+        !isBro && autoCacheNextRadio(tempCurRadio)
+        setDrawShow(false)
+      }).finally(() => {
+        setLastLoading(false)
+      })
   }
 
   const autoCacheNextRadio = (tempCurRadio: string | number) => {
     let nextIdx = radioList.findIndex(e => e.value == tempCurRadio)
-    // console.log("🚀 ~ file: OpenRadio.tsx:120 ~ autoCacheNextRadio ~ nextIdx:", nextIdx)
     if (nextIdx - 1 < 0) {
       return
     }
     let next = radioList[nextIdx - 1]
     get_gradio_info_simple(next.value).then((data: any) => {
-      console.log("🚀 ~ file: OpenRadio.tsx:125 ~ get_gradio_info_simple ~ data:", data)
       let url = `https://alioss.gcores.com/uploads/audio/${data.included[0].attributes.audio}`
-      return SaveGadioAndUpKey(url,data.data.attributes.title)
+      return SaveGadioAndUpKey(url, data.data.attributes.title)
     })
   }
 
@@ -137,7 +142,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
     setCacheLoading(true)
     get_gradio_info_simple(curRadio).then((data: any) => {
       let url = `https://alioss.gcores.com/uploads/audio/${data.included[0].attributes.audio}`
-      return SaveGadioAndUpKey(url,data.data.attributes.title)
+      return SaveGadioAndUpKey(url, data.data.attributes.title)
     }).then(() => {
 
     }).finally(() => {
@@ -202,15 +207,21 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
   }
 
   useEffect(() => {
-    console.log("🚀 ~ file: OpenRadio.tsx:197 ~ constOpenRadio:React.FC<IOpenRadioProp&RefAttributes<unknown>>=forwardRef ~ fastInitCount:", fastInitCount)
     if (fastInitCount > 0) {
       MessagePlugin.success({ content: '电台快速触发', ...getMsgOpt() })
       rightDropDownClick({ value: 0 }, {} as any)
     }
   }, [fastInitCount])
   useEffect(() => {
-    autoCacheNextRadio(curRadio)
-  },[curRadio])
+    if (broFastInitCount > 0) {
+      MessagePlugin.success({ content: 'Browser电台快速触发', ...getMsgOpt() })
+      setIsBro(true)
+      selectLastRadio()
+    }
+  }, [broFastInitCount])
+  useEffect(() => {
+    !isBro && autoCacheNextRadio(curRadio)
+  }, [curRadio])
   // useEffect(() => {
   //   getRadioList()
   // }, [])
@@ -220,7 +231,7 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
 
   return (
     <>
-      <div className={'h-8 flex justify-center p-2 absolute right-2 top-2 '} style={{zIndex:'500'}}
+      <div className={'h-8 flex justify-center p-2 absolute right-2 top-2 '} style={{ zIndex: '500' }}
       // onMouseUp={(e) => { e.stopPropagation() }} onTouchEnd={(e) => { e.stopPropagation() }}  
       >
         <Button className={'w-16 '} icon={<BsPlusSquareDotted className="text-2xl" />} shape={'round'} accessKey="c" onClick={() => { isEdit = false; showForm() }} > </Button>
@@ -236,13 +247,18 @@ const OpenRadio: React.FC<IOpenRadioProp & RefAttributes<unknown>> = forwardRef(
             footer={
               <div className={'flex justify-center'}>
                 <div className=" absolute left-2 ">
-                  <Button icon={<RiDownloadCloudFill className="text-2xl" />} onClick={cacheCurRadioFile} loading={cacheLoading} ></Button>
+                  {/* <Button icon={<RiDownloadCloudFill className="text-2xl" />} onClick={cacheCurRadioFile} loading={cacheLoading} ></Button> */}
+                  <div className={'inline-block'} title={'是否走机核官网'}>
+                    <Switch value={isBro} className={'mr-2'} size={'large'} onChange={(val) => { setIsBro(val) }}  ></Switch>
+                  </div>
                 </div>
 
                 <Button className={' min-w-[10rem] max-w-[24rem]'} onClick={submit} type={'submit'} loading={loading} shape="round" >提 交</Button>
 
                 <div className=" absolute right-2 ">
-                  <Switch value={isUpKey} className={'mr-2'} size={'large'} onChange={(val) => { setIsUpKey(val) }}  ></Switch>
+                  <div className={'inline-block'} title={'是否启用预载文件'}>
+                    <Switch value={isUpKey} className={'mr-2'} size={'large'} onChange={(val) => { setIsUpKey(val) }}  ></Switch>
+                  </div>
                   <Dropdown onClick={rightDropDownClick} options={options} trigger={'click'} >
                     <Button icon={<BiLastPage className="text-2xl" />} loading={lastLoading} ></Button>
                   </Dropdown>
