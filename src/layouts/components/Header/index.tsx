@@ -12,6 +12,7 @@ import { radioBroFastInitCountAtom, radioFastInitCountAtom } from 'jtStore/home'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ImRadioChecked } from 'react-icons/im';
 import { TbRadioactiveOff } from 'react-icons/tb';
+import { RiSpeedLine } from 'react-icons/ri';
 
 const { Header } = Layout;
 
@@ -51,6 +52,9 @@ export default memo((props: { showMenu?: boolean }) => {
 
   const closeGadioBro = () => {
     window.ipc.send('closeGadioBro')
+  }
+  const setPlaySpeed = () => {
+    window.ipc.send('setPlaySpeed')
   }
 
   let HeaderLeft;
@@ -99,7 +103,11 @@ export default memo((props: { showMenu?: boolean }) => {
         <Col></Col>
         <Col></Col>
         <Col></Col>
-        <Col></Col>
+        <Col>
+          <Button className={'noElectronDrag'} shape='square' size='large' variant='text' onClick={setPlaySpeed}>
+            <RiSpeedLine />
+          </Button>
+        </Col>
         <Col>
           <Button className={'noElectronDrag'} shape='square' size='large' variant='text' onClick={closeGadioBro}>
             <TbRadioactiveOff />

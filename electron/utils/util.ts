@@ -1,4 +1,4 @@
-export const browserGadioPlayFirst = (view:any,data:any) => { 
+export const browserGadioPlayFirst = (view: any, data: any) => {
   // audio.currentTime = ${data.time} 
   view.webContents.executeJavaScript(`
   var sleep = (ms) => {
@@ -13,7 +13,7 @@ export const browserGadioPlayFirst = (view:any,data:any) => {
 
 }
 
-export const browserGadioPlay = (view:any) => { 
+export const browserGadioPlay = (view: any) => {
   view.webContents.executeJavaScript(`
     var audio = document.querySelector('audio');
     if(audio.paused){
@@ -25,12 +25,12 @@ export const browserGadioPlay = (view:any) => {
     }
   `)
 }
-export const setLoopState = (view:any,state:string) =>{
+export const setLoopState = (view: any, state: string) => {
   view.webContents.executeJavaScript(`
     var loopState = ${state}
   `)
 }
-export const loopSavePlayLog = (view:any) => {
+export const loopSavePlayLog = (view: any) => {
   view.webContents.executeJavaScript(`
   var audio = document.querySelector('audio');
   var loopState = true
@@ -44,6 +44,14 @@ export const loopSavePlayLog = (view:any) => {
   }
   loop()
 `)
+}
+
+export const setPlaySpeed = (view: any) => {
+  view.webContents.executeJavaScript(`
+    var audio = document.querySelector('audio');
+    audio.playbackRate = 1.75
+  `)
+
 }
 
 export const sleep = (ms: number) => {
