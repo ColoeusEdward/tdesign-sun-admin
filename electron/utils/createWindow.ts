@@ -58,27 +58,29 @@ function createWindow() {
   // else Window.loadURL(path.join(__dirname, "./output/dist/index.html"));
   else Window.loadFile(`./dist/index.html`);
   // else Window.loadURL('http://localhost:3920/');
+  const view = new BrowserView({
+    webPreferences: {
+      // webSecurity:false,
+      // 加载脚本
+      preload: path.join(__dirname, '..', 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: true,
+      devTools:true, 
+    },
+  }
+  )
+  Window.setBrowserView(view)
+  global.data.broView = view
+  view.setBounds({ x: 60, y: 60, width: 1640, height: 860 })
+
   createShortcut(Window)
   createAutoUpdate(Window)
   createGcore(Window)
   global.data.Window = Window
+  
   ipcMain.on('openGadioBro', (event, data) => {
     // console.log("🚀 ~ ipcMain.on ~ val:", val)
-    const view = new BrowserView({
-      webPreferences: {
-        // webSecurity:false,
-        // 加载脚本
-        preload: path.join(__dirname, '..', 'preload.js'),
-        nodeIntegration: true,
-        contextIsolation: true,
-        devTools:true, 
-      },
-    }
-    )
-    Window.setBrowserView(view)
-    view.setBounds({ x: 60, y: 60, width: 1640, height: 860 })
     view.webContents.loadURL(`https://www.gcores.com/radios/${data.id}/timelines`)
-    global.data.broView = view
     sleep(4000).then(() => {
       // broPlay()
       browserGadioPlayFirst(view,data)
